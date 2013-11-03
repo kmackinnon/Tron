@@ -1,21 +1,33 @@
 package Gameplay;
 
-import java.util.Vector;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
-public class Controller {
+public class Controller extends KeyAdapter {
 
-    /**
-   * 
-   * @element-type Input
-   */
-  public Vector  myInput;
-    /**
-   * 
-   * @element-type Player
-   */
-  public Vector  myPlayer;
+	/**
+	 * 
+	 * @element-type Input
+	 */
+	Input input;
 
-  public void listen() {
-  }
+	/**
+	 * 
+	 * @element-type Player
+	 */
+	public ArrayList<Player> myPlayer;
+
+	public Controller(Input input) {
+		this.input = input;
+	}
+
+	public void keyPressed(KeyEvent e) {
+		input.keyPressed(e);
+	}
+
+	public void keyReleased(KeyEvent e) {
+		input.keyReleased(e);
+	}
 
 }
