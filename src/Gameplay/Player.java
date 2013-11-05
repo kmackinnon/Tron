@@ -90,7 +90,7 @@ public class Player {
 
   public void moveCurrent() {
       //add wall, to current position and color
-      Map.addWall(this.xPos, this.yPos, this.colour);
+      myMap.addWall(this.xPos, this.yPos, this.colour);
       //increment in same direction and check for collision (map) at new position
       switch(this.currentDirection){
           case 1:
@@ -109,7 +109,7 @@ public class Player {
               break;
       }
       //need to figure out specifics of collision and ending the round
-      if(Map.collides(this.xPos, this.yPos)){
+      if(myMap.collides(this.xPos, this.yPos)){
           loseGame();
       }
   }
