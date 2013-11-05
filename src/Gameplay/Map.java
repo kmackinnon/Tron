@@ -2,8 +2,7 @@ package Gameplay;
 
 import Database.Game;
 import UserInterface.Display;
-import BitSet;
-import String;
+import java.util.BitSet;
 
 public class Map {
 
