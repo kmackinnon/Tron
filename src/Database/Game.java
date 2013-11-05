@@ -2,13 +2,12 @@ package Database;
 
 import java.util.Vector;
 import Gameplay.Map;
-import Integer;
 
 public class Game {
 
-  public Integer playerOneWins;
+  private int playerOneWins;
 
-  public Integer playerTwoWins;
+  private int playerTwoWins;
 
     public Map myMap;
     /**

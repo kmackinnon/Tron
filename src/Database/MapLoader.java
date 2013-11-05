@@ -1,11 +1,10 @@
 package Database;
 
-import String;
 import Gameplay.Map;
 
 public abstract class MapLoader {
 
-  public String name;
+  private String name;
 
     
   public Map loadMap() {

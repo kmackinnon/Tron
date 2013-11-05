@@ -1,8 +1,5 @@
 package Database;
 
-import String;
-
-
 public abstract class DatabaseInterface {
 
   protected String[] supportList;
@@ -18,11 +15,10 @@ public abstract class DatabaseInterface {
 
   protected abstract UserStatistics getUserStats(int uid);
 
-  public abstract void changePassword(int uid, String newPassword) {
-  }
+  public abstract void changePassword(int uid, String newPassword);
 
   public boolean supports(String capability) {
-    return null;
+    return false;
   }
   public String[] getSupportList(){
     return supportList;

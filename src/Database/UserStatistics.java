@@ -1,14 +1,12 @@
 package Database;
 
-import Integer;
-
 public class UserStatistics {
 
-  public Integer wins;
+  private int wins;
 
-  public Integer games;
+  private int games;
 
-  public Integer losses;
+  private int losses;
 
     public User myUser;
   

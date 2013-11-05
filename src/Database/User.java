@@ -1,19 +1,20 @@
 package Database;
 
 import Gameplay.Player;
-import String;
-import Integer;
 
 public class User {
 
   private String username;
 
-  private Integer uid;
+  private int uid;
 
   private UserStatistics myUserStatistics;
   private DatabaseInterface myDatabaseInterface;
   private Player myPlayer;
   
+  public String getUsername(){
+      return this.username;
+  }
   public void login(String password) {
   }
 
