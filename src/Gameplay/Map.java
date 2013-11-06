@@ -3,7 +3,7 @@ package Gameplay;
 import Database.Game;
 import UserInterface.Display;
 import java.util.BitSet;
-import java.util.regex.Pattern
+import java.util.regex.Pattern;
 
 public class Map {
 
