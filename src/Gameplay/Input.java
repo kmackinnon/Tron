@@ -3,7 +3,7 @@ import java.awt.event.KeyEvent;
 
 public abstract class Input {
     private KeyEvent key;
-    private Player player;
+    protected Player player;
     
     public KeyEvent checkKey(){
         return key;
@@ -15,7 +15,8 @@ public abstract class Input {
     
     public abstract void command();
     
-    public Input(int key, Controller control){
-        
+    public Input(KeyEvent key, Player player){
+        this.key = key;
+        this.player = player;
     }
 }
