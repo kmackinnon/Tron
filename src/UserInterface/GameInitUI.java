@@ -18,15 +18,9 @@ import javafx.stage.Stage;
  *
  * @author vmorel7
  */
-public class GameInitUI extends Application {
-    public static void main(String[] args) {
+public class GameInitUI extends VBox {
 
-
-        launch(args);
-    }
-
-    @Override
-    public void start(final Stage stage) {
+    public GameInitUI(final Stage stage) {
         
         Label titleLabel = new Label("Light Racer");
         titleLabel.setMinSize(50,50);
@@ -37,19 +31,12 @@ public class GameInitUI extends Application {
         //BtnGroup.setPadding(new Insets(10, 10, 10, 10));
         BtnGroup.setSpacing(30);
         BtnGroup.getChildren().addAll(singlePlayerBtn, multiPlayerBtn);
+         
+        setSpacing(70);
+        getChildren().addAll(titleLabel, BtnGroup);
         
-        VBox MainGroup = new VBox();
-        MainGroup.setSpacing(70);
-        MainGroup.getChildren().addAll(titleLabel, BtnGroup);
         
-        Scene scene = new Scene(MainGroup, 600, 500);
-        stage.setScene(scene);
-        stage.setTitle("Light Racer");
-        stage.setWidth(1030);
-        stage.setHeight(800);
-
-        stage.show();
-     
+        
         singlePlayerBtn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
