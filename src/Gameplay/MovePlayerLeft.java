@@ -1,15 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Gameplay;
 
-/**
- *
- * @author mwilli40
- */
+import java.awt.event.KeyEvent;
+
 public class MovePlayerLeft extends Input {
-    public void command(){
-        this.player.moveLeft();
-    }
+	
+	public MovePlayerLeft(KeyEvent key, Player player) {
+		super(key, player);
+	}
+
+	public void command() {
+		this.player.moveLeft();
+	}
 }
