@@ -2,7 +2,7 @@ package Gameplay;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Controller extends KeyAdapter {
 
@@ -10,24 +10,23 @@ public class Controller extends KeyAdapter {
 	 * 
 	 * @element-type Input
 	 */
-	Input input;
+	static HashMap<KeyEvent,Input> inputList = new HashMap();
 
-	/**
-	 * 
-	 * @element-type Player
-	 */
-	public ArrayList<Player> myPlayer;
 
-	public Controller(Input input) {
-		this.input = input;
+	public Controller() {
 	}
 
+        public void addBinding(Input input){
+            inputList.put(input.checkKey(),input);
+        }
+        
 	public void keyPressed(KeyEvent e) {
-		input.keyPressed(e);
+		Input input = inputList.get(e);
+                input.command();
 	}
 
 	public void keyReleased(KeyEvent e) {
-		input.keyReleased(e);
+		//input.keyReleased(e);
 	}
 
 }
