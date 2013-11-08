@@ -38,9 +38,25 @@ public class Map {
   private void mapParse(String mapString, String colour){
     Matcher m = headerParser.matcher(mapString);
   }
+  
+  /**
+   * Generates Map from string 
+   * @param mapString
+   * @param colour
+   * @param game
+   * @param display 
+   */
   public Map(String mapString, String colour, Game game, Display display){
     myGame = game;
     myDisplay = display;
     mapParse(mapString, colour);
+  }
+  
+  public Map(int width, int height, Game game, Display display){
+      myGame = game;
+      myDisplay = display;
+      this.width = width;
+      this.height = height;
+      map = new BitSet(width*height);
   }
 }
