@@ -65,6 +65,9 @@ public class Display extends StackPane {
          grid[xpos][ypos].setFill(color);
     }
     
+    public void displayWall(int xpos,int ypos, String color){
+        displaywall(xpos, ypos, Color.web(color));
+    }
     
     /**
      * The main() method is ignored in correctly deployed JavaFX application.
