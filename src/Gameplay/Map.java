@@ -1,11 +1,16 @@
 package Gameplay;
 
 import Database.Game;
+import Database.User;
 import UserInterface.Display;
 
 import java.util.BitSet;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.Vector;
+
+import java.awt.event.KeyEvent;
+
 
 /**
  * Contains details concerning the current map in play, and determines if a collision has occurred.
@@ -18,9 +23,14 @@ public class Map {
   private BitSet map;
   private int width;
   private int height;
+  private int numOfPlayers;
+  private boolean running;
 
+
+  private Vector<Player> playerList;
   private final Game myGame;
   private final Display myDisplay;
+  private Controller controller;
   
   /**
    * Adds a wall at a given co-ordinate with a given colour.
@@ -54,6 +64,40 @@ public class Map {
     Matcher m = headerParser.matcher(mapString);
   }
   
+  public static Map makeDemo(Display display){
+    Map map = new Map(50, 50, null, display);
+    addPlayer(null);
+    Player player = playerList.get(0);
+    controller.addBinding(new MovePlayerDown(VK_DOWN, player));
+    controller.addBinding(new MovePlayerLeft(VK_LEFT, player));
+    controller.addBinding(new MovePlayerUp(VK_UP, player));
+    controller.addBinding(new MovePlayerRight(VK_RIGHT, player));
+  }
+
+  private void gameLoop(){
+    running = true;
+    Iterator<Player> it;
+    while(running){
+      for(it = playerList.iterator(); it.hasNext();){
+        Player player = it.next();
+        player.moveCurrent();
+      }
+      for(it = playerList.iterator(); it.hasNext();){
+        Player player = it.next();
+        if(collides(player.getX, player.getY)){
+          //TODO: add player dies code once Player has alive attribute...
+          display.gameover();
+        }
+      }
+    }
+  }
+
+  public void addPlayer(User user){
+    numOfPlayers++;
+    Player player = new Player(25, 25, numOfPlayers, user);
+    playerList.add(player);
+  }
+
   /**
    * Generates Map from string 
    * @param mapString string formated map
@@ -64,6 +108,7 @@ public class Map {
   public Map(String mapString, String colour, Game game, Display display){
     myGame = game;
     myDisplay = display;
+    playerList = new Vector();
     mapParse(mapString, colour);
   }
   
@@ -79,6 +124,9 @@ public class Map {
       myDisplay = display;
       this.width = width;
       this.height = height;
+      numOfPlayers = 0;
       map = new BitSet(width*height);
+      playerList = new Vector();
+      controller = new Controller();
   }
 }
