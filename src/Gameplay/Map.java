@@ -12,6 +12,7 @@ import java.util.Iterator;
 
 import java.awt.event.KeyEvent;
 
+import javafx.concurrent.Service;
 
 /**
  * Contains details concerning the current map in play, and determines if a collision has occurred.
@@ -72,7 +73,7 @@ public class Map {
   
   public static Map makeDemo(Display display){
     Map map = new Map(50, 50, null, display);
-    map.addPlayer(null, "0xF00");
+    map.addPlayer(null, "0xF00", 1);//TODO: change direction to enum
     Player player = map.getPlayer(0);
     controller.addBinding(new MovePlayerDown(KeyEvent.VK_DOWN, player));
     controller.addBinding(new MovePlayerLeft(KeyEvent.VK_LEFT, player));
@@ -115,9 +116,9 @@ public class Map {
     }
   }
 
-  public void addPlayer(User user, String colour){
+  public void addPlayer(User user, String colour, int direction){//TODO: change direction to enum
     numOfPlayers++;
-    Player player = new Player(25, 25, colour, user, this);
+    Player player = new Player(25, 25, colour, user, this, direction);
     playerList.add(player);
   }
 
@@ -143,17 +144,33 @@ public class Map {
    * @param display 
    */
   public Map(int width, int height, Game game, Display display){
-      myGame = game;
-      myDisplay = display;
-      this.width = width;
-      this.height = height;
-      numOfPlayers = 0;
-      map = new BitSet(width*height);
-      playerList = new Vector();
-      if (controller == null) {
-        controller = new Controller();
-      } else {
-        controller.clear();
-      }
+    myGame = game;
+    myDisplay = display;
+    this.width = width;
+    this.height = height;
+    numOfPlayers = 0;
+    map = new BitSet(width*height);
+    playerList = new Vector();
+    if (controller == null) {
+      controller = new Controller();
+    } else {
+      controller.clear();
+    }
+  }
+
+  private class MapInternal {
+    private BitSet map;
+    private int width;
+    private int height;
+    private int numOfPlayers;
+    private boolean running;
+    private int sleep;  
+    private Vector<Player> playerList;
+    private final Game myGame;
+    private final Display myDisplay;
+  }
+
+  private class MapService extends Service<MapInternal> {
+    
   }
 }
