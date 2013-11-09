@@ -117,7 +117,7 @@ public class Map {
 
   public void addPlayer(User user, String colour){
     numOfPlayers++;
-    Player player = new Player(25, 25, colour, user);
+    Player player = new Player(25, 25, colour, user, this);
     playerList.add(player);
   }
 
