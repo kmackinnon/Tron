@@ -115,9 +115,9 @@ public class Map {
     }
   }
 
-  public void addPlayer(User user, String colour){
+  public void addPlayer(User user, String colour, int direction){//TODO: change direction to enum
     numOfPlayers++;
-    Player player = new Player(25, 25, colour, user, this);
+    Player player = new Player(25, 25, colour, user, this, 1);/TODO: change direction to enum
     playerList.add(player);
   }
 
