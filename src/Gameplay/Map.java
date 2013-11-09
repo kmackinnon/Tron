@@ -74,18 +74,22 @@ public class Map {
     Map map = new Map(50, 50, null, display);
     map.addPlayer(null);
     Player player = map.getPlayer(0);
-    controller.addBinding(new MovePlayerDown(VK_DOWN, player));
-    controller.addBinding(new MovePlayerLeft(VK_LEFT, player));
-    controller.addBinding(new MovePlayerUp(VK_UP, player));
-    controller.addBinding(new MovePlayerRight(VK_RIGHT, player));
+    controller.addBinding(new MovePlayerDown(KeyEvent.VK_DOWN, player));
+    controller.addBinding(new MovePlayerLeft(KeyEvent.VK_LEFT, player));
+    controller.addBinding(new MovePlayerUp(KeyEvent.VK_UP, player));
+    controller.addBinding(new MovePlayerRight(KeyEvent.VK_RIGHT, player));
     player.moveLeft();
-    player.setSpeed(2);
+    map.setSpeed(2);
     return map;
   }
 
   public void run(){
     gameLoop();
-    display.gameover();
+    myDisplay.gameover();
+  }
+
+  public Player getPlayer(int i){
+    return playerList.get(0);
   }
 
   private void gameLoop(){
@@ -98,18 +102,22 @@ public class Map {
       }
       for(it = playerList.iterator(); it.hasNext();){
         Player player = it.next();
-        if(collides(player.getX, player.getY)){
+        if(collides(player.getX(), player.getY())){
           running = false;//TODO: add player dies code once Player has alive attribute...
         }
       }
       //TODO: add checks for who is alive
-      Thread.sleep(sleep);
+      try{
+        Thread.sleep(sleep);
+      } catch (InterruptedException ex) {
+        
+      }
     }
   }
 
-  public void addPlayer(User user){
+  public void addPlayer(User user, String colour){
     numOfPlayers++;
-    Player player = new Player(25, 25, numOfPlayers, user);
+    Player player = new Player(25, 25, colour, user);
     playerList.add(player);
   }
 
