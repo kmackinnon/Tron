@@ -108,12 +108,9 @@ public class Player {
           default:
               break;
       }
-      //need to figure out specifics of collision and ending the round
-      if(myMap.collides(this.xPos, this.yPos)){
-          loseGame();
-      }
   }
 
+  //these send the updated end of game stats to the DB.
   public void winGame() {
   }
 
@@ -121,7 +118,7 @@ public class Player {
   }
 
   public String getUsername() {
-      return this.myUser.getUsername(); //need to add get method in User class
+      return this.myUser.getUsername();
   }
 
 }
