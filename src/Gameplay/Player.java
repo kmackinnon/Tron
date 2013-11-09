@@ -18,11 +18,12 @@ public class Player {
   public User myUser;
   
   //used to give starting coords for new game 
-  public Player(int xStart, int yStart, String colour, User user){
+  public Player(int xStart, int yStart, String colour, User user, Map map){
       this.xPos = xStart;
       this.yPos = yStart;
       this.colour = colour;
       this.myUser = user;
+      this.myMap = map;
   }
   public int getX(){
       return this.xPos;
