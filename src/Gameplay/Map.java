@@ -72,7 +72,7 @@ public class Map {
   
   public static Map makeDemo(Display display){
     Map map = new Map(50, 50, null, display);
-    map.addPlayer(null);
+    map.addPlayer(null, "0xF00");
     Player player = map.getPlayer(0);
     controller.addBinding(new MovePlayerDown(KeyEvent.VK_DOWN, player));
     controller.addBinding(new MovePlayerLeft(KeyEvent.VK_LEFT, player));
