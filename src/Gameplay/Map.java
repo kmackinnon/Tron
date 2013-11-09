@@ -12,6 +12,7 @@ import java.util.Iterator;
 
 import java.awt.event.KeyEvent;
 
+import javafx.concurrent.Service;
 
 /**
  * Contains details concerning the current map in play, and determines if a collision has occurred.
@@ -143,17 +144,33 @@ public class Map {
    * @param display 
    */
   public Map(int width, int height, Game game, Display display){
-      myGame = game;
-      myDisplay = display;
-      this.width = width;
-      this.height = height;
-      numOfPlayers = 0;
-      map = new BitSet(width*height);
-      playerList = new Vector();
-      if (controller == null) {
-        controller = new Controller();
-      } else {
-        controller.clear();
-      }
+    myGame = game;
+    myDisplay = display;
+    this.width = width;
+    this.height = height;
+    numOfPlayers = 0;
+    map = new BitSet(width*height);
+    playerList = new Vector();
+    if (controller == null) {
+      controller = new Controller();
+    } else {
+      controller.clear();
+    }
+  }
+
+  private class MapInternal {
+    private BitSet map;
+    private int width;
+    private int height;
+    private int numOfPlayers;
+    private boolean running;
+    private int sleep;  
+    private Vector<Player> playerList;
+    private final Game myGame;
+    private final Display myDisplay;
+  }
+
+  private class MapService extends Service<MapInternal> {
+    
   }
 }
