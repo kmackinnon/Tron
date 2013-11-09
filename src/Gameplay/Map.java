@@ -26,7 +26,7 @@ public class Map {
   private int height;
   private int numOfPlayers;
   private boolean running;
-  private int 
+  private int sleep;
 
 
   private Vector<Player> playerList;
@@ -49,6 +49,10 @@ public class Map {
     return (x >= width || x < 0 || y >= height || y < 0);   
   }
 
+  public void setSpeed(int hz){
+    sleep = 1000/hz;
+  }
+
   private int getCellIndex(int x, int y){
     return y * width + x;
   }
@@ -68,13 +72,15 @@ public class Map {
   
   public static Map makeDemo(Display display){
     Map map = new Map(50, 50, null, display);
-    addPlayer(null);
-    Player player = playerList.get(0);
+    map.addPlayer(null);
+    Player player = map.getPlayer(0);
     controller.addBinding(new MovePlayerDown(VK_DOWN, player));
     controller.addBinding(new MovePlayerLeft(VK_LEFT, player));
     controller.addBinding(new MovePlayerUp(VK_UP, player));
     controller.addBinding(new MovePlayerRight(VK_RIGHT, player));
     player.moveLeft();
+    player.setSpeed(2);
+    return map;
   }
 
   public void run(){
@@ -97,6 +103,7 @@ public class Map {
         }
       }
       //TODO: add checks for who is alive
+      Thread.sleep(sleep);
     }
   }
 
