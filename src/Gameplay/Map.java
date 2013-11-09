@@ -72,6 +72,12 @@ public class Map {
     controller.addBinding(new MovePlayerLeft(VK_LEFT, player));
     controller.addBinding(new MovePlayerUp(VK_UP, player));
     controller.addBinding(new MovePlayerRight(VK_RIGHT, player));
+    player.moveLeft();
+  }
+
+  public void run(){
+    gameloop;
+    display.gameover();
   }
 
   private void gameLoop(){
@@ -85,10 +91,10 @@ public class Map {
       for(it = playerList.iterator(); it.hasNext();){
         Player player = it.next();
         if(collides(player.getX, player.getY)){
-          //TODO: add player dies code once Player has alive attribute...
-          display.gameover();
+          running = false;//TODO: add player dies code once Player has alive attribute...
         }
       }
+      //TODO: add checks for who is alive
     }
   }
 
