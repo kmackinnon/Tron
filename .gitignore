@@ -4,5 +4,7 @@
 *.metadata
 // eclipse settings file
 *.prefs
-/nbproject/private/
+.project
+/nbproject/
 /build/
+
