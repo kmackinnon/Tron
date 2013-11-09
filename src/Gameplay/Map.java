@@ -72,7 +72,7 @@ public class Map {
   
   public static Map makeDemo(Display display){
     Map map = new Map(50, 50, null, display);
-    map.addPlayer(null, "0xF00");
+    map.addPlayer(null, "0xF00", 1);//TODO: change direction to enum
     Player player = map.getPlayer(0);
     controller.addBinding(new MovePlayerDown(KeyEvent.VK_DOWN, player));
     controller.addBinding(new MovePlayerLeft(KeyEvent.VK_LEFT, player));
@@ -117,7 +117,7 @@ public class Map {
 
   public void addPlayer(User user, String colour, int direction){//TODO: change direction to enum
     numOfPlayers++;
-    Player player = new Player(25, 25, colour, user, this, 1);/TODO: change direction to enum
+    Player player = new Player(25, 25, colour, user, this, direction);
     playerList.add(player);
   }
 
