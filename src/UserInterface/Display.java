@@ -4,13 +4,24 @@
  */
 package UserInterface;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.paint.Color;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
+
+import Gameplay.Map;
+import javafx.animation.FadeTransition;
+import javafx.util.Duration;
 
 /**
  *
@@ -18,39 +29,90 @@ import javafx.scene.image.ImageView;
  */
 public class Display extends StackPane {
     
-    final int gridSize= 50;
+    final int horizontalGridSize= 50;
+    final int verticalGridSize= 50;
    
     private Rectangle grid[][] ; 
-    
+     StackPane gameoverTotal;
+    Map baseMap;
+    Button startBtn;
     
     public Display() {
     
         
-        final Image background = new Image("file:/F:/Display/src/images/background.png");
-        ImageView veiwer = new ImageView();
-        veiwer.setImage(background);
+       // final Image background = new Image("/UserInterface/Images/background.jpg");
+       // ImageView veiwer = new ImageView();
+       // veiwer.setImage(background);
         
-        grid = new Rectangle[gridSize][gridSize]; 
+        grid = new Rectangle[horizontalGridSize][verticalGridSize]; 
         GridPane gridpanel = new GridPane();
         gridpanel.setAlignment(Pos.CENTER);
         gridpanel.setHgap(0);
         gridpanel.setVgap(0);
         
         makeSquares(gridpanel);
-
         
-        getChildren().add(veiwer);
+        VBox gameoverScreen = new VBox();
+        Button restartBtn = new Button("Restart");
+        //restartBtn.setDisable(true);
+        Label restartLabel = new Label("Game Over");
+        restartLabel.setFont(new Font(26));
+        restartLabel.setTextFill(Color.PINK);
+        gameoverScreen.setAlignment(Pos.CENTER);
+        
+        gameoverScreen.getChildren().addAll(restartLabel,restartBtn);
+        
+        Rectangle gameoverBack= new Rectangle();
+        gameoverBack.setWidth(200);
+        gameoverBack.setHeight(90);
+        gameoverBack.setFill(Color.BLACK);
+        
+        gameoverTotal= new StackPane();
+        gameoverTotal.getChildren().addAll(gameoverBack,gameoverScreen);
+        gameoverTotal.setOpacity(0);
+        
+        startBtn = new Button("Start Game");
+        
+        
+        //getChildren().add(veiwer);
         getChildren().add(gridpanel);
+        getChildren().add(gameoverTotal);
+        getChildren().add(startBtn);
         
-        displaywall(5,5,Color.RED);
+        baseMap = Map.makeDemo(this);
+        
+        
+    
+        restartBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e) {
+               FadeTransition fadeTransition =
+                            new FadeTransition(Duration.millis(2000), gameoverTotal);
+        fadeTransition.setCycleCount(1);
+        fadeTransition.setAutoReverse(true);
+                fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+        fadeTransition.play();
+            }
+        });
+        
+        startBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e) {
+              getChildren().remove(startBtn);
+              baseMap.run(); 
+            }
+        });
     }
 
     public void makeSquares(GridPane panel )
     {
  
-        for(int i = 0; i< gridSize ; i++)
+        for(int i = 0; i< horizontalGridSize ; i++)
         {
-            for(int j = 0; j< gridSize ; j++)
+            for(int j = 0; j< verticalGridSize ; j++)
             {
                 grid[i][j]= new Rectangle();
                 grid[i][j].setWidth(10);
@@ -60,21 +122,26 @@ public class Display extends StackPane {
             }
         }
     }
-
-    public void displaywall(int xpos,int ypos, Color color){
-         grid[xpos][ypos].setFill(color);
+    
+    public void displayWall(int xpos,int ypos, String color)
+    {
+        grid[xpos][ypos].setFill(Color.web(color));
     }
     
-    public void displayWall(int xpos,int ypos, String color){
-        displaywall(xpos, ypos, Color.web(color));
+    public void gameover()
+    {
+        
+        
+        
+        
+         FadeTransition fadeTransition =
+                            new FadeTransition(Duration.millis(2000), gameoverTotal);
+        fadeTransition.setCycleCount(1);
+        fadeTransition.setAutoReverse(true);
+        
+        fadeTransition.setFromValue(0.0);
+        fadeTransition.setToValue(1.0);
+        fadeTransition.play();
     }
     
-    /**
-     * The main() method is ignored in correctly deployed JavaFX application.
-     * main() serves only as fallback in case the application can not be
-     * launched through deployment artifacts, e.g., in IDEs with limited FX
-     * support. NetBeans ignores main().
-     *
-     * @param args the command line arguments
-     */
 }
