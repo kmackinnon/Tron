@@ -8,6 +8,7 @@ import java.util.BitSet;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.Vector;
+import java.util.Iterator;
 
 import java.awt.event.KeyEvent;
 
@@ -25,12 +26,13 @@ public class Map {
   private int height;
   private int numOfPlayers;
   private boolean running;
+  private int 
 
 
   private Vector<Player> playerList;
   private final Game myGame;
   private final Display myDisplay;
-  private Controller controller;
+  private static Controller controller;
   
   /**
    * Adds a wall at a given co-ordinate with a given colour.
@@ -76,7 +78,7 @@ public class Map {
   }
 
   public void run(){
-    gameloop;
+    gameLoop();
     display.gameover();
   }
 
@@ -133,6 +135,10 @@ public class Map {
       numOfPlayers = 0;
       map = new BitSet(width*height);
       playerList = new Vector();
-      controller = new Controller();
+      if (controller == null) {
+        controller = new Controller();
+      } else {
+        controller.clear();
+      }
   }
 }

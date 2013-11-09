@@ -10,17 +10,21 @@ public class Controller extends KeyAdapter {
 	 * 
 	 * @element-type Input
 	 */
-	static HashMap<KeyEvent, Input> inputList = new HashMap<>();
+	static HashMap<int, Input> inputList = new HashMap<>();
 
 	public Controller() {
 	}
+
+        public void clear() {
+          inputList.clear();
+        }
 
 	public void addBinding(Input input) {
 		inputList.put(input.checkKey(), input);
 	}
 
 	public void keyPressed(KeyEvent e) {
-		Input input = inputList.get(e);
+		Input input = inputList.get(e.getKeyCode());
 		input.command();
 	}
 
