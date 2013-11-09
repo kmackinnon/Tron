@@ -7,7 +7,6 @@ public class Player {
 
   private int xPos;
   private int yPos;
-  private int playerNumber; //used to distinguish between player 1 and player 2
   private int currentDirection; //1=left, 2=up, 3=down, 4=right
 
   private String colour;
@@ -19,10 +18,10 @@ public class Player {
   public User myUser;
   
   //used to give starting coords for new game 
-  public Player(int xStart, int yStart, int num, User user){
+  public Player(int xStart, int yStart, String colour, User user){
       this.xPos = xStart;
       this.yPos = yStart;
-      this.playerNumber = num;
+      this.colour = colour;
       this.myUser = user;
   }
   public int getX(){
@@ -43,15 +42,7 @@ public class Player {
   public String getColour(){
       return this.colour;
   }
-  public int getPlayerNumber(){
-      return this.playerNumber;
-  }
-  
-  //set 1 for player 1 (Arrow keys), 2 for player 2 (WASD)
-  public void setPlayerNumber(int number){
-      this.playerNumber = number;
-  }
-  
+
   public void moveUp() {
       //needs to be currently moving left or right
       if(this.currentDirection == 1 || this.currentDirection == 4)
