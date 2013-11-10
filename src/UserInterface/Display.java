@@ -44,9 +44,10 @@ public class Display extends StackPane {
     public Display() {
     
         controller = Controller.getInstance();
-       // final Image background = new Image("/UserInterface/Images/background.jpg");
-       // ImageView veiwer = new ImageView();
-       // veiwer.setImage(background);
+		
+        final Image background = new Image("/UserInterface/Images/background.png");
+        ImageView veiwer = new ImageView();
+        veiwer.setImage(background);
         
         grid = new Rectangle[horizontalGridSize][verticalGridSize]; 
         GridPane gridpanel = new GridPane();
@@ -78,7 +79,7 @@ public class Display extends StackPane {
         startBtn = new Button("Start Game");
         
         
-        //getChildren().add(veiwer);
+        getChildren().add(veiwer);
         getChildren().add(gridpanel);
         getChildren().add(gameoverTotal);
         getChildren().add(startBtn);
