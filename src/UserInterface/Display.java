@@ -22,6 +22,7 @@ import javafx.scene.text.Font;
 import Gameplay.Map;
 import Gameplay.Controller;
 import javafx.animation.FadeTransition;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -41,7 +42,7 @@ public class Display extends StackPane {
     final Controller controller;
     
     
-    public Display() {
+    public Display(final Stage stage) {
     
         controller = Controller.getInstance();
 		

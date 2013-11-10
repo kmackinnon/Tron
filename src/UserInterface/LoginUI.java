@@ -47,7 +47,7 @@ public class LoginUI extends VBox {
                 //Will check if valid or not and display accordingly 
                 
                 
-                Display gameplay = new Display();
+                Display gameplay = new Display(stage);
                 Scene Gameplayscene = new Scene(gameplay);
                 stage.setScene(Gameplayscene);
                 
