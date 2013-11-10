@@ -10,7 +10,7 @@ public class Controller extends KeyAdapter {
 	 * 
 	 * @element-type Input
 	 */
-	static HashMap<int, Input> inputList = new HashMap<>();
+	static HashMap<Integer, Input> inputList = new HashMap<>();
 
 	public Controller() {
 	}
@@ -23,6 +23,7 @@ public class Controller extends KeyAdapter {
 		inputList.put(input.checkKey(), input);
 	}
 
+        @Override
 	public void keyPressed(KeyEvent e) {
 		Input input = inputList.get(e.getKeyCode());
 		input.command();

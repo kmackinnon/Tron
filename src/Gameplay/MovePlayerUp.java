@@ -1,10 +1,8 @@
 package Gameplay;
 
-import java.awt.event.KeyEvent;
-
 public class MovePlayerUp extends Input {
 	
-	public MovePlayerUp(KeyEvent key, Player player) {
+	public MovePlayerUp(Integer key, Player player) {
 		super(key, player);
 	}
 

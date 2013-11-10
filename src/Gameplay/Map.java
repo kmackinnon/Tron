@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.awt.event.KeyEvent;
 
 import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 
 /**
  * Contains details concerning the current map in play, and determines if a collision has occurred.
@@ -158,7 +159,7 @@ public class Map {
     }
   }
 
-  private class MapInternal {
+  private class MapService extends Service<Integer> {
     private BitSet map;
     private int width;
     private int height;
@@ -168,9 +169,24 @@ public class Map {
     private Vector<Player> playerList;
     private final Game myGame;
     private final Display myDisplay;
-  }
 
-  private class MapService extends Service<MapInternal> {
+    @Override
+    protected Task<Integer> createTask(){
+        
+        return new Task<Integer>() {
+          protected Integer call() {
+              Integer result = null;
+              return result;
+          }
+        };
+    }
     
+    public MapService (int width, int height, Game game, Display display, BitSet map){
+        myGame = game;
+        myDisplay = display;
+        this.width=width;
+        this.height=height;
+        this.map = map;
+    }
   }
 }

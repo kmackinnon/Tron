@@ -1,10 +1,8 @@
 package Gameplay;
 
-import java.awt.event.KeyEvent;
-
 public class MovePlayerLeft extends Input {
 	
-	public MovePlayerLeft(KeyEvent key, Player player) {
+	public MovePlayerLeft(Integer key, Player player) {
 		super(key, player);
 	}
 

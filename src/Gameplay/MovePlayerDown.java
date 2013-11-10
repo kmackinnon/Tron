@@ -1,13 +1,12 @@
 package Gameplay;
 
-import java.awt.event.KeyEvent;
-
 public class MovePlayerDown extends Input {
 	
-	public MovePlayerDown(KeyEvent key, Player player) {
+	public MovePlayerDown(Integer key, Player player) {
 		super(key, player);
 	}
-
+        
+        @Override
 	public void command() {
 		this.player.moveDown();
 	}
