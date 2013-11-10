@@ -11,8 +11,6 @@ import java.util.Vector;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import java.awt.event.KeyEvent;
-
 
 import javafx.concurrent.Task;
 import javafx.scene.input.KeyCode;
@@ -75,10 +73,10 @@ public class Map {
     Map map = new Map(50, 50, null, display);
     map.addPlayer(null, "0xF00", 1); //TODO: change direction to enum
     Player player = map.getPlayer(0);
-    controller.addBinding(new MovePlayerDown(KeyCode.DOWN, player));
-    controller.addBinding(new MovePlayerLeft(KeyCode.LEFT, player));
-    controller.addBinding(new MovePlayerUp(KeyCode.UP, player));
-    controller.addBinding(new MovePlayerRight(KeyCode.RIGHT, player));
+    controller.addBinding(new MovePlayerDown(KeyCode.S, player));
+    controller.addBinding(new MovePlayerLeft(KeyCode.A, player));
+    controller.addBinding(new MovePlayerUp(KeyCode.W, player));
+    controller.addBinding(new MovePlayerRight(KeyCode.D, player));
     player.moveLeft();
     map.setSpeed(2);
     return map;
