@@ -20,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 
 import Gameplay.Map;
+import Gameplay.Controller;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
 
@@ -37,9 +38,12 @@ public class Display extends StackPane {
     Map baseMap;
     Button startBtn;
     
+    final Controller controller;
+    
+    
     public Display() {
     
-        
+        controller = Controller.getInstance();
        // final Image background = new Image("/UserInterface/Images/background.jpg");
        // ImageView veiwer = new ImageView();
        // veiwer.setImage(background);
@@ -78,8 +82,9 @@ public class Display extends StackPane {
         getChildren().add(gridpanel);
         getChildren().add(gameoverTotal);
         getChildren().add(startBtn);
-        
+        setOnKeyPressed(controller);
         baseMap = Map.makeDemo(this);
+        
         
         
     

@@ -1,8 +1,10 @@
 package Gameplay;
 
+import javafx.scene.input.KeyCode;
+
 public class MovePlayerUp extends Input {
 	
-	public MovePlayerUp(Integer key, Player player) {
+	public MovePlayerUp(KeyCode key, Player player) {
 		super(key, player);
 	}
 

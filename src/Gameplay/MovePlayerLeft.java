@@ -1,8 +1,12 @@
 package Gameplay;
 
+import javafx.scene.input.KeyCode;
+
+import javafx.scene.input.KeyCode;
+
 public class MovePlayerLeft extends Input {
 	
-	public MovePlayerLeft(Integer key, Player player) {
+	public MovePlayerLeft(KeyCode key, Player player) {
 		super(key, player);
 	}
 

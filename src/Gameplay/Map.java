@@ -15,6 +15,7 @@ import java.awt.event.KeyEvent;
 
 
 import javafx.concurrent.Task;
+import javafx.scene.input.KeyCode;
 
 /**
  * Contains details concerning the current map in play, and determines if a collision has occurred.
@@ -27,7 +28,7 @@ public class Map {
   private final MapTask internal;
   private int width, height;
   
-  private static Controller controller;
+  private final static Controller controller = Controller.getInstance();
   
   /**
    * Adds a wall at a given co-ordinate with a given colour.
@@ -74,10 +75,10 @@ public class Map {
     Map map = new Map(50, 50, null, display);
     map.addPlayer(null, "0xF00", 1); //TODO: change direction to enum
     Player player = map.getPlayer(0);
-    controller.addBinding(new MovePlayerDown(KeyEvent.VK_DOWN, player));
-    controller.addBinding(new MovePlayerLeft(KeyEvent.VK_LEFT, player));
-    controller.addBinding(new MovePlayerUp(KeyEvent.VK_UP, player));
-    controller.addBinding(new MovePlayerRight(KeyEvent.VK_RIGHT, player));
+    controller.addBinding(new MovePlayerDown(KeyCode.DOWN, player));
+    controller.addBinding(new MovePlayerLeft(KeyCode.LEFT, player));
+    controller.addBinding(new MovePlayerUp(KeyCode.UP, player));
+    controller.addBinding(new MovePlayerRight(KeyCode.RIGHT, player));
     player.moveLeft();
     map.setSpeed(2);
     return map;
@@ -104,6 +105,7 @@ public class Map {
   public Map(String mapString, String colour, Game game, Display display){
     BitSet map = mapParse(mapString, colour);
     internal = new MapTask(width, height, game, display, map, this);
+    controller.clear();
   }
   
   /**
@@ -117,11 +119,7 @@ public class Map {
     this.width = width;
     this.height = height;
     internal = new MapTask(width, height, game, display, new BitSet(width*height), this);
-    if (controller == null) {
-      controller = new Controller();
-    } else {
-      controller.clear();
-    }
+    controller.clear();
   }
 
   private class MapTask extends Task<Void> {
