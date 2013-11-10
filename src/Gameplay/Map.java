@@ -9,10 +9,11 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.Vector;
 import java.util.Iterator;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import java.awt.event.KeyEvent;
 
-import javafx.concurrent.Service;
+
 import javafx.concurrent.Task;
 
 /**
@@ -40,7 +41,7 @@ public class Map {
    * @param colour 
    */
   public void addWall(int xPos, int yPos, String colour){
-    return internal.addWall(xPos, yPos, colour);
+    internal.addWall(xPos, yPos, colour);
   }
 
   /**
@@ -48,7 +49,7 @@ public class Map {
    * @param hz
    */
   public void setSpeed(int hz){
-    return internal.setSpeed(hz);
+    internal.setSpeed(hz);
   }
 
   /**
@@ -81,11 +82,12 @@ public class Map {
   public void run(){
     new Thread(internal).start();
   }
-
+  public Player getPlayer(int i){
+    return internal.getPlayer(i);
+  }
 
   public void addPlayer(User user, String colour, int direction){ //TODO: change direction to enum
-    Player player = new Player(25, 25, colour, user, this, direction);
-    playerList.add(player);
+    internal.addPlayer(user, colour, direction);
   }
 
   /**
@@ -113,9 +115,7 @@ public class Map {
     myDisplay = display;
     this.width = width;
     this.height = height;
-    numOfPlayers = 0;
     map = new BitSet(width*height);
-    playerList = new Vector();
     if (controller == null) {
       controller = new Controller();
     } else {
@@ -124,15 +124,16 @@ public class Map {
   }
 
   private class MapTask extends Task<Void> {
-    private BitSet map;
-    private int width;
-    private int height;
+    private final BitSet map;
+    private final int width;
+    private final int height;
     private boolean running;
     private int sleep;  
-    private Vector<Player> playerList;
+    private final Vector<Player> playerList;
     private final Game myGame;
     private final Display myDisplay;
     private final Map parent;
+    private final ConcurrentLinkedQueue<Move> moveQueue;
     
     public void addWall(int xPos, int yPos, String colour) {
       map.set(getCellIndex(xPos,yPos));
@@ -147,6 +148,7 @@ public class Map {
       this.map = map;
       playerList = new Vector();
       this.parent = parent;
+      moveQueue = new ConcurrentLinkedQueue();
     }
 
     @Override
@@ -156,13 +158,20 @@ public class Map {
         if(isCancelled()) {
           break;
         }
-        listenPlayers();
         gameRound();
       }
       myDisplay.gameover();
       return null;
     }
 
+    private void listenPlayers(){
+      Move move;
+      while (!moveQueue.isEmpty()){
+        move = moveQueue.poll();
+        map.set(getCellIndex(move.getX(),move.getY()));
+        myDisplay.displayWall(move.getX(),move.getY(), move.getColour());
+      }
+    }
     public void setSpeed(int hz){
       sleep = 1000/hz;
     }
@@ -185,6 +194,7 @@ public class Map {
         Player player = it.next();
         player.moveCurrent();
       }
+      listenPlayers();
       for(it = playerList.iterator(); it.hasNext();){
         Player player = it.next();
         if(collides(player.getX(), player.getY())){
@@ -196,7 +206,7 @@ public class Map {
         Thread.sleep(sleep);
       } catch (InterruptedException ex) {
         if(isCancelled()) {
-          break;
+          
         }
       }
     }
@@ -208,6 +218,29 @@ public class Map {
 
     public boolean collides(int x, int y) {
       return (outside(x,y)||map.get(getCellIndex(x,y)));
+    }
+    
+    private class Move {
+      private final int x, y;
+      private final String colour;
+    
+      public Move (int x, int y, String colour){
+        this.x = x;
+        this.y = y;
+        this.colour = colour;
+      }
+      
+      public final int getX(){
+        return x;
+      }
+    
+      public final int getY(){
+        return y;
+      }
+    
+      public final String getColour(){
+        return colour;
+      }
     }
   }
 }
