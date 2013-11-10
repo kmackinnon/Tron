@@ -23,15 +23,10 @@ import javafx.concurrent.Task;
 public class Map {
 
   private static final Pattern headerParser = Pattern.compile("\\dx\\d");
-
-  private MapTask internal;
   
-  private BitSet map;
-  private int width;
-  private int height;
-
-  private final Game myGame;
-  private final Display myDisplay;
+  private final MapTask internal;
+  private int width, height;
+  
   private static Controller controller;
   
   /**
@@ -62,8 +57,17 @@ public class Map {
     return internal.collides(x, y);
   }
 
-  private void mapParse(String mapString, String colour){
+  private BitSet mapParse(String mapString, String colour){
     Matcher m = headerParser.matcher(mapString);
+    String head[];
+    if(m.find()){
+      head = m.group().split("x");
+      m.find();
+      width = Integer.parseInt(head[0]);
+      height = Integer.parseInt(head[1]);
+    }
+    BitSet map = new BitSet();
+    return map;
   }
   
   public static Map makeDemo(Display display){
@@ -98,9 +102,8 @@ public class Map {
    * @param display 
    */
   public Map(String mapString, String colour, Game game, Display display){
-    myGame = game;
-    myDisplay = display;
-    mapParse(mapString, colour);
+    BitSet map = mapParse(mapString, colour);
+    internal = new MapTask(width, height, game, display, map, this);
   }
   
   /**
@@ -111,11 +114,9 @@ public class Map {
    * @param display 
    */
   public Map(int width, int height, Game game, Display display){
-    myGame = game;
-    myDisplay = display;
     this.width = width;
     this.height = height;
-    map = new BitSet(width*height);
+    internal = new MapTask(width, height, game, display, new BitSet(width*height), this);
     if (controller == null) {
       controller = new Controller();
     } else {
