@@ -23,6 +23,8 @@ public class Map {
 
   private static final Pattern headerParser = Pattern.compile("\\dx\\d");
 
+  private MapService internal;
+  
   private BitSet map;
   private int width;
   private int height;
@@ -42,9 +44,8 @@ public class Map {
    * @param yPos
    * @param colour 
    */
-  public void addWall(int xPos, int yPos, String colour) {
-    map.set(getCellIndex(xPos,yPos));
-    myDisplay.displayWall(xPos, yPos, colour);
+  public void addWall(int xPos, int yPos, String colour){
+    internal.addWall(xPos, yPos, colour);
   }
 
   private boolean outside(int x, int y){
@@ -133,7 +134,7 @@ public class Map {
   public Map(String mapString, String colour, Game game, Display display){
     myGame = game;
     myDisplay = display;
-    playerList = new Vector();
+    
     mapParse(mapString, colour);
   }
   
@@ -169,16 +170,20 @@ public class Map {
     private Vector<Player> playerList;
     private final Game myGame;
     private final Display myDisplay;
+    
+    public void addWall(int xPos, int yPos, String colour) {
+      map.set(getCellIndex(xPos,yPos));
+      myDisplay.displayWall(xPos, yPos, colour);
+    }
 
     @Override
-    protected Task<Integer> createTask(){
-        
-        return new Task<Integer>() {
-          protected Integer call() {
-              Integer result = null;
-              return result;
-          }
-        };
+    protected Task<Integer> createTask(){  
+      return new Task<Integer>() {
+        protected Integer call() {
+          Integer result = null;
+          return result;
+        }
+      };
     }
     
     public MapService (int width, int height, Game game, Display display, BitSet map){
@@ -187,6 +192,7 @@ public class Map {
         this.width=width;
         this.height=height;
         this.map = map;
+        playerList = new Vector();
     }
   }
 }
