@@ -101,7 +101,7 @@ public class Player {
           default:
               break;
       }
-      myMap.displayPlayer(xPos, yPos, colour);
+      
   }
 
   //these send the updated end of game stats to the DB.

@@ -185,7 +185,7 @@ public class Map {
     }
 
     private boolean outside(int x, int y){
-      return (x >= width || x < 0 || y >= height || y < 0);   
+      return (x >= width || x < 0 || y >= height || y < 0);
     }
 
     public Player getPlayer(int i){
@@ -203,6 +203,8 @@ public class Map {
         Player player = it.next();
         if(collides(player.getX(), player.getY())){
           running = false;//TODO: add player dies code once Player has alive attribute...
+        } else {
+         displayPlayer(player.getX(), player.getY(), player.getColour()); 
         }
       }
       //TODO: add checks for who is alive
