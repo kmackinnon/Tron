@@ -1,31 +1,37 @@
 package Gameplay;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.util.HashMap;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class Controller extends KeyAdapter {
 
+public class Controller implements EventHandler<KeyEvent> {
+
+    private static final Controller INSTANCE = new Controller();
 	/**
 	 * 
 	 * @element-type Input
 	 */
-	static HashMap<Integer, Input> inputList = new HashMap<>();
+	static ConcurrentHashMap<KeyCode, Input> inputList = new ConcurrentHashMap<>();
 
-	public Controller() {
+	private Controller() {
 	}
 
-        public void clear() {
-          inputList.clear();
-        }
+    public static Controller getInstance(){
+      return INSTANCE;
+    }
+    public void clear() {
+      inputList.clear();
+    }
 
 	public void addBinding(Input input) {
 		inputList.put(input.checkKey(), input);
 	}
 
-        @Override
-	public void keyPressed(KeyEvent e) {
-		Input input = inputList.get(e.getKeyCode());
+    @Override
+	public void handle(KeyEvent e) {
+		Input input = inputList.get(e.getCode());
 		input.command();
 	}
 

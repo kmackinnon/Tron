@@ -11,10 +11,9 @@ import java.util.Vector;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import java.awt.event.KeyEvent;
-
 
 import javafx.concurrent.Task;
+import javafx.scene.input.KeyCode;
 
 /**
  * Contains details concerning the current map in play, and determines if a collision has occurred.
@@ -27,7 +26,8 @@ public class Map {
   private final MapTask internal;
   private int width, height;
   
-  private static Controller controller;
+  private final Display myDisplay;
+  private final static Controller controller = Controller.getInstance();
   
   /**
    * Adds a wall at a given co-ordinate with a given colour.
@@ -74,12 +74,12 @@ public class Map {
     Map map = new Map(50, 50, null, display);
     map.addPlayer(null, "0xF00", 1); //TODO: change direction to enum
     Player player = map.getPlayer(0);
-    controller.addBinding(new MovePlayerDown(KeyEvent.VK_DOWN, player));
-    controller.addBinding(new MovePlayerLeft(KeyEvent.VK_LEFT, player));
-    controller.addBinding(new MovePlayerUp(KeyEvent.VK_UP, player));
-    controller.addBinding(new MovePlayerRight(KeyEvent.VK_RIGHT, player));
+    controller.addBinding(new MovePlayerDown(KeyCode.S, player));
+    controller.addBinding(new MovePlayerLeft(KeyCode.A, player));
+    controller.addBinding(new MovePlayerUp(KeyCode.W, player));
+    controller.addBinding(new MovePlayerRight(KeyCode.D, player));
     player.moveLeft();
-    map.setSpeed(2);
+    map.setSpeed(5);
     return map;
   }
 
@@ -93,6 +93,10 @@ public class Map {
   public void addPlayer(User user, String colour, int direction){ //TODO: change direction to enum
     internal.addPlayer(user, colour, direction);
   }
+  
+  public void displayPlayer(int x, int y, String colour){
+    myDisplay.displayWall(x, y, colour);
+  }
 
   /**
    * Generates Map from string 
@@ -103,7 +107,9 @@ public class Map {
    */
   public Map(String mapString, String colour, Game game, Display display){
     BitSet map = mapParse(mapString, colour);
+    myDisplay = display;
     internal = new MapTask(width, height, game, display, map, this);
+    controller.clear();
   }
   
   /**
@@ -116,12 +122,9 @@ public class Map {
   public Map(int width, int height, Game game, Display display){
     this.width = width;
     this.height = height;
+    myDisplay = display;
     internal = new MapTask(width, height, game, display, new BitSet(width*height), this);
-    if (controller == null) {
-      controller = new Controller();
-    } else {
-      controller.clear();
-    }
+    controller.clear();
   }
 
   private class MapTask extends Task<Void> {
@@ -182,7 +185,7 @@ public class Map {
     }
 
     private boolean outside(int x, int y){
-      return (x >= width || x < 0 || y >= height || y < 0);   
+      return (x >= width || x < 0 || y >= height || y < 0);
     }
 
     public Player getPlayer(int i){
@@ -200,6 +203,8 @@ public class Map {
         Player player = it.next();
         if(collides(player.getX(), player.getY())){
           running = false;//TODO: add player dies code once Player has alive attribute...
+        } else {
+         displayPlayer(player.getX(), player.getY(), player.getColour()); 
         }
       }
       //TODO: add checks for who is alive

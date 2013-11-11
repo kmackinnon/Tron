@@ -2,6 +2,7 @@ package lightracer;
 
 
 import UserInterface.GameInitUI;
+import UserInterface.Display;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -24,9 +25,13 @@ public class LightRacer extends Application {
     }
     public void start(final Stage stage) {
         
-        GameInitUI startScreen = new GameInitUI(stage);
-        Scene startScreenScene = new Scene(startScreen);
-        stage.setScene(startScreenScene);
+        Display demo = new Display(stage);
+        Scene demoScene = new Scene(demo);
+        stage.setScene(demoScene);
+        
+        //GameInitUI startScreen = new GameInitUI(stage);
+        //Scene startScreenScene = new Scene(startScreen);
+        //stage.setScene(startScreenScene);
         stage.setTitle("Light Racer");
         stage.setWidth(1030);
         stage.setHeight(800);

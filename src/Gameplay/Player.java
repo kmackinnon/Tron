@@ -90,10 +90,10 @@ public class Player {
               this.xPos--;
               break;
           case 2:
-              this.yPos++;
+              this.yPos--;// Up is negative
               break;
           case 3:
-              this.yPos--;
+              this.yPos++;// Down is Positive
               break;
           case 4:
               this.xPos++;
@@ -101,6 +101,7 @@ public class Player {
           default:
               break;
       }
+      
   }
 
   //these send the updated end of game stats to the DB.

@@ -1,20 +1,22 @@
 package Gameplay;
 
+import javafx.scene.input.KeyCode;
+
 public abstract class Input {
-	private int key;
+	private final KeyCode key;
 	protected Player player;
 
-	public int checkKey() {
+	public KeyCode checkKey() {
 		return key;
 	}
 
-	public boolean isKey(int key) {
+	public boolean isKey(KeyCode key) {
 		return key == this.key;
 	}
 
 	public abstract void command();
 
-	public Input(int key, Player player) {
+	public Input(KeyCode key, Player player) {
 		this.key = key;
 		this.player = player;
 	}
