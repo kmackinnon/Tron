@@ -26,6 +26,7 @@ public class Map {
   private final MapTask internal;
   private int width, height;
   
+  private final Display myDisplay;
   private final static Controller controller = Controller.getInstance();
   
   /**
@@ -78,7 +79,7 @@ public class Map {
     controller.addBinding(new MovePlayerUp(KeyCode.W, player));
     controller.addBinding(new MovePlayerRight(KeyCode.D, player));
     player.moveLeft();
-    map.setSpeed(2);
+    map.setSpeed(5);
     return map;
   }
 
@@ -92,6 +93,10 @@ public class Map {
   public void addPlayer(User user, String colour, int direction){ //TODO: change direction to enum
     internal.addPlayer(user, colour, direction);
   }
+  
+  public void displayPlayer(int x, int y, String colour){
+    myDisplay.displayWall(x, y, colour);
+  }
 
   /**
    * Generates Map from string 
@@ -102,6 +107,7 @@ public class Map {
    */
   public Map(String mapString, String colour, Game game, Display display){
     BitSet map = mapParse(mapString, colour);
+    myDisplay = display;
     internal = new MapTask(width, height, game, display, map, this);
     controller.clear();
   }
@@ -116,6 +122,7 @@ public class Map {
   public Map(int width, int height, Game game, Display display){
     this.width = width;
     this.height = height;
+    myDisplay = display;
     internal = new MapTask(width, height, game, display, new BitSet(width*height), this);
     controller.clear();
   }
