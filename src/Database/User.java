@@ -9,7 +9,7 @@ public class User {
   private int uid;
 
   private UserStatistics myStats;
-  private DatabaseInterface db;
+  private static DatabaseInterface db;
   private Player myPlayer;
   private boolean authenticated;
   
@@ -36,9 +36,6 @@ public class User {
   }
 
   public void lose() {
-  }
-
-  public void changePassword(String newPassword) {
   }
 
   public UserStatistics getStats() {
