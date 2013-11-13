@@ -140,8 +140,7 @@ public class Map {
     private final ConcurrentLinkedQueue<Move> moveQueue;
     
     public void addWall(int xPos, int yPos, String colour) {
-      map.set(getCellIndex(xPos,yPos));
-      myDisplay.displayWall(xPos, yPos, colour);
+      moveQueue.add(new Move(xPos, yPos, colour));
     }
     
     public MapTask (int width, int height, Game game, Display display, BitSet map, Map parent){

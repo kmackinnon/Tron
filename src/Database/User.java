@@ -8,21 +8,28 @@ public class User {
 
   private int uid;
 
-  private UserStatistics myUserStatistics;
-  private DatabaseInterface myDatabaseInterface;
+  private UserStatistics myStats;
+  private DatabaseInterface db;
   private Player myPlayer;
+  private boolean authenticated;
   
   public String getUsername(){
-      return this.username;
+    return this.username;
   }
+
+  public void changePassword(String password){
+    db.changePassword(this.uid, password);
+  }
+
   public void login(String password) {
   }
 
   public static User create(String username, String password) {
-  return null;
+    return db.addUser(username, password);
   }
 
   public void save() {
+    db.updateUser(this.uid, this.myStats);
   }
 
   public void win() {
@@ -35,7 +42,7 @@ public class User {
   }
 
   public UserStatistics getStats() {
-  return null;
+    return myStats;
   }
 
 }
