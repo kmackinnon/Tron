@@ -13,7 +13,7 @@ public abstract class DatabaseInterface {
 
   public abstract User addUser(String username, String password);
 
-  public abstract void addGame(Game game);
+  public abstract void addGame(GameInfo game);
 
   public abstract UserStatistics getUserStats(int uid);
 

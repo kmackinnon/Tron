@@ -1,6 +1,6 @@
 package Gameplay;
 
-import Database.Game;
+import Database.GameInfo;
 import Database.User;
 
 public class Player {
@@ -11,7 +11,7 @@ public class Player {
 
   private String colour;
 
-  public Game myGame;
+  public GameInfo myGame;
   //public Controller myController;
   public Input myInput;
   public Map myMap;

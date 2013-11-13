@@ -3,7 +3,7 @@ package Database;
 import java.util.Vector;
 import Gameplay.Map;
 
-public class Game {
+public class GameInfo {
 
   private int playerOneWins;
 

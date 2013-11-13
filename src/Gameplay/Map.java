@@ -1,6 +1,6 @@
 package Gameplay;
 
-import Database.Game;
+import Database.GameInfo;
 import Database.User;
 import UserInterface.Display;
 
@@ -105,7 +105,7 @@ public class Map {
    * @param game
    * @param display 
    */
-  public Map(String mapString, String colour, Game game, Display display){
+  public Map(String mapString, String colour, GameInfo game, Display display){
     BitSet map = mapParse(mapString, colour);
     myDisplay = display;
     internal = new MapTask(width, height, game, display, map, this);
@@ -119,7 +119,7 @@ public class Map {
    * @param game
    * @param display 
    */
-  public Map(int width, int height, Game game, Display display){
+  public Map(int width, int height, GameInfo game, Display display){
     this.width = width;
     this.height = height;
     myDisplay = display;
@@ -134,7 +134,7 @@ public class Map {
     private boolean running;
     private int sleep;  
     private final Vector<Player> playerList;
-    private final Game myGame;
+    private final GameInfo myGame;
     private final Display myDisplay;
     private final Map parent;
     private final ConcurrentLinkedQueue<Move> moveQueue;
@@ -143,7 +143,7 @@ public class Map {
       moveQueue.add(new Move(xPos, yPos, colour));
     }
     
-    public MapTask (int width, int height, Game game, Display display, BitSet map, Map parent){
+    public MapTask (int width, int height, GameInfo game, Display display, BitSet map, Map parent){
       myGame = game;
       myDisplay = display;
       this.width=width;
