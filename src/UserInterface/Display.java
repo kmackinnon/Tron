@@ -46,7 +46,7 @@ public class Display extends StackPane {
     
         controller = Controller.getInstance();
 		
-        final Image background = new Image("/UserInterface/Images/background.png");
+        final Image background = new Image("/image/background.png");
         ImageView veiwer = new ImageView();
         veiwer.setImage(background);
         

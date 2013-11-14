@@ -22,7 +22,9 @@ public class SQLiteInterface extends DatabaseInterface {
        statement = connection.createStatement();
        ResultSet result = statement.executeQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='Users'");
        if(!result.first()){ //If the Users table doesn't exist
-         List<String> sqlCommands  = Files.readAllLines(Paths.get("/Database/db_init.sql"), Charset.defaultCharset());
+         List<String> sqlCommands  = 
+Files.readAllLines(Paths.get("/data/db_init.sql"), 
+Charset.defaultCharset());
          Iterator<String> it = sqlCommands.iterator();
          String sql;
          while (it.hasNext()){
