@@ -14,6 +14,7 @@ In the Git shell, navigate to the repo and execute:
 3. git pull origin master
 
 Back in NetBeans, click on Source->Scan for External Changes.
+Then add the 'res' folder as a source by right clicking on Source Packages and pressing properties
 At this point, you should be able to build without any problems.
 
 Setting up SQLite JDBC support (with Netbeans)
@@ -28,4 +29,3 @@ In non-Netbeans environments, append the file to your classpath at runtime with 
 ` -classpath ".;sqlite-jdbc-3.7.2.jar"` for Windows environments
 
 Should you end up wanting a newer version of the SQLite JDBC implementation some time in the future, it can be found [here](https://bitbucket.org/xerial/sqlite-jdbc/downloads "SQLite-JDBC Downloads")
-
