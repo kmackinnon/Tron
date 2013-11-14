@@ -2,6 +2,13 @@ package Database;
 
 import java.sql.*;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.charset.Charset;
+
+import java.util.List;
+import java.util.Iterator;
+
 public class SQLiteInterface extends DatabaseInterface {
   Connection connection;
   Statement statement;
@@ -12,6 +19,18 @@ public class SQLiteInterface extends DatabaseInterface {
      try {
        Class.forName("org.sqlite.JDBC");
        connection = DriverManager.getConnection("jdbc:sqlite:" + db);
+       statement = connection.createStatement();
+       ResultSet result = statement.executeQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='Users'");
+       if(!result.first()){ //If the Users table doesn't exist
+         List<String> sqlCommands  = Files.readAllLines(Paths.get("/Database/db_init.sql"), Charset.defaultCharset());
+         Iterator<String> it = sqlCommands.iterator();
+         String sql;
+         while (it.hasNext()){
+           sql = it.next();
+           statement.execute(sql);
+         }
+         statement.close();
+       }
        hash = new SHA256Hash();
      } catch (Exception e) {
        // Bad things... Very Bad Things...

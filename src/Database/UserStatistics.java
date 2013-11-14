@@ -8,6 +8,13 @@ public class UserStatistics {
 
   private int losses;
 
-    public User myUser;
+  public User myUser;
   
+  public void addWin(){
+    
+  }
+  
+  public void addLoss(){
+    
+  }
 }
