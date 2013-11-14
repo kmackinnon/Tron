@@ -22,7 +22,7 @@ public class User {
   }
 
   public void login(String password) {
-    if (db.confirmUser(this.uid, password){
+    if (db.confirmUser(this.uid, password)){
       authenticated = true;
       //TODO actually log the user in...
     } else {
@@ -40,11 +40,11 @@ public class User {
 
   //TODO how to set wins and losses
   public void win() {
-    this.myStats.setWin();
+    this.myStats.addWin();
   }
 
   public void lose() {
-    this.myStats.setLoss();
+    this.myStats.addLoss();
   }
 
   public UserStatistics getStats() {
