@@ -73,12 +73,21 @@ public class Map {
   public static Map makeDemo(Display display){
     Map map = new Map(50, 50, null, display);
     map.addPlayer(null, "0xF00", 1); //TODO: change direction to enum
-    Player player = map.getPlayer(0);
-    controller.addBinding(new MovePlayerDown(KeyCode.S, player));
-    controller.addBinding(new MovePlayerLeft(KeyCode.A, player));
-    controller.addBinding(new MovePlayerUp(KeyCode.W, player));
-    controller.addBinding(new MovePlayerRight(KeyCode.D, player));
-    player.moveLeft();
+    Player player1 = map.getPlayer(0);
+    controller.addBinding(new MovePlayerDown(KeyCode.S, player1));
+    controller.addBinding(new MovePlayerLeft(KeyCode.A, player1));
+    controller.addBinding(new MovePlayerUp(KeyCode.W, player1));
+    controller.addBinding(new MovePlayerRight(KeyCode.D, player1));
+    player1.moveLeft();
+    
+    map.addPlayer(null, "0x00F", 4);
+    Player player2 = map.getPlayer(1);
+    controller.addBinding(new MovePlayerDown(KeyCode.DOWN, player2));
+    controller.addBinding(new MovePlayerLeft(KeyCode.LEFT, player2));
+    controller.addBinding(new MovePlayerUp(KeyCode.UP, player2));
+    controller.addBinding(new MovePlayerRight(KeyCode.RIGHT, player2));
+    player2.moveRight();
+    
     map.setSpeed(5);
     return map;
   }
