@@ -15,3 +15,4 @@ public class SQLiteInterface extends DatabaseInterface {
      }
      supportList.add("user");
   }
+}

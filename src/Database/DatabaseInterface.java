@@ -22,7 +22,7 @@ public abstract class DatabaseInterface {
   public boolean supports(String capability) {
     return supportList.contains(capability);
   }
-  public String[] getSupportList(){
+  public ArrayList<String> getSupportList(){
     return supportList;
   }
 
