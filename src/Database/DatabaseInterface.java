@@ -10,8 +10,6 @@ public abstract class DatabaseInterface {
   public abstract User getUser(String username);
   
   public abstract boolean confirmUser(int uid, String password);
-  
-  protected abstract String hash(String string, String seed);
 
   public abstract void updateUser(int uid, UserStatistics stats);
 
