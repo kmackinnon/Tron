@@ -1,10 +1,12 @@
 package lightracer;
 
 
-import UserInterface.GameInitUI;
-import UserInterface.Display;
+import UserInterface.LoginUI;
+import UserInterface.menuUI;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 
@@ -25,13 +27,13 @@ public class LightRacer extends Application {
     }
     public void start(final Stage stage) {
         
-        Display demo = new Display(stage);
-        Scene demoScene = new Scene(demo);
-        stage.setScene(demoScene);
-        
-        //GameInitUI startScreen = new GameInitUI(stage);
-        //Scene startScreenScene = new Scene(startScreen);
-        //stage.setScene(startScreenScene);
+        final Image background = new Image("/image/background.png");
+        ImageView veiwer = new ImageView();
+        veiwer.setImage(background);
+
+        LoginUI startScreen = new LoginUI(stage, veiwer);
+        Scene startScreenScene = new Scene(startScreen);
+        stage.setScene(startScreenScene);
         stage.setTitle("Light Racer");
         stage.setWidth(1030);
         stage.setHeight(800);

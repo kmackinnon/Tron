@@ -7,7 +7,7 @@ public class User {
     private String username;
     private int uid;
     private UserStatistics myStats;
-    private static DatabaseInterface db = new SQLiteInterface("mainDataBase");
+    private final DatabaseInterface db = new SQLiteInterface("mainDataBase");
     private Player myPlayer;
     private boolean authenticated;
     boolean success = false;
