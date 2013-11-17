@@ -21,7 +21,10 @@ import javafx.scene.text.Font;
 
 import Gameplay.Map;
 import Gameplay.Controller;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -30,125 +33,123 @@ import javafx.util.Duration;
  * @author Victorio
  */
 public class Display extends StackPane {
-    
-    final int horizontalGridSize= 50;
-    final int verticalGridSize= 50;
-   
-    private Rectangle grid[][] ; 
-     StackPane gameoverTotal;
+
+    final int horizontalGridSize = 50;
+    final int verticalGridSize = 50;
+    private Rectangle grid[][];
+    StackPane gameoverTotal;
     Map baseMap;
     Button startBtn;
-    
+    Button restartBtn;
     final Controller controller;
-    
-    
-    public Display(final Stage stage) {
-    
+
+    public Display(final Stage stage,ImageView veiwer) {
+
+
+
         controller = Controller.getInstance();
-		
-        final Image background = new Image("/image/background.png");
-        ImageView veiwer = new ImageView();
-        veiwer.setImage(background);
-        
-        grid = new Rectangle[horizontalGridSize][verticalGridSize]; 
+
+
+        grid = new Rectangle[horizontalGridSize][verticalGridSize];
         GridPane gridpanel = new GridPane();
         gridpanel.setAlignment(Pos.CENTER);
         gridpanel.setHgap(0);
         gridpanel.setVgap(0);
-        
+
         makeSquares(gridpanel);
-        
+
         VBox gameoverScreen = new VBox();
         Button restartBtn = new Button("Restart");
-        //restartBtn.setDisable(true);
         Label restartLabel = new Label("Game Over");
         restartLabel.setFont(new Font(26));
         restartLabel.setTextFill(Color.PINK);
         gameoverScreen.setAlignment(Pos.CENTER);
-        
-        gameoverScreen.getChildren().addAll(restartLabel,restartBtn);
-        
-        Rectangle gameoverBack= new Rectangle();
+
+        gameoverScreen.getChildren().addAll(restartLabel, restartBtn);
+
+        Rectangle gameoverBack = new Rectangle();
         gameoverBack.setWidth(200);
         gameoverBack.setHeight(90);
         gameoverBack.setFill(Color.BLACK);
-        
-        gameoverTotal= new StackPane();
-        gameoverTotal.getChildren().addAll(gameoverBack,gameoverScreen);
+
+        gameoverTotal = new StackPane();
+        gameoverTotal.getChildren().addAll(gameoverBack, gameoverScreen);
         gameoverTotal.setOpacity(0);
-        
+
         startBtn = new Button("Start Game");
-        
-        
+
+
         getChildren().add(veiwer);
         getChildren().add(gridpanel);
         getChildren().add(gameoverTotal);
         getChildren().add(startBtn);
         setOnKeyPressed(controller);
         baseMap = Map.makeDemo(this);
-        
-        
-        
-    
-        restartBtn.setOnAction(new EventHandler<ActionEvent>() {
 
+
+
+
+        restartBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-               FadeTransition fadeTransition =
-                            new FadeTransition(Duration.millis(2000), gameoverTotal);
-        fadeTransition.setCycleCount(1);
-        fadeTransition.setAutoReverse(true);
+                FadeTransition fadeTransition =
+                        new FadeTransition(Duration.millis(2000), gameoverTotal);
+                fadeTransition.setCycleCount(1);
+                fadeTransition.setAutoReverse(true);
                 fadeTransition.setFromValue(1.0);
-        fadeTransition.setToValue(0.0);
-        fadeTransition.play();
+                fadeTransition.setToValue(0.0);
+                fadeTransition.play();
+                setDisable(true);
+
+                //baseMap = Map.makeDemo(this);
+                clearGrid();
             }
         });
-        
-        startBtn.setOnAction(new EventHandler<ActionEvent>() {
 
+        startBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-              getChildren().remove(startBtn);
-              baseMap.run(); 
+                getChildren().remove(startBtn);
+                baseMap.run();
             }
         });
     }
 
-    public void makeSquares(GridPane panel )
-    {
- 
-        for(int i = 0; i< horizontalGridSize ; i++)
-        {
-            for(int j = 0; j< verticalGridSize ; j++)
-            {
-                grid[i][j]= new Rectangle();
+    public void makeSquares(GridPane panel) {
+
+        for (int i = 0; i < horizontalGridSize; i++) {
+            for (int j = 0; j < verticalGridSize; j++) {
+                grid[i][j] = new Rectangle();
                 grid[i][j].setWidth(10);
                 grid[i][j].setHeight(10);
                 grid[i][j].setFill(Color.GREY);
-                panel.add(grid[i][j],i, j);
+                panel.add(grid[i][j], i, j);
             }
         }
     }
-    
-    public void displayWall(int xpos,int ypos, String color)
-    {
+
+    public void clearGrid() {
+        for (int i = 0; i < horizontalGridSize; i++) {
+            for (int j = 0; j < verticalGridSize; j++) {
+                grid[i][j].setFill(Color.GREY);
+            }
+        }
+    }
+
+    public void displayWall(int xpos, int ypos, String color) {
         grid[xpos][ypos].setFill(Color.web(color));
     }
-    
-    public void gameover()
-    {
-        
-        
-        
-        
-         FadeTransition fadeTransition =
-                            new FadeTransition(Duration.millis(2000), gameoverTotal);
+
+    public void gameover() {
+
+        FadeTransition fadeTransition =
+                new FadeTransition(Duration.millis(2000), gameoverTotal);
         fadeTransition.setCycleCount(1);
         fadeTransition.setAutoReverse(true);
-        
+
         fadeTransition.setFromValue(0.0);
         fadeTransition.setToValue(1.0);
         fadeTransition.play();
+
     }
-    
 }
