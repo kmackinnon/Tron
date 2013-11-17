@@ -7,13 +7,15 @@ public abstract class DatabaseInterface {
   protected ArrayList<String> supportList;
 
     
-  public abstract User getUser(String username);
+  public abstract int getUser(String username);
   
   public abstract boolean confirmUser(int uid, String password);
 
   public abstract void updateUser(int uid, UserStatistics stats);
 
-  public abstract User addUser(String username, String password);
+  public abstract int addUser(String username, String password);
+  
+  public abstract boolean userExsits(String username);
 
   public abstract void addGame(GameInfo game);
 

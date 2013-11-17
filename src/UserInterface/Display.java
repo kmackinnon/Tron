@@ -34,7 +34,7 @@ import javafx.util.Duration;
  */
 public class Display extends StackPane {
 
-    final int horizontalGridSize = 50;
+    final int horizontalGridSize = 75;
     final int verticalGridSize = 50;
     private Rectangle grid[][];
     StackPane gameoverTotal;
@@ -45,11 +45,11 @@ public class Display extends StackPane {
 
     public Display(final Stage stage,ImageView veiwer) {
 
-
-
+        
+        
         controller = Controller.getInstance();
 
-
+        
         grid = new Rectangle[horizontalGridSize][verticalGridSize];
         GridPane gridpanel = new GridPane();
         gridpanel.setAlignment(Pos.CENTER);
@@ -88,7 +88,7 @@ public class Display extends StackPane {
 
 
 
-
+        //This is for the restart button when it is clicked, it will clear the map and fadeaway the gameover screen
         restartBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -106,6 +106,8 @@ public class Display extends StackPane {
             }
         });
 
+        
+        // The start button will 
         startBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
