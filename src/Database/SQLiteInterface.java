@@ -5,6 +5,7 @@ import java.sql.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 
 import java.util.List;
 import java.util.Iterator;
@@ -17,6 +18,7 @@ public class SQLiteInterface extends DatabaseInterface {
 
     public SQLiteInterface(String db) {
         connection = null;
+        supportList = new ArrayList();
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:" + db);
