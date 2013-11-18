@@ -9,13 +9,14 @@ public class Player {
   private int yPos;
   private int currentDirection; //1=left, 2=up, 3=down, 4=right
 
-  private String colour;
+  private final String colour;
 
-  public GameInfo myGame;
+  private GameInfo myGame;
   //public Controller myController;
-  public Input myInput;
-  public Map myMap;
-  public User myUser;
+  private Input myInput;
+  private final Map myMap;
+  private final User myUser;
+  private boolean moved;
   
   //used to give starting coords for new game 
   public Player(int xStart, int yStart, String colour, User user, Map map, int startingDirection){
@@ -25,6 +26,7 @@ public class Player {
       this.myUser = user;
       this.myMap = map;
       this.currentDirection = startingDirection;
+      moved = false;
   }
   public int getX(){
       return this.xPos;
@@ -47,37 +49,37 @@ public class Player {
 
   public void moveUp() {
       //needs to be currently moving left or right
-      if(this.currentDirection == 1 || this.currentDirection == 4)
-      {
+      if(!moved&&(this.currentDirection == 1 || this.currentDirection == 4)) {
           //update new direction to up
           this.currentDirection = 2;
+          moved = true;
       }
   }
   
   public void moveDown() {
       //player needs to be moving left or right
-      if(this.currentDirection == 1 || this.currentDirection == 4)
-      {
+      if(!moved&&(this.currentDirection == 1 || this.currentDirection == 4)) {
           //update new direction to down
           this.currentDirection = 3;
+          moved = true;
       }
   }
 
   public void moveRight() {
       //player needs to be moving up or down
-      if(this.currentDirection == 2 || this.currentDirection == 3)
-      {
+      if(!moved&&(this.currentDirection == 2 || this.currentDirection == 3)) {
           //update new direction to right
           this.currentDirection = 4;
+          moved = true;
       }
   }
 
   public void moveLeft() {
       //player needs to be moving up or down
-      if(this.currentDirection == 2 || this.currentDirection == 3)
-      {
+      if(!moved&& (this.currentDirection == 2 || this.currentDirection == 3)) {
           //update new direction to left
           this.currentDirection = 1;
+          moved = true;
       }
   }
 
@@ -101,6 +103,7 @@ public class Player {
           default:
               break;
       }
+      moved = false;
       
   }
 
