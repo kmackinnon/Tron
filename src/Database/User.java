@@ -12,6 +12,12 @@ public class User {
     private boolean authenticated;
     boolean success = false;
 
+    /**
+     * 
+     * @param username
+     * @param password
+     * @param newUser 
+     */
     public User(String username, String password, boolean newUser) {
         if (newUser && !db.userExists(username)  ) {
             uid = db.addUser(username, password);

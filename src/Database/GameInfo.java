@@ -22,7 +22,10 @@ public class GameInfo {
   private Vector  myMapLoader;
   private static final DatabaseInterface myDatabaseInterface = new SQLiteInterface(".lightracer.db");
 
-  private void startRound() {
+  /**
+   * 
+   */
+  public void startRound() {
   }
 
 }
