@@ -9,20 +9,20 @@ public class GameInfo {
 
   private int playerTwoWins;
 
-    public Map myMap;
+    private Map myMap;
     /**
    * 
    * @element-type Player
    */
-  public Vector  myPlayer;
+  private Vector  myPlayer;
     /**
    * 
    * @element-type MapLoader
    */
-  public Vector  myMapLoader;
-    public DatabaseInterface myDatabaseInterface;
+  private Vector  myMapLoader;
+  private DatabaseInterface myDatabaseInterface;
 
-  public void startRound() {
+  private void startRound() {
   }
 
 }
