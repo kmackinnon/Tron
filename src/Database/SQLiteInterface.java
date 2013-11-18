@@ -1,24 +1,29 @@
 package Database;
 
+import java.io.IOException;
 import java.sql.*;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.charset.Charset;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import java.util.List;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SQLiteInterface extends DatabaseInterface {
 
-    Connection connection;
-    Statement statement;
-    Hash hash;
+    private  Connection connection;
+    private Statement statement;
+    private final Hash hash;
 
     public SQLiteInterface(String db) {
         connection = null;
         supportList = new ArrayList();
+        hash = new SHA256Hash();
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:" + db);
@@ -36,8 +41,7 @@ public class SQLiteInterface extends DatabaseInterface {
                 }
                 statement.close();
             }
-            hash = new SHA256Hash();
-        } catch (Exception e) {
+        } catch (IOException | ClassNotFoundException | SQLException e) {
             // Bad things... Very Bad Things...
         }
         supportList.add("user");
@@ -101,7 +105,7 @@ public class SQLiteInterface extends DatabaseInterface {
                 statement.close();
                 return false;
             }
-        } catch (SQLException e) {
+        } catch (SQLException| NoSuchAlgorithmException e) {
             return false;
         }
     }
@@ -120,7 +124,7 @@ public class SQLiteInterface extends DatabaseInterface {
             statement.executeUpdate("insert into Users (username,password,salt) values ('" + username + "', '" + hashedPassword + "', '" + salt + "');");
             statement.close();
             return getUser(username);
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchAlgorithmException e) {
             return -1;
         }
     }
@@ -137,12 +141,12 @@ public class SQLiteInterface extends DatabaseInterface {
 
     @Override
     public void changePassword(int uid, String newPassword) {
-        String salt = Hash.genSalt(20);
-        String hashedPassword = hash.hash(newPassword, salt);
         try {
-            statement = connection.createStatement();
-            statement.executeUpdate("update Users set password = '" + hashedPassword + "', salt = '" + salt + "' where id = " + uid + ";");
-        } catch (SQLException e) {
+          String salt = Hash.genSalt(20);
+          String hashedPassword = hash.hash(newPassword, salt);
+          statement = connection.createStatement();
+          statement.executeUpdate("update Users set password = '" + hashedPassword + "', salt = '" + salt + "' where id = " + uid + ";");
+        } catch (SQLException | NoSuchAlgorithmException e) {
         }
     }
 

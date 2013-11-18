@@ -14,24 +14,20 @@ import java.security.NoSuchAlgorithmException;
  */
 public abstract class Hash {
   static SecureRandom NUMBER_GENERATOR;
-  public abstract String hash(String password, String salt);
+  public abstract String hash(String password, String salt) throws NoSuchAlgorithmException;
   
-  public Hash(){
-    if (NUMBER_GENERATOR==null){
-      try{
-        NUMBER_GENERATOR=SecureRandom.getInstance("SHA1PRNG");
-      } catch (NoSuchAlgorithmException e) {
-        
-      }
-    }
-  }
+  
   /**
    * Generates a random salt for using in password hashing.
    * 
    * @param length
    * @return Random Salt
+   * @throws java.security.NoSuchAlgorithmException
    */
-  public static String genSalt(int length){
+  public static String genSalt(int length) throws NoSuchAlgorithmException{
+    if (NUMBER_GENERATOR==null){
+      NUMBER_GENERATOR=SecureRandom.getInstance("SHA1PRNG");
+    }
     byte salt[] = NUMBER_GENERATOR.generateSeed(length);
     return new String(salt);
   }

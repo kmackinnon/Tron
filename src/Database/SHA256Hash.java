@@ -14,8 +14,8 @@ import java.security.NoSuchAlgorithmException;
  * @author draringi
  */
 public class SHA256Hash extends Hash {
-  static MessageDigest MSG_DIGEST;
-  static final int REPETITIONS = 1000;
+  private static MessageDigest MSG_DIGEST;
+  private static final int REPETITIONS = 1000;
   
   /**
    * Hashes password using the SHA-256 Algorithm, and a given salt.
@@ -25,7 +25,7 @@ public class SHA256Hash extends Hash {
    * @return Hashed password
    */
   @Override
-  public String hash(String password, String salt){
+  public String hash(String password, String salt) throws NoSuchAlgorithmException{
     String tmp = password;
     int i;
     for(i=0;i<REPETITIONS;i++){
@@ -42,12 +42,10 @@ public class SHA256Hash extends Hash {
   }
   
   public SHA256Hash(){
-    if(MSG_DIGEST==null){
-      try{
-        MSG_DIGEST = MessageDigest.getInstance("SHA-256");
-      } catch (NoSuchAlgorithmException e){
-        
-      }
+    try{
+      MSG_DIGEST = MessageDigest.getInstance("SHA-256");
+    } catch (NoSuchAlgorithmException e){
+      
     }
   }
 }
