@@ -115,7 +115,7 @@ public class SQLiteInterface extends DatabaseInterface {
         try {
           statement = connection.createStatement();
           statement.executeUpdate("update UserStats set wins = " + stats.getWins() + ", losses = " + stats.getLosses() + ", games = " + stats.getGames() + " where user_id = " + uid + ";");
-        } catch (SQLException | NoSuchAlgorithmException e) {
+        } catch (SQLException e) {
         }
     }
 
@@ -144,18 +144,18 @@ public class SQLiteInterface extends DatabaseInterface {
             statement = connection.createStatement();
             ResultSet result = statement.executeQuery("select * from UserStats where user_id = " + uid + ";");
             if (result.first()) {
-                int wins = results.getInt("wins")
-		int losses = results.getInt("losses")
-		int games = results.getInt("games")
+                int wins = result.getInt("wins");
+		int losses = result.getInt("losses");
+		int games = result.getInt("games");
                 result.close();
                 statement.close();
-                return UserStatistics(wins, losses, games);
+                return new UserStatistics(wins, losses, games);
             } else {
                 result.close();
                 statement.close();
                 return null;
             }
-        } catch (SQLException| NoSuchAlgorithmException e) {
+        } catch (SQLException e) {
             return null;
         }
     }

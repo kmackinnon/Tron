@@ -13,11 +13,11 @@ public class User {
     boolean success = false;
 
     public User(String username, String password, boolean newUser) {
-        if (newUser &&!db.userExsits(username)  ) {
-            uid = db.addUser(username, password);;
+        if (newUser &&!db.userExists(username)  ) {
+            uid = db.addUser(username, password);
             this.username = username;
             success = true;
-        } else if (!newUser && db.userExsits(username)) {
+        } else if (!newUser && db.userExists(username)) {
             uid = db.getUser(username);
             if (db.confirmUser(uid, password)) {
                 success = true;
