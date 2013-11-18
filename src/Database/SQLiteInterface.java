@@ -70,7 +70,7 @@ public class SQLiteInterface extends DatabaseInterface {
 
     
     @Override
-    public boolean userExsits(String username) {
+    public boolean userExists(String username) {
         try {
             statement = connection.createStatement();
             ResultSet result = statement.executeQuery("select * from Users where username = " + username + ";");
@@ -93,7 +93,7 @@ public class SQLiteInterface extends DatabaseInterface {
     public boolean confirmUser(int uid, String password) {
         try {
             statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("select * from Users where uid = " + uid + ";");
+            ResultSet result = statement.executeQuery("select * from Users where id = " + uid + ";");
             if (result.first()) {
                 String correct = result.getString("password");
                 String salt = result.getString("salt");
@@ -111,8 +111,12 @@ public class SQLiteInterface extends DatabaseInterface {
     }
 
     @Override
-    public void updateUser(int uid, UserStatistics stats) throws UnsupportedOperationException {
-        //TODO: Implement this
+    public void updateUser(int uid, UserStatistics stats) {
+        try {
+          statement = connection.createStatement();
+          statement.executeUpdate("update UserStats set wins = " + stats.getWins() + ", losses = " + stats.getLosses() + ", games = " + stats.getGames() + " where user_id = " + uid + ";");
+        } catch (SQLException | NoSuchAlgorithmException e) {
+        }
     }
 
     @Override
@@ -136,7 +140,24 @@ public class SQLiteInterface extends DatabaseInterface {
 
     @Override
     public UserStatistics getUserStats(int uid) throws UnsupportedOperationException {
-        return null;//TODO: Implement this
+        try {
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("select * from UserStats where user_id = " + uid + ";");
+            if (result.first()) {
+                int wins = results.getInt("wins")
+		int losses = results.getInt("losses")
+		int games = results.getInt("games")
+                result.close();
+                statement.close();
+                return UserStatistics(wins, losses, games);
+            } else {
+                result.close();
+                statement.close();
+                return null;
+            }
+        } catch (SQLException| NoSuchAlgorithmException e) {
+            return null;
+        }
     }
 
     @Override

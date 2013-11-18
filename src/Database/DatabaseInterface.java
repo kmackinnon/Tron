@@ -11,15 +11,15 @@ public abstract class DatabaseInterface {
   
   public abstract boolean confirmUser(int uid, String password);
 
-  public abstract void updateUser(int uid, UserStatistics stats);
+  public abstract void updateUser(int uid, UserStatistics stats) throws UnsupportedOperationException;
 
   public abstract int addUser(String username, String password);
   
-  public abstract boolean userExsits(String username);
+  public abstract boolean userExists(String username);
 
-  public abstract void addGame(GameInfo game);
+  public abstract void addGame(GameInfo game) throws UnsupportedOperationException;
 
-  public abstract UserStatistics getUserStats(int uid);
+  public abstract UserStatistics getUserStats(int uid) throws UnsupportedOperationException;
 
   public abstract void changePassword(int uid, String newPassword);
 
@@ -30,8 +30,8 @@ public abstract class DatabaseInterface {
     return supportList;
   }
 
-  public abstract void addMap(String name, String mapString);
+  public abstract void addMap(String name, String mapString) throws UnsupportedOperationException;
 
-  public abstract String getMap(String name);
+  public abstract String getMap(String name) throws UnsupportedOperationException;
 
 }
