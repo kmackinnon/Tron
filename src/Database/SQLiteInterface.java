@@ -1,6 +1,9 @@
 package Database;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.*;
 
 import java.nio.file.Files;
@@ -9,7 +12,7 @@ import java.nio.charset.Charset;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,25 +27,52 @@ public class SQLiteInterface extends DatabaseInterface {
         connection = null;
         supportList = new ArrayList();
         hash = new SHA256Hash();
+        String homedir = System.getProperty("user.home");
         try {
             Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:" + db);
-            statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='Users'");
-            if (!result.first()) { //If the Users table doesn't exist
-                List<String> sqlCommands =
-                        Files.readAllLines(Paths.get("/data/db_init.sql"),
-                        Charset.defaultCharset());
-                Iterator<String> it = sqlCommands.iterator();
-                String sql;
-                while (it.hasNext()) {
-                    sql = it.next();
-                    statement.execute(sql);
-                }
-                statement.close();
+            try {
+             connection = DriverManager.getConnection("jdbc:sqlite:" + homedir + "/" + db);   
+            } catch (SQLException ex) {
+                Logger.getLogger(SQLiteInterface.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Something bad happened in opening db" + ex.getMessage());
+                return;
             }
-        } catch (IOException | ClassNotFoundException | SQLException e) {
-            // Bad things... Very Bad Things...
+            try {
+                statement = connection.createStatement();
+            } catch (SQLException ex) {
+                Logger.getLogger(SQLiteInterface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ResultSet result;
+            try {
+                result = statement.executeQuery("SELECT * FROM Users;");
+                statement.close();
+            } catch (SQLException e) { //If the Users table doesn't exist
+                LinkedList<String> sqlCommands = new LinkedList();
+                String line;
+                try {
+                    try (InputStream file = getClass().getResourceAsStream("/data/db_init.sql"); InputStreamReader reader = new InputStreamReader(file); BufferedReader buffer = new BufferedReader(reader)) {
+                        while ( (line = buffer.readLine()) != null){
+                            sqlCommands.add(line);
+                        }
+                    }
+                } catch (IOException ex) {
+                    System.out.println("Something bad happened in reading sql" + ex.getMessage());
+                    Logger.getLogger(SQLiteInterface.class.getName()).log(Level.SEVERE, null, ex);
+                    return;
+                }
+                String sql;
+                try {
+                    while ((sql = sqlCommands.poll()) != null) {
+                        statement.execute(sql);
+                    }
+                    statement.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(SQLiteInterface.class.getName()).log(Level.SEVERE, null, ex);
+                    return;
+                }
+            }
+        } catch (ClassNotFoundException  e) {
+            System.out.println("Something bad happened in init" + e.getMessage());
         }
         supportList.add("user");
     }
@@ -51,18 +81,11 @@ public class SQLiteInterface extends DatabaseInterface {
     public int getUser(String username) {
         try {
             statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("select * from Users where username = " + username + ";");
-            if (result.first()) {
-                int id = result.getInt("id");
-                result.close();
-                statement.close();
-                return id;
-                
-            } else {
-                result.close();
-                statement.close();
-                return -1;
-            }
+            ResultSet result = statement.executeQuery("select id from Users where username = '" + username + "';");
+            int id = result.getInt("id");
+            result.close();
+            statement.close();
+            return id;
         } catch (SQLException e) {
             return -1; //TODO: replace this with proper error handling...
         }
@@ -73,9 +96,8 @@ public class SQLiteInterface extends DatabaseInterface {
     public boolean userExists(String username) {
         try {
             statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("select * from Users where username = " + username + ";");
-            if (result.first()) {
-                int id = result.getInt("id");
+            ResultSet result = statement.executeQuery("SELECT COUNT(*) FROM Users WHERE username = '" + username + "';");
+            if (result.getInt(1) == 1) {
                 result.close();
                 statement.close();
                 return true;
@@ -85,6 +107,7 @@ public class SQLiteInterface extends DatabaseInterface {
                 return false;
             }
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             return false; //TODO: replace this with proper error handling...
         }
     }
@@ -93,18 +116,14 @@ public class SQLiteInterface extends DatabaseInterface {
     public boolean confirmUser(int uid, String password) {
         try {
             statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("select * from Users where id = " + uid + ";");
-            if (result.first()) {
-                String correct = result.getString("password");
-                String salt = result.getString("salt");
-                result.close();
-                statement.close();
-                return correct.equals(hash.hash(password, salt));
-            } else {
-                result.close();
-                statement.close();
-                return false;
+            String correct;
+            String salt;
+            try (ResultSet result = statement.executeQuery("select * from Users where id = " + uid + ";")) {
+                correct = result.getString("password");
+                salt = result.getString("salt");
             }
+            statement.close();
+            return correct.equals(hash.hash(password, salt));
         } catch (SQLException| NoSuchAlgorithmException e) {
             return false;
         }
@@ -123,12 +142,20 @@ public class SQLiteInterface extends DatabaseInterface {
     public int addUser(String username, String password) {
         try {
             statement = connection.createStatement();
-            String salt = Hash.genSalt(20);
-            String hashedPassword = hash.hash(password, salt);
+            String salt;
+            String hashedPassword;
+            try{
+                salt = Hash.genSalt(20);
+                hashedPassword = hash.hash(password, salt);
+            } catch ( NoSuchAlgorithmException e ){
+                System.out.println("Something bad happened in hashing in creation" + e.getMessage());
+                return -1;
+            }
             statement.executeUpdate("insert into Users (username,password,salt) values ('" + username + "', '" + hashedPassword + "', '" + salt + "');");
             statement.close();
             return getUser(username);
-        } catch (SQLException | NoSuchAlgorithmException e) {
+        } catch (SQLException  e) {
+            System.out.println("Something bad happened in creation" + e.getMessage());
             return -1;
         }
     }
@@ -143,18 +170,12 @@ public class SQLiteInterface extends DatabaseInterface {
         try {
             statement = connection.createStatement();
             ResultSet result = statement.executeQuery("select * from UserStats where user_id = " + uid + ";");
-            if (result.first()) {
-                int wins = result.getInt("wins");
-		int losses = result.getInt("losses");
-		int games = result.getInt("games");
-                result.close();
-                statement.close();
-                return new UserStatistics(wins, losses, games);
-            } else {
-                result.close();
-                statement.close();
-                return null;
-            }
+            int wins = result.getInt("wins");
+            int losses = result.getInt("losses");
+            int games = result.getInt("games");
+            result.close();
+            statement.close();
+            return new UserStatistics(wins, losses, games);
         } catch (SQLException e) {
             return null;
         }
@@ -168,6 +189,7 @@ public class SQLiteInterface extends DatabaseInterface {
           statement = connection.createStatement();
           statement.executeUpdate("update Users set password = '" + hashedPassword + "', salt = '" + salt + "' where id = " + uid + ";");
         } catch (SQLException | NoSuchAlgorithmException e) {
+            System.out.println("Something bad happened");
         }
     }
 

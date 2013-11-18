@@ -7,19 +7,23 @@ public class User {
     private String username;
     private int uid;
     private UserStatistics myStats;
-    private final DatabaseInterface db = new SQLiteInterface("mainDataBase");
+    private final DatabaseInterface db = new SQLiteInterface(".lightracer.db");
     private Player myPlayer;
     private boolean authenticated;
     boolean success = false;
 
     public User(String username, String password, boolean newUser) {
-        if (newUser &&!db.userExists(username)  ) {
+        if (newUser && !db.userExists(username)  ) {
             uid = db.addUser(username, password);
+            if (uid < 0){
+                success = false;
+                return;
+            }
             this.username = username;
             success = true;
         } else if (!newUser && db.userExists(username)) {
             uid = db.getUser(username);
-            if (db.confirmUser(uid, password)) {
+            if (uid > 0 && db.confirmUser(uid, password)) {
                 success = true;
             }
         } 
