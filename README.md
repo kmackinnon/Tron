@@ -29,3 +29,9 @@ In non-Netbeans environments, append the file to your classpath at runtime with 
 ` -classpath ".;sqlite-jdbc-3.7.2.jar"` for Windows environments
 
 Should you end up wanting a newer version of the SQLite JDBC implementation some time in the future, it can be found [here](https://bitbucket.org/xerial/sqlite-jdbc/downloads "SQLite-JDBC Downloads")
+
+Setting up Base64 Support (with Netbeans)
+-----------------------------------------
+Much the same as with SQLite, but this time with Base64-2.7.3.jar instead.
+This Implementation is both fast, and in the Public Domain.
+This addition will break your old copies of the DB though
