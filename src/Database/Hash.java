@@ -8,6 +8,7 @@ package Database;
 
 import java.security.SecureRandom;
 import java.security.NoSuchAlgorithmException;
+import net.iharder.Base64;
 /**
  * Abstract Hash class that provides salt generation and contains an abstract hash method.
  * @author draringi
@@ -29,6 +30,6 @@ public abstract class Hash {
       NUMBER_GENERATOR=SecureRandom.getInstance("SHA1PRNG");
     }
     byte salt[] = NUMBER_GENERATOR.generateSeed(length);
-    return new String(salt);
+    return Base64.encodeBytes(salt);
   }
 }

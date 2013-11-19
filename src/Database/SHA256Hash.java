@@ -7,6 +7,8 @@
 package Database;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import net.iharder.Base64;
+
 /**
  * Implementation of the abstract Hash class, using the SHA-256 Algorithm (of the SHA-2 family)
  * It alternates between appending and prepending the salt,
@@ -38,7 +40,7 @@ public class SHA256Hash extends Hash {
       MSG_DIGEST.update(tmp.getBytes());
       tmp = new String(MSG_DIGEST.digest());
     }
-    return tmp;
+    return Base64.encodeBytes(tmp.getBytes());
   }
   
   public SHA256Hash(){

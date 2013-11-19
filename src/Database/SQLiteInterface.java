@@ -6,16 +6,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.*;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.charset.Charset;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import java.util.LinkedList;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import net.iharder.Base64;
 
 public class SQLiteInterface extends DatabaseInterface {
 
@@ -81,6 +79,7 @@ public class SQLiteInterface extends DatabaseInterface {
     public int getUser(String username) {
         try {
             statement = connection.createStatement();
+            username = Base64.encodeBytes(username.getBytes());
             ResultSet result = statement.executeQuery("select id from Users where username = '" + username + "';");
             int id = result.getInt("id");
             result.close();
@@ -96,6 +95,7 @@ public class SQLiteInterface extends DatabaseInterface {
     public boolean userExists(String username) {
         try {
             statement = connection.createStatement();
+            username = Base64.encodeBytes(username.getBytes());
             ResultSet result = statement.executeQuery("SELECT COUNT(*) FROM Users WHERE username = '" + username + "';");
             if (result.getInt(1) == 1) {
                 result.close();
@@ -142,6 +142,7 @@ public class SQLiteInterface extends DatabaseInterface {
     public int addUser(String username, String password) {
         try {
             statement = connection.createStatement();
+            username = Base64.encodeBytes(username.getBytes());
             String salt;
             String hashedPassword;
             try{
