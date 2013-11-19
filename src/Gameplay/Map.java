@@ -72,7 +72,7 @@ public class Map {
   
   public static Map makeDemo(Display display){
     Map map = new Map(50, 50, null, display);
-    map.addPlayer(null, "0xF00", 1); //TODO: change direction to enum
+    map.addPlayer(null, "0xF00", Player.Direction.LEFT); //TODO: change direction to enum
     Player player1 = map.getPlayer(0);
     controller.addBinding(new MovePlayerDown(KeyCode.S, player1));
     controller.addBinding(new MovePlayerLeft(KeyCode.A, player1));
@@ -80,7 +80,7 @@ public class Map {
     controller.addBinding(new MovePlayerRight(KeyCode.D, player1));
     player1.moveLeft();
     
-    map.addPlayer(null, "0x00F", 4);
+    map.addPlayer(null, "0x00F", Player.Direction.RIGHT);
     Player player2 = map.getPlayer(1);
     controller.addBinding(new MovePlayerDown(KeyCode.DOWN, player2));
     controller.addBinding(new MovePlayerLeft(KeyCode.LEFT, player2));
@@ -99,7 +99,7 @@ public class Map {
     return internal.getPlayer(i);
   }
 
-  public void addPlayer(User user, String colour, int direction){ //TODO: change direction to enum
+  public void addPlayer(User user, String colour, Player.Direction direction){ //TODO: change direction to enum
     internal.addPlayer(user, colour, direction);
   }
   
@@ -225,7 +225,7 @@ public class Map {
       }
     }
 
-    public void addPlayer(User user, String colour, int direction){//TODO: change direction to enum
+    public void addPlayer(User user, String colour, Player.Direction direction){//TODO: change direction to enum
       Player player = new Player(25, 25, colour, user, parent, direction);
       playerList.add(player);
     }

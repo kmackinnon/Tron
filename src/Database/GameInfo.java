@@ -1,7 +1,8 @@
 package Database;
 
-import java.util.Vector;
+import java.util.ArrayList;
 import Gameplay.Map;
+import Gameplay.Player;
 
 public class GameInfo {
 
@@ -9,17 +10,17 @@ public class GameInfo {
 
   private int playerTwoWins;
 
-    private Map myMap;
+  private Map current;
     /**
    * 
    * @element-type Player
    */
-  private Vector  myPlayer;
+  private ArrayList<Player>  myPlayer;
     /**
    * 
    * @element-type MapLoader
    */
-  private Vector  myMapLoader;
+  private ArrayList<MapLoader>  myMapLoader;
   private static final DatabaseInterface myDatabaseInterface = new SQLiteInterface(".lightracer.db");
 
   /**
