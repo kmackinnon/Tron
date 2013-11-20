@@ -87,10 +87,10 @@ public class Map {
 
         map.addPlayer(null, "0x00F", Player.Direction.RIGHT, 26, 25);
         Player player2 = map.getPlayer(1);
-        controller.addBinding(new MovePlayerDown(KeyCode.DOWN, player2));
-        controller.addBinding(new MovePlayerLeft(KeyCode.LEFT, player2));
-        controller.addBinding(new MovePlayerUp(KeyCode.UP, player2));
-        controller.addBinding(new MovePlayerRight(KeyCode.RIGHT, player2));
+        controller.addBinding(new MovePlayerDown(KeyCode.K, player2));
+        controller.addBinding(new MovePlayerLeft(KeyCode.J, player2));
+        controller.addBinding(new MovePlayerUp(KeyCode.I, player2));
+        controller.addBinding(new MovePlayerRight(KeyCode.L, player2));
         player2.moveRight();
 
         map.setSpeed(5);
