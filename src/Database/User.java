@@ -21,10 +21,10 @@ public class User {
     public User(String username, String password, boolean newUser) {
         if (newUser && !db.userExists(username)  ) {
             uid = db.addUser(username, password);
-            if (uid < 0){
-                success = false;
-                return;
-            }
+            //if (uid < 0){
+            //    success = false;
+            //    return;
+            //}
             this.username = username;
             success = true;
         } else if (!newUser && db.userExists(username)) {
