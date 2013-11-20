@@ -4,120 +4,125 @@ import Database.GameInfo;
 import Database.User;
 
 public class Player {
-  
-  public enum Direction {LEFT, UP, DOWN, RIGHT};
 
-  private int xPos;
-  private int yPos;
-  private Direction currentDirection; //1=left, 2=up, 3=down, 4=right
+    public enum Direction {
 
-  private final String colour;
+        LEFT, UP, DOWN, RIGHT
+    };
 
-  private GameInfo myGame;
-  //public Controller myController;
-  private Input myInput;
-  private final Map myMap;
-  private final User myUser;
-  private boolean moved;
-  
-  //used to give starting coords for new game 
-  public Player(int xStart, int yStart, String colour, User user, Map map, Direction startingDirection){
-      this.xPos = xStart;
-      this.yPos = yStart;
-      this.colour = colour;
-      this.myUser = user;
-      this.myMap = map;
-      this.currentDirection = startingDirection;
-      moved = false;
-  }
-  public int getX(){
-      return this.xPos;
-  }
-  public int getY(){
-      return this.yPos;
-  }
-  
-  public void setX(int x){
-      this.xPos = x;
-  }
-  
-  public void setY(int y){
-      this.yPos = y;
-  }
-  
-  public String getColour(){
-      return this.colour;
-  }
+    private int xPos;
+    private int yPos;
+    private Direction currentDirection; //1=left, 2=up, 3=down, 4=right
 
-  public void moveUp() {
-      //needs to be currently moving left or right
-      if(!moved&&(this.currentDirection == Direction.LEFT || this.currentDirection == Direction.RIGHT)) {
-          //update new direction to up
-          this.currentDirection = Direction.UP;
-          moved = true;
-      }
-  }
-  
-  public void moveDown() {
-      //player needs to be moving left or right
-      if(!moved&&(this.currentDirection == Direction.LEFT || this.currentDirection == Direction.RIGHT)) {
-          //update new direction to down
-          this.currentDirection = Direction.DOWN;
-          moved = true;
-      }
-  }
+    private final String colour;
 
-  public void moveRight() {
-      //player needs to be moving up or down
-      if(!moved&&(this.currentDirection == Direction.UP || this.currentDirection == Direction.DOWN)) {
-          //update new direction to right
-          this.currentDirection = Direction.RIGHT;
-          moved = true;
-      }
-  }
+    private GameInfo myGame;
+    //public Controller myController;
+    private Input myInput;
+    private final Map myMap;
+    private final User myUser;
+    private boolean moved;
 
-  public void moveLeft() {
-      //player needs to be moving up or down
-      if(!moved&& (this.currentDirection == Direction.UP || this.currentDirection == Direction.DOWN)) {
-          //update new direction to left
-          this.currentDirection = Direction.LEFT;
-          moved = true;
-      }
-  }
+    //used to give starting coords for new game 
+    public Player(int xStart, int yStart, String colour, User user, Map map, Direction startingDirection) {
+        this.xPos = xStart;
+        this.yPos = yStart;
+        this.colour = colour;
+        this.myUser = user;
+        this.myMap = map;
+        this.currentDirection = startingDirection;
+        moved = false;
+    }
 
-  public void moveCurrent() {
-      //add wall, to current position and color
-      myMap.addWall(this.xPos, this.yPos, this.colour);
-      //increment in same direction and check for collision (map) at new position
-      switch(this.currentDirection){
-          case LEFT:
-              this.xPos--;
-              break;
-          case UP:
-              this.yPos--;// Up is negative
-              break;
-          case DOWN:
-              this.yPos++;// Down is Positive
-              break;
-          case RIGHT:
-              this.xPos++;
-              break;
-          default:
-              break;
-      }
-      moved = false;
-      
-  }
+    public int getX() {
+        return this.xPos;
+    }
 
-  //these send the updated end of game stats to the DB.
-  public void winGame() {
-  }
+    public int getY() {
+        return this.yPos;
+    }
 
-  public void loseGame() {
-  }
+    public void setX(int x) {
+        this.xPos = x;
+    }
 
-  public String getUsername() {
-      return this.myUser.getUsername();
-  }
+    public void setY(int y) {
+        this.yPos = y;
+    }
+
+    public String getColour() {
+        return this.colour;
+    }
+
+    public void moveUp() {
+        //needs to be currently moving left or right
+        if (!moved && (this.currentDirection == Direction.LEFT || this.currentDirection == Direction.RIGHT)) {
+            //update new direction to up
+            this.currentDirection = Direction.UP;
+            moved = true;
+        }
+    }
+
+    public void moveDown() {
+        //player needs to be moving left or right
+        if (!moved && (this.currentDirection == Direction.LEFT || this.currentDirection == Direction.RIGHT)) {
+            //update new direction to down
+            this.currentDirection = Direction.DOWN;
+            moved = true;
+        }
+    }
+
+    public void moveRight() {
+        //player needs to be moving up or down
+        if (!moved && (this.currentDirection == Direction.UP || this.currentDirection == Direction.DOWN)) {
+            //update new direction to right
+            this.currentDirection = Direction.RIGHT;
+            moved = true;
+        }
+    }
+
+    public void moveLeft() {
+        //player needs to be moving up or down
+        if (!moved && (this.currentDirection == Direction.UP || this.currentDirection == Direction.DOWN)) {
+            //update new direction to left
+            this.currentDirection = Direction.LEFT;
+            moved = true;
+        }
+    }
+
+    public void moveCurrent() {
+        //add wall, to current position and color
+        myMap.addWall(this.xPos, this.yPos, this.colour);
+        //increment in same direction and check for collision (map) at new position
+        switch (this.currentDirection) {
+            case LEFT:
+                this.xPos--;
+                break;
+            case UP:
+                this.yPos--;// Up is negative
+                break;
+            case DOWN:
+                this.yPos++;// Down is Positive
+                break;
+            case RIGHT:
+                this.xPos++;
+                break;
+            default:
+                break;
+        }
+        moved = false;
+
+    }
+
+    //these send the updated end of game stats to the DB.
+    public void winGame() {
+    }
+
+    public void loseGame() {
+    }
+
+    public String getUsername() {
+        return this.myUser.getUsername();
+    }
 
 }
