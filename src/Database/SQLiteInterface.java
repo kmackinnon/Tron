@@ -78,15 +78,16 @@ public class SQLiteInterface extends DatabaseInterface {
     @Override
     public int getUser(String username) {
         try {
-            statement = connection.createStatement();
-            username = Base64.encodeBytes(username.getBytes());
-            ResultSet result = statement.executeQuery("select id from Users where username = '" + username + "';");
-            int id = result.getInt("id");
-            result.close();
-            statement.close();
-            return id;
+          statement = connection.createStatement();
+          username = Base64.encodeBytes(username.getBytes());
+          int id;
+          try (ResultSet result = statement.executeQuery("select id from Users where username = '" + username + "';")) {
+            id = result.getInt("id");
+          }
+          statement.close();
+          return id;
         } catch (SQLException e) {
-            return -1; //TODO: replace this with proper error handling...
+          return -1; //TODO: replace this with proper error handling...
         }
     }
 
@@ -142,6 +143,7 @@ public class SQLiteInterface extends DatabaseInterface {
     public int addUser(String username, String password) {
         try {
             statement = connection.createStatement();
+            String realUsername = username;
             username = Base64.encodeBytes(username.getBytes());
             String salt;
             String hashedPassword;
@@ -154,7 +156,7 @@ public class SQLiteInterface extends DatabaseInterface {
             }
             statement.executeUpdate("insert into Users (username,password,salt) values ('" + username + "', '" + hashedPassword + "', '" + salt + "');");
             statement.close();
-            return getUser(username);
+            return getUser(realUsername);
         } catch (SQLException  e) {
             System.out.println("Something bad happened in creation" + e.getMessage());
             return -1;
@@ -168,18 +170,21 @@ public class SQLiteInterface extends DatabaseInterface {
 
     @Override
     public UserStatistics getUserStats(int uid) throws UnsupportedOperationException {
-        try {
-            statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("select * from UserStats where user_id = " + uid + ";");
-            int wins = result.getInt("wins");
-            int losses = result.getInt("losses");
-            int games = result.getInt("games");
-            result.close();
-            statement.close();
-            return new UserStatistics(wins, losses, games);
-        } catch (SQLException e) {
-            return null;
+      try {
+        statement = connection.createStatement();
+        int wins;
+        int losses;
+        int games;
+        try (ResultSet result = statement.executeQuery("select * from UserStats where user_id = " + uid + ";")) {
+          wins = result.getInt("wins");
+          losses = result.getInt("losses");
+          games = result.getInt("games");
         }
+        statement.close();
+        return new UserStatistics(wins, losses, games);
+      } catch (SQLException e) {
+        return null;
+      }
     }
 
     @Override
