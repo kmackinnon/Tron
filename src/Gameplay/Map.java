@@ -208,7 +208,7 @@ public class Map {
         }
 
         public Player getPlayer(int i) {
-            return playerList.get(0);
+            return playerList.get(i);
         }
 
         private void gameRound() {
