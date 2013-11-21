@@ -151,6 +151,7 @@ public class Map {
         private final int width;
         private final int height;
         private boolean running;
+        private int aliveCount = 0;
         private int sleep;
         private final Vector<Player> playerList;
         private final GameInfo myGame;
@@ -182,7 +183,17 @@ public class Map {
                 }
                 gameRound();
             }
+            
+//            if (aliveCount == 0){
+//                // DRAW
+//                myGame.endRound(true, null); // 2nd param is user's string
+//            } else {
+//                // One player wins
+//                myGame.endRound(true, null); // 2nd param is winning user
+//            }
+            
             myDisplay.gameover();
+            
             return null;
         }
 
@@ -221,13 +232,26 @@ public class Map {
             for (it = playerList.iterator(); it.hasNext();) {
                 Player player = it.next();
                 if (collides(player.getX(), player.getY())) {
-                    running = false;//TODO: add player dies code once Player has alive attribute...
+                    running = false;
+                    player.setIsAlive(false);
                 } else {
                     displayPlayer(player.getX(), player.getY(), player.getColour());
                 }
             }
             
-            //TODO: add checks for who is alive
+            // checks for who is alive
+            for (it = playerList.iterator(); it.hasNext();){
+                Player player = it.next();
+                if (player.getIsAlive()){
+                    aliveCount++;
+                }
+            }
+            
+            // at least one of the players is dead so game should end
+            if (aliveCount < 2){
+                running = false;
+            }
+            
             try {
                 Thread.sleep(sleep);
             } catch (InterruptedException ex) {
