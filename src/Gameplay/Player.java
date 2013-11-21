@@ -12,7 +12,11 @@ public class Player {
 
     private int xPos;
     private int yPos;
-    private Direction currentDirection; //1=left, 2=up, 3=down, 4=right
+    private Direction currentDirection;
+    /**
+     * 1=left, 2=up, 3=down, 4=right
+     */
+    private boolean isAlive;
 
     private final String colour;
 
@@ -32,6 +36,7 @@ public class Player {
         this.myMap = map;
         this.currentDirection = startingDirection;
         moved = false;
+        isAlive = true; // player starts round alive
     }
 
     public int getX() {
@@ -42,6 +47,18 @@ public class Player {
         return this.yPos;
     }
 
+    public String getColour() {
+        return this.colour;
+    }
+
+    public boolean getIsAlive() {
+        return this.isAlive;
+    }
+
+    public String getUsername() {
+        return this.myUser.getUsername();
+    }
+
     public void setX(int x) {
         this.xPos = x;
     }
@@ -50,8 +67,8 @@ public class Player {
         this.yPos = y;
     }
 
-    public String getColour() {
-        return this.colour;
+    public void setIsAlive(boolean isAlive) {
+        this.isAlive = isAlive;
     }
 
     public void moveUp() {
@@ -119,10 +136,6 @@ public class Player {
     }
 
     public void loseGame() {
-    }
-
-    public String getUsername() {
-        return this.myUser.getUsername();
     }
 
 }

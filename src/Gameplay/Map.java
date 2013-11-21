@@ -77,21 +77,21 @@ public class Map {
     public static Map makeDemo(Display display) {
         Map map = new Map(75, 50, null, display);
 
-        map.addPlayer(null, "0xF00", Player.Direction.LEFT, 24, 25); //TODO: change direction to enum
+        map.addPlayer(null, "0xF00", Player.Direction.LEFT, 37, 25);
         Player player1 = map.getPlayer(0);
         controller.addBinding(new MovePlayerDown(KeyCode.S, player1));
         controller.addBinding(new MovePlayerLeft(KeyCode.A, player1));
         controller.addBinding(new MovePlayerUp(KeyCode.W, player1));
         controller.addBinding(new MovePlayerRight(KeyCode.D, player1));
-        player1.moveLeft();
+        player1.moveLeft(); // starting direction
 
-        map.addPlayer(null, "0x00F", Player.Direction.RIGHT, 26, 25);
+        map.addPlayer(null, "0x00F", Player.Direction.RIGHT, 38, 25);
         Player player2 = map.getPlayer(1);
         controller.addBinding(new MovePlayerDown(KeyCode.K, player2));
         controller.addBinding(new MovePlayerLeft(KeyCode.J, player2));
         controller.addBinding(new MovePlayerUp(KeyCode.I, player2));
         controller.addBinding(new MovePlayerRight(KeyCode.L, player2));
-        player2.moveRight();
+        player2.moveRight(); // starting direction
 
         map.setSpeed(5);
         return map;
@@ -226,6 +226,7 @@ public class Map {
                     displayPlayer(player.getX(), player.getY(), player.getColour());
                 }
             }
+            
             //TODO: add checks for who is alive
             try {
                 Thread.sleep(sleep);
