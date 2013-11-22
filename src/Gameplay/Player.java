@@ -13,10 +13,8 @@ public class Player {
     private int xPos;
     private int yPos;
     private Direction currentDirection;
-    /**
-     * 1=left, 2=up, 3=down, 4=right
-     */
     private boolean isAlive;
+    private int wins;
 
     private final String colour;
 
@@ -143,6 +141,12 @@ public class Player {
 
     }
 
+    public void winRound() {
+      wins++;
+    }
+    public int getWins(){
+      return wins;
+    }
     //these send the updated end of game stats to the DB.
     public void winGame() {
     }

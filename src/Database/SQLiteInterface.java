@@ -165,7 +165,11 @@ public class SQLiteInterface extends DatabaseInterface {
 
     @Override
     public void addGame(GameInfo game) throws UnsupportedOperationException {
-        //TODO: Implement this
+        try {
+          statement = connection.createStatement();
+        } catch (SQLException ex) {
+        Logger.getLogger(SQLiteInterface.class.getName()).log(Level.SEVERE, null, ex);
+      }
     }
 
     @Override
