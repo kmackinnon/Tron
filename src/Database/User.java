@@ -22,7 +22,6 @@ public class User {
         if (newUser && !db.userExists(username)  ) {
             uid = db.addUser(username, password);
             if (uid < 0){
-                success = false;
                 return;
             }
             this.username = username;
@@ -31,6 +30,7 @@ public class User {
             uid = db.getUser(username);
             if (uid > 0 && db.confirmUser(uid, password)) {
                 success = true;
+                this.username = username;
             }
         } 
     }
