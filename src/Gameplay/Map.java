@@ -105,8 +105,12 @@ public class Map {
         return internal.getPlayer(i);
     }
 
-    public void addPlayer(User user, String colour, Player.Direction direction, int x, int y) { //TODO: change direction to enum
+    public void addPlayer(User user, String colour, Player.Direction direction, int x, int y) {
         internal.addPlayer(user, colour, direction, x, y);
+    }
+    
+    public void addPlayer(Player player, Player.Direction direction, int x, int y) {
+        internal.addPlayer(player, direction, x, y);
     }
 
     public void displayPlayer(int x, int y, String colour) {
@@ -262,8 +266,13 @@ public class Map {
         }
 
         public void addPlayer(User user, String colour, Player.Direction direction, int x, int y) {//TODO: change direction to enum
-            Player player = new Player(x, y, colour, user, parent, direction);
-            playerList.add(player);
+          Player player = new Player(x, y, colour, user, parent, direction);
+          playerList.add(player);
+        }
+        
+        public void addPlayer(Player player, Player.Direction direction, int x, int y) {
+          player.init(x, y, direction);
+          playerList.add(player);
         }
 
         public boolean collides(int x, int y) {

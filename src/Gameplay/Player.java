@@ -38,6 +38,12 @@ public class Player {
         moved = false;
         isAlive = true; // player starts round alive
     }
+    
+    public Player(User user, String colour){
+      this.colour = colour;
+      this.myUser = user;
+      this.myMap = null;
+    }
 
     public int getX() {
         return this.xPos;
@@ -69,6 +75,12 @@ public class Player {
 
     public void setIsAlive(boolean isAlive) {
         this.isAlive = isAlive;
+    }
+    
+    public void init(int xStart, int yStart, Direction startingDirection){
+      this.xPos = xStart;
+      this.yPos = yStart;
+      this.currentDirection = startingDirection;
     }
 
     public void moveUp() {
