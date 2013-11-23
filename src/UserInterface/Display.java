@@ -42,10 +42,15 @@ public class Display extends StackPane {
     Button startBtn;
     Button restartBtn;
     final Controller controller;
+    ImageView Veiwer;
+    
+    
+    
+    
 
     public Display(final Stage stage,ImageView veiwer) {
 
-        
+        this.Veiwer = veiwer;
         
         controller = Controller.getInstance();
 
@@ -85,7 +90,39 @@ public class Display extends StackPane {
         getChildren().add(startBtn);
         setOnKeyPressed(controller);
         baseMap = Map.makeDemo(this);
-
+        
+        
+        /*for (int i = 15; i < 25; i++) {
+            for (int j = 20; j < 30; j++) {
+               displayWall(i, j, "0x000");
+            }
+        }
+        
+         for (int i = 50; i < 60; i++) {
+            for (int j = 20; j < 30; j++) {
+               displayWall(i, j, "0x000");
+            }
+        }*/
+       /* for (int i = 30; i < 45; i++) {
+            for (int j = 20; j < 30; j++) {
+               displayWall(i, j, "0x000");
+            }
+        }
+        
+         for (int i = 5; i < 25; i++) {
+            for (int j = 25; j < 45; j++) {
+               displayWall(i, j, "0x000");
+            }
+        }
+        
+       for (int i = 50; i < 70; i++) {
+            for (int j = 5; j < 25; j++) {
+               displayWall(i, j, "0x000");
+            }
+        }*/
+       
+        
+        
 
 
         //This is for the restart button when it is clicked, it will clear the map and fadeaway the gameover screen
@@ -103,6 +140,10 @@ public class Display extends StackPane {
 
                 //baseMap = Map.makeDemo(this);
                 clearGrid();
+                
+                Display Gameplay = new Display(stage, Veiwer);
+                Scene Gameplayscene = new Scene(Gameplay);
+                stage.setScene(Gameplayscene);
             }
         });
 
@@ -134,6 +175,15 @@ public class Display extends StackPane {
         for (int i = 0; i < horizontalGridSize; i++) {
             for (int j = 0; j < verticalGridSize; j++) {
                 grid[i][j].setFill(Color.GREY);
+            }
+        }
+    }
+    
+    public void displayMultipleWalls(int xposStart, int yposStart,int xposEnd, int yposEnd, String color)
+    {
+         for (int i = xposStart; i < xposEnd; i++) {
+            for (int j = yposStart; j < yposEnd; j++) {
+                grid[i][j].setFill(Color.BLACK);
             }
         }
     }

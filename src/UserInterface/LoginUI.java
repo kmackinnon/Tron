@@ -38,10 +38,21 @@ public class LoginUI extends StackPane {
     Label errorLabel;
     PasswordField passwordInput;
     ImageView veiwer;
+    User user1;
 
-    public LoginUI(final Stage stage, final ImageView veiwer) {
+    public LoginUI(final Stage stage, final ImageView veiwer, User loggedInPlayer) {
 
-        //this is the back
+        boolean cameFromMainUI;
+        this.user1 = loggedInPlayer;
+        if (user1 != null) {
+            cameFromMainUI = true;
+            playerNumber=1;
+        } else {
+            cameFromMainUI = false;
+        }
+
+
+        //this is the background
         this.veiwer = veiwer;
 
         //opening the group that contains everything but the background
@@ -51,17 +62,17 @@ public class LoginUI extends StackPane {
         Label titleLabel = new Label("Light Racer");
         titleLabel.setFont(new Font(120));
         titleLabel.setTextFill(Color.WHITE);
-        
+
         // opening the group that contains Player 1 button & Player 2 button
         BtnGroup = new HBox();
-        
+
         //Player 1 button
         Button singlePlayerBtn = new Button("1 Player");
         singlePlayerBtn.setFont(new Font(16));
         singlePlayerBtn.setMinSize(180, 50);
-        
+
         //Player 2 button
-        Button multiPlayerBtn = new Button("2 Player");
+        Button multiPlayerBtn = new Button("2 Players");
         multiPlayerBtn.setFont(new Font(16));
         multiPlayerBtn.setMinSize(180, 50);
 
@@ -69,6 +80,11 @@ public class LoginUI extends StackPane {
         BtnGroup.setAlignment(Pos.CENTER);
         BtnGroup.setSpacing(70);
         BtnGroup.getChildren().addAll(singlePlayerBtn, multiPlayerBtn);
+        if(cameFromMainUI){
+        BtnGroup.setDisable(true);
+        BtnGroup.setOpacity(0);
+        }
+        
 
         //opening the group that conatins most of the log in items (textboxs & buttons)
         loginBase = new VBox();
@@ -76,7 +92,7 @@ public class LoginUI extends StackPane {
         //the username text box
         usernameInput = new TextField();
         usernameInput.setMaxWidth(200);
-        
+
         //the password text box
         passwordInput = new PasswordField();
         passwordInput.setMaxWidth(200);
@@ -86,24 +102,24 @@ public class LoginUI extends StackPane {
         usernameLabel.setTextFill(Color.WHITE);
         usernameLabel.setFont(new Font(16));
 
-         //the label for the password (pretty much just text) 
+        //the label for the password (pretty much just text) 
         Label passwordLabel = new Label("Password");
         passwordLabel.setTextFill(Color.WHITE);
         passwordLabel.setFont(new Font(16));
 
         //opening the group that will contain the login button and the creat account button
         HBox loginBtnGroup = new HBox();
-        
+
         //the login Button
         Button LoginBtn = new Button("Login");
         LoginBtn.setFont(new Font(16));
         LoginBtn.setMinSize(180, 50);
-        
+
         //the create account button
         Button createAccountBtn = new Button("Create Account");
         createAccountBtn.setMinSize(180, 50);
         createAccountBtn.setFont(new Font(16));
-        
+
         //finishing up the login buttons group
         loginBtnGroup.setSpacing(70);
         loginBtnGroup.setAlignment(Pos.CENTER);
@@ -120,8 +136,11 @@ public class LoginUI extends StackPane {
                 passwordLabel, passwordInput,
                 loginBtnGroup, errorLabel);
         loginBase.setSpacing(15);
+        if(!cameFromMainUI){
         loginBase.setDisable(true);
-        loginBase.setOpacity(0);
+        loginBase.setOpacity(0);}
+        
+        
 
         // this is the swicth group this is here so that I would be able to switch one out for the other once I'm done with one set of buttons
         StackPane switchGrp = new StackPane();
@@ -203,11 +222,12 @@ public class LoginUI extends StackPane {
             @Override
             public void handle(ActionEvent e) {
 
-                User user = new User(usernameInput.getText(),passwordInput.getText(), false);
+                User user = new User(usernameInput.getText(), passwordInput.getText(), false);
 
                 if (user.getSuccess()) {
                     if (playerNumber == 1) {
-                        menuUI mainMenu = new menuUI(stage, veiwer);
+                        menuUI mainMenu;
+                        mainMenu = new menuUI(stage, veiwer, user1, user);
                         Scene mainMenuscene = new Scene(mainMenu);
                         stage.setScene(mainMenuscene);
                     } else {
@@ -215,7 +235,8 @@ public class LoginUI extends StackPane {
                         usernameInput.clear();
                         passwordInput.clear();
                         errorLabel.setText("Logged in the first player, please enter second player ");
-                   }
+                        user1 = user;
+                    }
                 } else {
                     passwordInput.clear();
                     errorLabel.setText("Username or password was incorrect");
@@ -227,13 +248,21 @@ public class LoginUI extends StackPane {
             @Override
             public void handle(ActionEvent e) {
 
+                if (passwordInput.getText().length() < 5) {
+                    errorLabel.setText("the password length is too small - less than 5 ");
+                    return;
+                }
 
+                if (usernameInput.getText().length() < 2) {
+                    errorLabel.setText("the password length is too small - less than 2");
+                    return;
+                }
 
                 User user = new User(usernameInput.getText(), passwordInput.getText(), true);
 
                 if (user.getSuccess()) {
                     if (playerNumber == 1) {
-                        menuUI mainMenu = new menuUI(stage, veiwer);
+                        menuUI mainMenu = new menuUI(stage, veiwer, user1, user);
                         Scene mainMenuscene = new Scene(mainMenu);
                         stage.setScene(mainMenuscene);
                     } else {
@@ -241,6 +270,7 @@ public class LoginUI extends StackPane {
                         usernameInput.clear();
                         passwordInput.clear();
                         errorLabel.setText("Created the first player, please enter second player ");
+                        user1 = user;
 
                     }
                 } else {

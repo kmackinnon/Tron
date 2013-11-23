@@ -77,21 +77,21 @@ public class Map {
     public static Map makeDemo(Display display) {
         Map map = new Map(75, 50, null, display);
 
-        map.addPlayer(null, "0xF00", Player.Direction.LEFT, 37, 25);
+        map.addPlayer(null, "0xF00", Player.Direction.RIGHT, 0, 49);
         Player player1 = map.getPlayer(0);
         controller.addBinding(new MovePlayerDown(KeyCode.S, player1));
         controller.addBinding(new MovePlayerLeft(KeyCode.A, player1));
         controller.addBinding(new MovePlayerUp(KeyCode.W, player1));
         controller.addBinding(new MovePlayerRight(KeyCode.D, player1));
-        player1.moveLeft(); // starting direction
+        player1.moveRight(); // starting direction
 
-        map.addPlayer(null, "0x00F", Player.Direction.RIGHT, 38, 25);
+        map.addPlayer(null, "0x00F", Player.Direction.LEFT, 74, 0);
         Player player2 = map.getPlayer(1);
         controller.addBinding(new MovePlayerDown(KeyCode.K, player2));
         controller.addBinding(new MovePlayerLeft(KeyCode.J, player2));
         controller.addBinding(new MovePlayerUp(KeyCode.I, player2));
         controller.addBinding(new MovePlayerRight(KeyCode.L, player2));
-        player2.moveRight(); // starting direction
+        player2.moveLeft(); // starting direction
 
         map.setSpeed(5);
         return map;

@@ -25,13 +25,18 @@ public class LightRacer extends Application {
 
         launch(args);
     }
+    /**
+     *
+     * @param stage
+     */
+    @Override
     public void start(final Stage stage) {
         
         final Image background = new Image("/image/background.png");
         ImageView veiwer = new ImageView();
         veiwer.setImage(background);
 
-        LoginUI startScreen = new LoginUI(stage, veiwer);
+        LoginUI startScreen = new LoginUI(stage, veiwer,null);
         Scene startScreenScene = new Scene(startScreen);
         stage.setScene(startScreenScene);
         stage.setTitle("Light Racer");
