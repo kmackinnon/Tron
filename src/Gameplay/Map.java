@@ -18,7 +18,7 @@ import javafx.scene.input.KeyCode;
  * Contains details concerning the current map in play, and determines if a
  * collision has occurred.
  *
- * @author draringi
+ * @author Michael Williams, Keith MacKinnon
  */
 public class Map {
 
@@ -55,12 +55,18 @@ public class Map {
      *
      * @param x
      * @param y
-     * @return
+     * @return true or false if a collision occurred
      */
     public boolean collides(int x, int y) {
         return internal.collides(x, y);
     }
 
+    /**
+     *
+     * @param mapString
+     * @param colour
+     * @return a BitSet which defines the map to be used
+     */
     private BitSet mapParse(String mapString, String colour) {
         Matcher m = headerParser.matcher(mapString);
         String head[];
@@ -74,6 +80,13 @@ public class Map {
         return map;
     }
 
+    /**
+     * Creates a map and associated keys to control both players and sets
+     * initial positions and directions.
+     *
+     * @param display
+     * @return map for the game board
+     */
     public static Map makeDemo(Display display) {
         Map map = new Map(75, 50, null, display);
 
@@ -97,32 +110,63 @@ public class Map {
         return map;
     }
 
+    /**
+     * Starts the thread.
+     */
     public void run() {
         new Thread(internal).start();
     }
 
+    /**
+     *
+     * @param i the index of the player (0 or 1)
+     * @return player 1 or player 2
+     */
     public Player getPlayer(int i) {
         return internal.getPlayer(i);
     }
 
+    /**
+     * Adds a user with starting game information.
+     *
+     * @param user
+     * @param colour
+     * @param direction
+     * @param x
+     * @param y
+     */
     public void addPlayer(User user, String colour, Player.Direction direction, int x, int y) {
         internal.addPlayer(user, colour, direction, x, y);
     }
-    
+
+    /**
+     * Adds a player with starting game information.
+     *
+     * @param player
+     * @param direction
+     * @param x
+     * @param y
+     */
     public void addPlayer(Player player, Player.Direction direction, int x, int y) {
         internal.addPlayer(player, direction, x, y);
     }
 
+    /**
+     * Show a wall at current position of the player
+     *
+     * @param x
+     * @param y
+     * @param colour
+     */
     public void displayPlayer(int x, int y, String colour) {
         myDisplay.displayWall(x, y, colour);
     }
 
     /**
-     * Generates Map from string
+     * Generates Map from String
      *
-     * @param mapString string formated map
-     * @param colour String containing colour of base walls in hexadecimal
-     * format
+     * @param mapString string formatted map
+     * @param colour String containing colour of base walls in hex format
      * @param game
      * @param display
      */
@@ -149,6 +193,9 @@ public class Map {
         controller.clear();
     }
 
+    /**
+     * Inner class to perform related tasks. TODO Explain this better
+     */
     private class MapTask extends Task<Void> {
 
         private final BitSet map;
@@ -163,10 +210,6 @@ public class Map {
         private final Map parent;
         private final ConcurrentLinkedQueue<Move> moveQueue;
 
-        public void addWall(int xPos, int yPos, String colour) {
-            moveQueue.add(new Move(xPos, yPos, colour));
-        }
-
         public MapTask(int width, int height, GameInfo game, Display display, BitSet map, Map parent) {
             myGame = game;
             myDisplay = display;
@@ -178,6 +221,22 @@ public class Map {
             moveQueue = new ConcurrentLinkedQueue();
         }
 
+        /**
+         * Adds a wall at given position.
+         *
+         * @param xPos
+         * @param yPos
+         * @param colour
+         */
+        public void addWall(int xPos, int yPos, String colour) {
+            moveQueue.add(new Move(xPos, yPos, colour));
+        }
+
+        /**
+         * Used to tell the display whether the round is still in progress.
+         *
+         * @return
+         */
         @Override
         public Void call() {
             running = true;
@@ -187,7 +246,7 @@ public class Map {
                 }
                 gameRound();
             }
-            
+
 //            if (aliveCount == 0){
 //                // DRAW
 //                myGame.endRound(true, null); // 2nd param is user's string
@@ -195,12 +254,15 @@ public class Map {
 //                // One player wins
 //                myGame.endRound(true, null); // 2nd param is winning user
 //            }
-            
             myDisplay.gameover();
-            
-            return null;
+
+            return null; // TODO is this necessary?
         }
 
+        /**
+         * When moving into a cell on the grid, set the cell index as moved.
+         * Also display the wall with appropriate colour.
+         */
         private void listenPlayers() {
             Move move;
             while (!moveQueue.isEmpty()) {
@@ -210,22 +272,48 @@ public class Map {
             }
         }
 
+        /**
+         * Sets the sleep interval based on the frequency
+         * @param hz 
+         */
         public void setSpeed(int hz) {
             sleep = 1000 / hz;
         }
 
+        /** 
+         * Used to get the cell index on the game map.
+         * @param x
+         * @param y
+         * @return the index of the cell
+         */
         private int getCellIndex(int x, int y) {
             return y * width + x;
         }
 
+        /**
+         * Defines the exterior of the grid.
+         * 
+         * @param x
+         * @param y
+         * @return true or false if player moves outside of grid
+         */
         private boolean outside(int x, int y) {
             return (x >= width || x < 0 || y >= height || y < 0);
         }
 
+        /** 
+         * Gets the player from the playerList. 
+         * @param i
+         * @return the player at the specified index
+         */
         public Player getPlayer(int i) {
             return playerList.get(i);
         }
 
+        /**
+         * Defines a round occurring as part of a game. 
+         * Determines characteristics such as who is still alive.
+         */
         private void gameRound() {
             Iterator<Player> it;
             for (it = playerList.iterator(); it.hasNext();) {
@@ -242,20 +330,20 @@ public class Map {
                     displayPlayer(player.getX(), player.getY(), player.getColour());
                 }
             }
-            
+
             // checks for who is alive
-            for (it = playerList.iterator(); it.hasNext();){
+            for (it = playerList.iterator(); it.hasNext();) {
                 Player player = it.next();
-                if (player.getIsAlive()){
+                if (player.getIsAlive()) {
                     aliveCount++;
                 }
             }
-            
+
             // at least one of the players is dead so game should end
-            if (aliveCount < 2){
+            if (aliveCount < 2) {
                 running = false;
             }
-            
+
             try {
                 Thread.sleep(sleep);
             } catch (InterruptedException ex) {
@@ -265,14 +353,14 @@ public class Map {
             }
         }
 
-        public void addPlayer(User user, String colour, Player.Direction direction, int x, int y) {//TODO: change direction to enum
-          Player player = new Player(x, y, colour, user, parent, direction);
-          playerList.add(player);
+        public void addPlayer(User user, String colour, Player.Direction direction, int x, int y) {
+            Player player = new Player(x, y, colour, user, parent, direction);
+            playerList.add(player);
         }
-        
+
         public void addPlayer(Player player, Player.Direction direction, int x, int y) {
-          player.init(x, y, direction);
-          playerList.add(player);
+            player.init(x, y, direction);
+            playerList.add(player);
         }
 
         public boolean collides(int x, int y) {
