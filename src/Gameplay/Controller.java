@@ -32,7 +32,13 @@ public class Controller implements EventHandler<KeyEvent> {
     @Override
     public void handle(KeyEvent e) {
         Input input = inputList.get(e.getCode());
-        input.command();
+        
+        // Need try-catch in case user types keys other than expected
+        try {
+            input.command(); 
+        } catch (NullPointerException ex){
+            // do nothing
+        }
     }
 
 }
