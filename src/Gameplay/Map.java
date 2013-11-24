@@ -193,9 +193,7 @@ public class Map {
         controller.clear();
     }
 
-    /**
-     * Inner class to perform related tasks. TODO Explain this better
-     */
+    // inner class representing a thread
     private class MapTask extends Task<Void> {
 
         private final BitSet map;
@@ -221,22 +219,10 @@ public class Map {
             moveQueue = new ConcurrentLinkedQueue();
         }
 
-        /**
-         * Adds a wall at given position.
-         *
-         * @param xPos
-         * @param yPos
-         * @param colour
-         */
         public void addWall(int xPos, int yPos, String colour) {
             moveQueue.add(new Move(xPos, yPos, colour));
         }
 
-        /**
-         * Used to tell the display whether the round is still in progress.
-         *
-         * @return
-         */
         @Override
         public Void call() {
             running = true;
@@ -259,10 +245,6 @@ public class Map {
             return null; // TODO is this necessary?
         }
 
-        /**
-         * When moving into a cell on the grid, set the cell index as moved.
-         * Also display the wall with appropriate colour.
-         */
         private void listenPlayers() {
             Move move;
             while (!moveQueue.isEmpty()) {
@@ -272,40 +254,18 @@ public class Map {
             }
         }
 
-        /**
-         * Sets the sleep interval based on the frequency
-         * @param hz 
-         */
         public void setSpeed(int hz) {
             sleep = 1000 / hz;
         }
 
-        /** 
-         * Used to get the cell index on the game map.
-         * @param x
-         * @param y
-         * @return the index of the cell
-         */
         private int getCellIndex(int x, int y) {
             return y * width + x;
         }
 
-        /**
-         * Defines the exterior of the grid.
-         * 
-         * @param x
-         * @param y
-         * @return true or false if player moves outside of grid
-         */
         private boolean outside(int x, int y) {
             return (x >= width || x < 0 || y >= height || y < 0);
         }
 
-        /** 
-         * Gets the player from the playerList. 
-         * @param i
-         * @return the player at the specified index
-         */
         public Player getPlayer(int i) {
             return playerList.get(i);
         }
@@ -325,10 +285,6 @@ public class Map {
           return dead;
         }
 
-        /**
-         * Defines a round occurring as part of a game. 
-         * Determines characteristics such as who is still alive.
-         */
         private void gameRound() {
             Iterator<Player> it;
             for (it = playerList.iterator(); it.hasNext();) {
