@@ -309,6 +309,21 @@ public class Map {
         public Player getPlayer(int i) {
             return playerList.get(i);
         }
+        
+        private boolean sameSquare(Player player) {
+          Iterator<Player> it;
+          boolean dead = false;
+          int x = player.getX();
+          int y = player.getY();
+          for (it = playerList.iterator(); it.hasNext();) {
+            Player other = it.next();
+            if (other != player && other.getIsAlive() && x == other.getX() && y == other.getY()) {
+              other.setIsAlive(false);
+              dead = true;
+            }
+          }
+          return dead;
+        }
 
         /**
          * Defines a round occurring as part of a game. 
@@ -318,12 +333,17 @@ public class Map {
             Iterator<Player> it;
             for (it = playerList.iterator(); it.hasNext();) {
                 Player player = it.next();
-                player.moveCurrent();
+                if (player.getIsAlive()){
+                  player.moveCurrent();
+                }
             }
             listenPlayers();
             for (it = playerList.iterator(); it.hasNext();) {
                 Player player = it.next();
-                if (collides(player.getX(), player.getY())) {
+                if (!player.getIsAlive()){
+                  continue;
+                }
+                if (collides(player.getX(), player.getY()) || sameSquare(player)) {
                     running = false;
                     player.setIsAlive(false);
                 } else {
