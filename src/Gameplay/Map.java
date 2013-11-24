@@ -7,7 +7,7 @@ import UserInterface.Display;
 import java.util.BitSet;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
-import java.util.Vector;
+import java.util.LinkedList;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -157,7 +157,7 @@ public class Map {
         private boolean running;
         private int aliveCount = 0;
         private int sleep;
-        private final Vector<Player> playerList;
+        private final LinkedList<Player> playerList;
         private final GameInfo myGame;
         private final Display myDisplay;
         private final Map parent;
@@ -173,7 +173,7 @@ public class Map {
             this.width = width;
             this.height = height;
             this.map = map;
-            playerList = new Vector();
+            playerList = new LinkedList();
             this.parent = parent;
             moveQueue = new ConcurrentLinkedQueue();
         }
