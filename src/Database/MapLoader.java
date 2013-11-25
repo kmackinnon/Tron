@@ -5,7 +5,7 @@ import UserInterface.Display;
 
 public abstract class MapLoader {
 
-  protect String name;
+  protected String name;
 
     
   public Map loadMap(Display display, GameInfo game) {

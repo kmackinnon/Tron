@@ -11,7 +11,7 @@ public class DBMapLoader extends MapLoader {
   }
 
   protected String openMap(){
-    return ""
+    return null;
   }
 
 }
