@@ -11,6 +11,7 @@ public class GameInfo {
   private int winner;
 
   private Map current;
+  private MapLoader baseMap;
   
 
     /**
@@ -22,15 +23,15 @@ public class GameInfo {
    * 
    * @element-type MapLoader
    */
-  private MapLoader currentMapInit;
-  private final LinkedList<MapLoader>  mapList;
   private static final DatabaseInterface myDatabaseInterface = new SQLiteInterface(".lightracer.db");
+  private int speed;
 
   
-  public GameInfo (User playerOne, String playerOneColour, User playerTwo, String playerTwoColour){
+  public GameInfo (User playerOne, String playerOneColour, User playerTwo, String playerTwoColour, int speed, MapLoader map){
     winner = -1;
+    this.speed = speed;
     playerList = new ArrayList(2);
-    mapList = new LinkedList();
+    this.baseMap = map;
     playerList.add(new Player(playerOne, playerOneColour));
     playerList.add(new Player(playerTwo, playerTwoColour));
   }
@@ -39,8 +40,7 @@ public class GameInfo {
    * 
    */
   public void startRound() {
-    currentMapInit = mapList.poll();
-    current = currentMapInit.loadMap();
+    current = baseMap.loadMap();
     current.addPlayer(playerList.get(0), Player.Direction.UP, 24, 24);
     current.addPlayer(playerList.get(1), Player.Direction.DOWN, 26, 26);
     current.run();
@@ -77,10 +77,6 @@ public class GameInfo {
       player.winGame();
       return true;
     }
-  }
-  
-  public boolean addMap(MapLoader map){
-    return mapList.add(map);
   }
   
   public String getPlayerName(int index){
