@@ -20,15 +20,16 @@ import javafx.stage.Stage;
 
 public class menuUI extends StackPane {
 
-    Label desctiptionLabel;
+    Label desctiptionLabel, speedLabel;
     ImageView veiwer, mapSelect;
     User firstUser, secondUser;
     boolean isSinglePlayer;
     Rectangle colorOne, colorTwo;
-    int colorOnePlace, colorTwoPlace;
+    int colorOnePlace, colorTwoPlace,mapposition,speed=10;
     final String[] COLORS = {"0xF00", "0xFF0", "0x0F0", "0x0FF", "0x00F", "0xF0F"};
     Image[] maps = new Image[3];
-    int mapposition;
+    
+    
 
     public menuUI(final Stage stage, final ImageView veiwer, User userA, User userB) {
 
@@ -115,11 +116,25 @@ public class menuUI extends StackPane {
         } else {
             colorLabel.setText("Select " + firstUser.getUsername() + "'s color     Select " + secondUser.getUsername() + "'s color ");
         }
+       
+        HBox speedStartGrp=new HBox();
+        
 
-
+        Button leftSpeedBtn = new Button("←");
+        Button rightSpeedBtn = new Button("→");
+        
+        speedLabel= new Label("  Map Speed : "+String.valueOf(speed));
+        speedLabel.setFont(new Font(20));
+        speedLabel.setTextFill(Color.WHITE);
+        speedLabel.setMinWidth(165);
+        
+        
+        speedStartGrp.setAlignment(Pos.CENTER);
+        speedStartGrp.getChildren().addAll(leftSpeedBtn,speedLabel,rightSpeedBtn,new Label("      "),playBtn);
+        
         gameInitGrp.setSpacing(40);
         gameInitGrp.setAlignment(Pos.CENTER);
-        gameInitGrp.getChildren().addAll(mapLabel, mapGrp, colorLabel, colorGrp, playBtn);
+        gameInitGrp.getChildren().addAll(mapLabel, mapGrp, colorLabel, colorGrp, speedStartGrp);
         if (isSinglePlayer) {
             gameInitGrp.setDisable(true);
         }
@@ -162,19 +177,19 @@ public class menuUI extends StackPane {
         playerTwoStatWinLabel.setTextFill(Color.WHITE);
         
         //playerTwoStatWinLabel.setText("Games Played:"+(method to get games played)+" Wins:"+(method to get wins));
-        playerTwoStatWinLabel.setText("Games Played: 30 \n     Wins:25");
+        playerTwoStatWinLabel.setText("Games Played: 30\n     Wins: 25");
         
-        Label heaToHeadLabel = new Label("Head-To-Head");
-        heaToHeadLabel.setFont(new Font(20));
-        heaToHeadLabel.setTextFill(Color.WHITE);
+        Label headToHeadLabel = new Label("Head-To-Head");
+        headToHeadLabel.setFont(new Font(20));
+        headToHeadLabel.setTextFill(Color.WHITE);
         
         Label heaToHeadWinLabel = new Label();
         heaToHeadWinLabel.setFont(new Font(20));
         heaToHeadWinLabel.setTextFill(Color.WHITE);
         //heaToHeadWinLabel.setText(firstUser.getUsername()+" wons "+ Method to get the games won vs +" games vs "+ secondUser.getUsername());
-        heaToHeadWinLabel.setText(firstUser.getUsername()+" wons 5 games vs "+ secondUser.getUsername());
+        heaToHeadWinLabel.setText(firstUser.getUsername()+" won 5 games vs "+ secondUser.getUsername());
         
-        winStats.getChildren().addAll(playerOneStatLabel,playerOneStatWinLabel,playerTwoStatLabel,playerTwoStatWinLabel,heaToHeadLabel,heaToHeadWinLabel);
+        winStats.getChildren().addAll(playerOneStatLabel,playerOneStatWinLabel,playerTwoStatLabel,playerTwoStatWinLabel,headToHeadLabel,heaToHeadWinLabel);
         
         }
 
@@ -184,7 +199,7 @@ public class menuUI extends StackPane {
         top10Label.setTextFill(Color.WHITE);
         top10Label.setMinWidth(200);
         
-        top10Label.setText("bob  170 \nviviexe 32 \nbill 16 \nsteve 13\nvic 11\njill 9\njen 5\ntest 4\ntest1 2 \ntest3 1");
+        top10Label.setText("Top 10 Players\n\nbob  170 \nviviexe 32 \nbill 16 \nsteve 13\nvic 11\njill 9\njen 5\ntest 4\ntest1 2 \ntest3 1");
         //top10Label.setText((call the method that would give me the top 10 players));
         
         statisticsGrp.setAlignment(Pos.CENTER);
@@ -355,6 +370,23 @@ public class menuUI extends StackPane {
                     mapposition++;
                 }
                 mapSelect.setImage(maps[mapposition]);
+            }
+        });
+        leftSpeedBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                if(speed!=5)
+                speed--;
+                 speedLabel.setText("  Map Speed : "+String.valueOf(speed));
+            }
+        });
+
+        rightSpeedBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                if(speed!=20)
+                speed++;
+                speedLabel.setText("  Map Speed : "+String.valueOf(speed));
             }
         });
 

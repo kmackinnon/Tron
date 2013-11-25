@@ -38,13 +38,13 @@ public class LoginUI extends StackPane {
     Label errorLabel;
     PasswordField passwordInput;
     ImageView veiwer;
-    User user1;
+    User user;
 
     public LoginUI(final Stage stage, final ImageView veiwer, User loggedInPlayer) {
 
         boolean cameFromMainUI;
-        this.user1 = loggedInPlayer;
-        if (user1 != null) {
+        this.user = loggedInPlayer;
+        if (user != null) {
             cameFromMainUI = true;
             playerNumber=1;
         } else {
@@ -222,12 +222,19 @@ public class LoginUI extends StackPane {
             @Override
             public void handle(ActionEvent e) {
 
+                if(user!=null && usernameInput.getText().equals(user.getUsername()))
+                {
+                    passwordInput.clear();
+                    errorLabel.setText("That user is already logged in");
+                    return;
+                }
+                
                 User user = new User(usernameInput.getText(), passwordInput.getText(), false);
 
                 if (user.getSuccess()) {
                     if (playerNumber == 1) {
                         menuUI mainMenu;
-                        mainMenu = new menuUI(stage, veiwer, user1, user);
+                        mainMenu = new menuUI(stage, veiwer, LoginUI.this.user, user);
                         Scene mainMenuscene = new Scene(mainMenu);
                         stage.setScene(mainMenuscene);
                     } else {
@@ -235,7 +242,7 @@ public class LoginUI extends StackPane {
                         usernameInput.clear();
                         passwordInput.clear();
                         errorLabel.setText("Logged in the first player, please enter second player ");
-                        user1 = user;
+                        LoginUI.this.user = user;
                     }
                 } else {
                     passwordInput.clear();
@@ -248,12 +255,14 @@ public class LoginUI extends StackPane {
             @Override
             public void handle(ActionEvent e) {
 
-                if (passwordInput.getText().length() < 5) {
-                    errorLabel.setText("the password length is too small - less than 5 ");
+                if (passwordInput.getText().length() < 8) {
+                    passwordInput.clear();
+                    errorLabel.setText("the password length is too small - less than 8 ");
                     return;
                 }
 
                 if (usernameInput.getText().length() < 2) {
+                    passwordInput.clear();
                     errorLabel.setText("the password length is too small - less than 2");
                     return;
                 }
@@ -262,7 +271,7 @@ public class LoginUI extends StackPane {
 
                 if (user.getSuccess()) {
                     if (playerNumber == 1) {
-                        menuUI mainMenu = new menuUI(stage, veiwer, user1, user);
+                        menuUI mainMenu = new menuUI(stage, veiwer, LoginUI.this.user, user);
                         Scene mainMenuscene = new Scene(mainMenu);
                         stage.setScene(mainMenuscene);
                     } else {
@@ -270,7 +279,7 @@ public class LoginUI extends StackPane {
                         usernameInput.clear();
                         passwordInput.clear();
                         errorLabel.setText("Created the first player, please enter second player ");
-                        user1 = user;
+                        LoginUI.this.user = user;
 
                     }
                 } else {
