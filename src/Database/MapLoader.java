@@ -1,11 +1,11 @@
 package Database;
 
 import Gameplay.Map;
-import UserInterface.Display
+import UserInterface.Display;
 
 public abstract class MapLoader {
 
-  private String name;
+  protect String name;
 
     
   public Map loadMap(Display display, GameInfo game) {

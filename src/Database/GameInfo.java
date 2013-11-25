@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Iterator;
 import Gameplay.Map;
 import Gameplay.Player;
+import UserInterface.Display;
 
 public class GameInfo {
 
@@ -12,6 +13,7 @@ public class GameInfo {
 
   private Map current;
   private MapLoader baseMap;
+  private Display display;
   
 
     /**
@@ -26,7 +28,10 @@ public class GameInfo {
   private static final DatabaseInterface myDatabaseInterface = new SQLiteInterface(".lightracer.db");
   private int speed;
 
-  
+  public void setDisplay(Display display) {
+    this.display = display;
+  }
+
   public GameInfo (User playerOne, String playerOneColour, User playerTwo, String playerTwoColour, int speed, MapLoader map){
     winner = -1;
     this.speed = speed;
@@ -40,7 +45,7 @@ public class GameInfo {
    * 
    */
   public void startRound() {
-    current = baseMap.loadMap();
+    current = baseMap.loadMap(display, this);
     current.addPlayer(playerList.get(0), Player.Direction.UP, 24, 24);
     current.addPlayer(playerList.get(1), Player.Direction.DOWN, 26, 26);
     current.run();
@@ -48,7 +53,7 @@ public class GameInfo {
   
   public void endRound(boolean draw, Player victor){
     if ( draw ) {
-      current = currentMapInit.loadMap();
+      current = baseMap.loadMap(display, this);
       current.addPlayer(playerList.get(0), Player.Direction.UP, 24, 24);
       current.addPlayer(playerList.get(1), Player.Direction.DOWN, 26, 26);
       current.run();

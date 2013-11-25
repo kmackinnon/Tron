@@ -6,12 +6,12 @@ public class DBMapLoader extends MapLoader {
 
   private static final DatabaseInterface db = new SQLiteInterface(".lightracer.db");
 
-  public MapLoader(String mapName) {
-    name = mapName
+  public DBMapLoader(String mapName) {
+    name = mapName;
   }
 
   protected String openMap(){
-    
+    return ""
   }
 
 }
