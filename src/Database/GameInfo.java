@@ -59,7 +59,7 @@ public class GameInfo {
             int i = 0;
             for (it = playerList.iterator(); it.hasNext();) {
                 p = it.next();
-                if (p.getWins() >= 2) {
+                if (p.getNumRoundsWon() >= 2) {
                     winner = i;
                     return;
                 }

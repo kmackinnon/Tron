@@ -14,7 +14,7 @@ public class Player {
     private int yPos;
     private Direction currentDirection;
     private boolean isAlive;
-    private int wins;
+    private int roundsWon;
 
     private final String colour;
 
@@ -25,7 +25,17 @@ public class Player {
     private final User myUser;
     private boolean moved;
 
-    //used to give starting coords for new game 
+    /**
+     * 
+     * @param xStart
+     * @param yStart
+     * @param colour
+     * @param user
+     * @param map
+     * @param startingDirection 
+     * 
+     * used to give starting coords for new game 
+     */
     public Player(int xStart, int yStart, String colour, User user, Map map, Direction startingDirection) {
         this.xPos = xStart;
         this.yPos = yStart;
@@ -37,6 +47,11 @@ public class Player {
         isAlive = true; // player starts round alive
     }
     
+    /**
+     * 
+     * @param user
+     * @param colour 
+     */
     public Player(User user, String colour){
       this.colour = colour;
       this.myUser = user;
@@ -71,16 +86,31 @@ public class Player {
         this.yPos = y;
     }
 
+    /**
+     *
+     * @param isAlive 
+     */
     public void setIsAlive(boolean isAlive) {
         this.isAlive = isAlive;
     }
     
+    /**
+     * 
+     * @param xStart
+     * @param yStart
+     * @param startingDirection 
+     * 
+     * Set initial position and moving direction on the grid
+     */
     public void init(int xStart, int yStart, Direction startingDirection){
       this.xPos = xStart;
       this.yPos = yStart;
       this.currentDirection = startingDirection;
     }
 
+    /**
+     * Change direction to move up
+     */
     public void moveUp() {
         //needs to be currently moving left or right
         if (!moved && (this.currentDirection == Direction.LEFT || this.currentDirection == Direction.RIGHT)) {
@@ -90,6 +120,9 @@ public class Player {
         }
     }
 
+    /**
+     * Change direction to move down
+     */
     public void moveDown() {
         //player needs to be moving left or right
         if (!moved && (this.currentDirection == Direction.LEFT || this.currentDirection == Direction.RIGHT)) {
@@ -99,6 +132,9 @@ public class Player {
         }
     }
 
+    /**
+     * Change direction to move right
+     */
     public void moveRight() {
         //player needs to be moving up or down
         if (!moved && (this.currentDirection == Direction.UP || this.currentDirection == Direction.DOWN)) {
@@ -108,6 +144,9 @@ public class Player {
         }
     }
 
+    /**
+     * Change direction to move left
+     */
     public void moveLeft() {
         //player needs to be moving up or down
         if (!moved && (this.currentDirection == Direction.UP || this.currentDirection == Direction.DOWN)) {
@@ -116,7 +155,10 @@ public class Player {
             moved = true;
         }
     }
-
+    
+    /**
+     * add a wall to initial spot and update position (x or y coordinate) based on direction
+     */
     public void moveCurrent() {
         //add wall, to current position and color
         myMap.addWall(this.xPos, this.yPos, this.colour);
@@ -141,11 +183,19 @@ public class Player {
 
     }
 
+    /**
+     * increments the number of rounds won
+     */
     public void winRound() {
-      wins++;
+      roundsWon++;
     }
-    public int getWins(){
-      return wins;
+    
+    /**
+     * gets the number of rounds won
+     * @return 
+     */
+    public int getNumRoundsWon(){
+      return roundsWon;
     }
     //these send the updated end of game stats to the DB.
     public void winGame() {
