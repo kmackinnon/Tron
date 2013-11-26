@@ -213,6 +213,23 @@ public class Map {
         internal = new MapTask(width, height, game, display, new BitSet(width * height), this);
         controller.clear();
     }
+    
+    private BitSet loadMapDataFromBinary (byte data[]){
+      if (data.length != (width * height)/8){//8 bits in a byte
+        return null;
+      }
+      return BitSet.valueOf(data);
+      
+    }
+    
+    public Map(int width, int height, byte mapData[], GameInfo game, Display display){
+        this.width = width;
+        this.height = height;
+        BitSet map = loadMapDataFromBinary(mapData);
+        myDisplay = display;
+        internal = new MapTask(width, height, game, display, map, this);
+        controller.clear();
+    }
 
     // inner class representing a thread
     private class MapTask extends Task<Void> {
