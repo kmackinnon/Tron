@@ -4,6 +4,7 @@
  */
 package UserInterface;
 
+import Database.GameInfo;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.paint.Color;
@@ -15,16 +16,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 
-import Gameplay.Map;
 import Gameplay.Controller;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
-import javafx.animation.PauseTransition;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -38,18 +34,22 @@ public class Display extends StackPane {
     final int verticalGridSize = 50;
     private Rectangle grid[][];
     StackPane gameoverTotal;
-    Map baseMap;
     Button startBtn;
     Button restartBtn;
     final Controller controller;
     ImageView Veiwer;
+    GameInfo GameInfo;
     
     
     
     
 
-    public Display(final Stage stage,ImageView veiwer) {
+    public Display(final Stage stage,ImageView veiwer,GameInfo gameInfo) {
 
+        this.GameInfo=gameInfo;
+        
+        GameInfo.setDisplay(this);
+        
         this.Veiwer = veiwer;
         
         controller = Controller.getInstance();
@@ -89,7 +89,7 @@ public class Display extends StackPane {
         getChildren().add(gameoverTotal);
         getChildren().add(startBtn);
         setOnKeyPressed(controller);
-        baseMap = Map.makeDemo(this);
+        
         
         
         /*for (int i = 15; i < 25; i++) {
@@ -103,6 +103,8 @@ public class Display extends StackPane {
                displayWall(i, j, "0x000");
             }
         }*/
+        
+        
        /* for (int i = 30; i < 45; i++) {
             for (int j = 20; j < 30; j++) {
                displayWall(i, j, "0x000");
@@ -141,7 +143,7 @@ public class Display extends StackPane {
                 //baseMap = Map.makeDemo(this);
                 clearGrid();
                 
-                Display Gameplay = new Display(stage, Veiwer);
+                Display Gameplay = new Display(stage, Veiwer,GameInfo);
                 Scene Gameplayscene = new Scene(Gameplay);
                 stage.setScene(Gameplayscene);
             }
@@ -153,7 +155,7 @@ public class Display extends StackPane {
             @Override
             public void handle(ActionEvent e) {
                 getChildren().remove(startBtn);
-                baseMap.run();
+                //baseMap.run();
             }
         });
     }
@@ -175,15 +177,6 @@ public class Display extends StackPane {
         for (int i = 0; i < horizontalGridSize; i++) {
             for (int j = 0; j < verticalGridSize; j++) {
                 grid[i][j].setFill(Color.GREY);
-            }
-        }
-    }
-    
-    public void displayMultipleWalls(int xposStart, int yposStart,int xposEnd, int yposEnd, String color)
-    {
-         for (int i = xposStart; i < xposEnd; i++) {
-            for (int j = yposStart; j < yposEnd; j++) {
-                grid[i][j].setFill(Color.BLACK);
             }
         }
     }

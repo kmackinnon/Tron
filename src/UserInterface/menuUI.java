@@ -1,5 +1,7 @@
 package UserInterface;
 
+import Database.DBMapLoader;
+import Database.GameInfo;
 import Database.User;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -9,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -255,9 +256,16 @@ public class menuUI extends StackPane {
         playBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                Display Gameplay = new Display(stage, veiwer);
-                Scene Gameplayscene = new Scene(Gameplay);
-                stage.setScene(Gameplayscene);
+                
+               DBMapLoader map =new DBMapLoader("BasicMap"+String.valueOf(mapposition+1));
+               
+               GameInfo gameInfo =new GameInfo(firstUser,COLORS[colorOnePlace],secondUser,COLORS[colorTwoPlace],speed,map);
+               
+                
+                
+               Display Gameplay = new Display(stage, veiwer,gameInfo);
+               Scene Gameplayscene = new Scene(Gameplay);
+               stage.setScene(Gameplayscene);
             }
         });
 
