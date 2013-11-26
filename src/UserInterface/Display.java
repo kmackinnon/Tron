@@ -47,13 +47,9 @@ public class Display extends StackPane {
      Label controllerLabel,roundLabel;
     ImageView Veiwer;
     
-    
-    
-    
-
     public Display(final Stage stage,ImageView veiwer,GameInfo gameInfo) {
 
-         GameInfo=gameInfo;
+        GameInfo=gameInfo;
         
         GameInfo.setDisplay(this);
         
@@ -96,7 +92,7 @@ public class Display extends StackPane {
         Label nameLabel = new Label(gameInfo.getPlayerName(0)+"                                               "+gameInfo.getPlayerName(1));
         nameLabel.setTextFill(Color.WHITE);
         nameLabel.setFont(new Font(20));
-        controllerLabel = new Label("up = W,left = A,down = S,right = D      Use up = I,left = J,down = K,right = L");
+        controllerLabel = new Label("up: W, left: A, down: S, right: D      up: I, left: J, down: K, right: L");
         controllerLabel.setTextFill(Color.WHITE);
         controllerLabel.setFont(new Font(20));
         roundLabel=new Label("Games Won : 0               Draws : 0               Games Won : 0");
@@ -142,10 +138,6 @@ displayWall(i, j, "0x000");
 }
 }*/
        
-        
-        
-
-
         //This is for the restart button when it is clicked, it will clear the map and fadeaway the gameover screen
         restartBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override

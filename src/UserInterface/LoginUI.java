@@ -259,13 +259,13 @@ public class LoginUI extends StackPane {
                 
                 if (password.length() < 8|| password.matches("[A-Za-z0-9 ]*")||password.equals(password.toLowerCase())||password.equals(password.toUpperCase())||!password.matches(".*\\d.*")) {
                     passwordInput.clear();
-                    errorLabel.setText("The password must be the following : greater than 7 characters,1 lowercase letter,1 uppercase letter, 1 number, and 1 special character ");
+                    errorLabel.setText("The password must be greater than 7 characters and contain at least: \n 1 lowercase letter, 1 uppercase letter, 1 number, and 1 special character ");
                     return;
                 }
 
                 if (usernameInput.getText().length() < 2) {
                     passwordInput.clear();
-                    errorLabel.setText("the password length is too small - less than 2");
+                    errorLabel.setText("The username length is too short - must be at least 2 characters");
                     return;
                 }
 
@@ -280,13 +280,13 @@ public class LoginUI extends StackPane {
                         playerNumber--;
                         usernameInput.clear();
                         passwordInput.clear();
-                        errorLabel.setText("Created the first player, please enter second player ");
+                        errorLabel.setText("Created the first player; please enter second player ");
                         LoginUI.this.user = user;
 
                     }
                 } else {
                     passwordInput.clear();
-                    errorLabel.setText("That username is already used, please try a different one ");
+                    errorLabel.setText("That username is already used; please try a different one ");
                 }
             }
         });
