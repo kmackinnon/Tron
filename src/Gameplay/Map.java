@@ -116,6 +116,11 @@ public class Map {
     public void run() {
         new Thread(internal).start();
     }
+    
+    public int getPlayerWins(int index) {
+      Player player = this.getPlayer(index);
+      return player.getNumRoundsWon();
+    }
 
     /**
      *
