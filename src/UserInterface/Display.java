@@ -46,6 +46,7 @@ public class Display extends StackPane {
     final Controller controller;
      Label controllerLabel,roundLabel;
     ImageView Veiwer;
+    VBox gameoverScreen;
     
     public Display(final Stage stage,ImageView veiwer,GameInfo gameInfo) {
 
@@ -66,15 +67,15 @@ public class Display extends StackPane {
 
         makeSquares(gridpanel);
 
-        VBox gameoverScreen = new VBox();
+        gameoverScreen = new VBox();
         restartBtn = new Button("Restart");
-        restartBtn.setCancelButton(true);
+        
         Label restartLabel = new Label("Game Over");
         restartLabel.setFont(new Font(26));
         restartLabel.setTextFill(Color.PINK);
         gameoverScreen.setAlignment(Pos.CENTER);
 
-        gameoverScreen.getChildren().addAll(restartLabel, restartBtn);
+        gameoverScreen.getChildren().addAll(restartLabel,restartBtn);
 
         Rectangle gameoverBack = new Rectangle();
         gameoverBack.setWidth(200);
@@ -233,7 +234,6 @@ displayWall(i, j, "0x000");
         fadeTransition.setFromValue(0.0);
         fadeTransition.setToValue(1.0);
         fadeTransition.play();
-        restartBtn.setDisable(false);
 
     }
 }

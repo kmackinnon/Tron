@@ -150,11 +150,11 @@ public class menuUI extends StackPane {
         
         VBox winStats=new VBox();
         winStats.setAlignment(Pos.CENTER);
-        winStats.setSpacing(20);
+        winStats.setSpacing(10);
         
         
         Label playerOneStatLabel = new Label(firstUser.getUsername());
-        playerOneStatLabel.setFont(new Font(20));
+        playerOneStatLabel.setFont(new Font(26));
         playerOneStatLabel.setTextFill(Color.WHITE);
         
         Label playerOneStatWinLabel = new Label();
@@ -162,7 +162,7 @@ public class menuUI extends StackPane {
         playerOneStatWinLabel.setTextFill(Color.WHITE);
         
         //playerOneStatWinLabel.setText("Games Played:"+(method to get games played)+" Wins:"+(method to get wins));
-        playerOneStatWinLabel.setText("Games Played: 16\n     Wins: 8");
+        playerOneStatWinLabel.setText("Games Played: 16\n        Wins: 8");
         
         if(isSinglePlayer){
             winStats.getChildren().addAll(playerOneStatLabel,playerOneStatWinLabel);
@@ -170,7 +170,7 @@ public class menuUI extends StackPane {
         else 
         {
         Label playerTwoStatLabel = new Label(secondUser.getUsername());
-        playerTwoStatLabel.setFont(new Font(20));
+        playerTwoStatLabel.setFont(new Font(26));
         playerTwoStatLabel.setTextFill(Color.WHITE);
         
          Label playerTwoStatWinLabel = new Label();
@@ -178,17 +178,17 @@ public class menuUI extends StackPane {
         playerTwoStatWinLabel.setTextFill(Color.WHITE);
         
         //playerTwoStatWinLabel.setText("Games Played:"+(method to get games played)+" Wins:"+(method to get wins));
-        playerTwoStatWinLabel.setText("Games Played: 30\n     Wins: 25");
+        playerTwoStatWinLabel.setText("Games Played: 30\n        Wins: 25");
         
         Label headToHeadLabel = new Label("Head-To-Head");
-        headToHeadLabel.setFont(new Font(20));
+        headToHeadLabel.setFont(new Font(26));
         headToHeadLabel.setTextFill(Color.WHITE);
         
         Label heaToHeadWinLabel = new Label();
         heaToHeadWinLabel.setFont(new Font(20));
         heaToHeadWinLabel.setTextFill(Color.WHITE);
         //heaToHeadWinLabel.setText(firstUser.getUsername()+" wons "+ Method to get the games won vs +" games vs "+ secondUser.getUsername());
-        heaToHeadWinLabel.setText(firstUser.getUsername()+" won 5 games vs "+ secondUser.getUsername());
+        heaToHeadWinLabel.setText(firstUser.getUsername()+" vs "+ secondUser.getUsername()+"\n         4-2");
         
         winStats.getChildren().addAll(playerOneStatLabel,playerOneStatWinLabel,playerTwoStatLabel,playerTwoStatWinLabel,headToHeadLabel,heaToHeadWinLabel);
         

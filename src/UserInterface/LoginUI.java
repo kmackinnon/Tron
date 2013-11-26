@@ -129,6 +129,7 @@ public class LoginUI extends StackPane {
         errorLabel = new Label();
         errorLabel.setTextFill(Color.WHITE);
         errorLabel.setFont(new Font(16));
+        errorLabel.setMinHeight(45);
 
         //finishing the group that contains most of thge login items  
         loginBase.setAlignment(Pos.CENTER);
