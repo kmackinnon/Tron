@@ -255,9 +255,11 @@ public class LoginUI extends StackPane {
             @Override
             public void handle(ActionEvent e) {
 
-                if (passwordInput.getText().length() < 8) {
+                String password = passwordInput.getText();
+                
+                if (password.length() < 8|| password.matches("[A-Za-z0-9 ]*")||password.equals(password.toLowerCase())||password.equals(password.toUpperCase())||!password.matches(".*\\d.*")) {
                     passwordInput.clear();
-                    errorLabel.setText("the password length is too small - less than 8 ");
+                    errorLabel.setText("The password must be the following : greater than 7 characters,1 lowercase letter,1 uppercase letter, 1 number, and 1 special character ");
                     return;
                 }
 
