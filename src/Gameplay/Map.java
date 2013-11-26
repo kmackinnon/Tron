@@ -23,6 +23,7 @@ import javafx.scene.input.KeyCode;
 public class Map {
 
     private static final Pattern headerParser = Pattern.compile("\\dx\\d");
+    private static final Pattern bodyParser = Pattern.compile("[01]+");
 
     private final MapTask internal;
     private int width, height;
@@ -72,11 +73,26 @@ public class Map {
         String head[];
         if (m.find()) {
             head = m.group().split("x");
-            m.find();
             width = Integer.parseInt(head[0]);
             height = Integer.parseInt(head[1]);
+        } else {
+          return null;
         }
         BitSet map = new BitSet();
+        String main = mapString.substring(m.end());
+        m = bodyParser.matcher(main);
+        if (!m.matches()){
+          return null;
+        }
+        char array[] = main.toCharArray();
+        if (array.length != width * height) {
+          return null;
+        }
+        for (int i = 0; i < array.length; i++) {
+          if (array[i] == '1') {
+            map.set(i);
+          }
+        }
         return map;
     }
 
