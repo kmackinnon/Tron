@@ -23,6 +23,7 @@ import javafx.scene.input.KeyCode;
 public class Map {
 
     private static final Pattern headerParser = Pattern.compile("\\dx\\d");
+    private static final Pattern bodyParser = Pattern.compile("[01]+");
 
     private final MapTask internal;
     private int width, height;
@@ -72,11 +73,26 @@ public class Map {
         String head[];
         if (m.find()) {
             head = m.group().split("x");
-            m.find();
             width = Integer.parseInt(head[0]);
             height = Integer.parseInt(head[1]);
+        } else {
+          return null;
         }
         BitSet map = new BitSet();
+        String main = mapString.substring(m.end());
+        m = bodyParser.matcher(main);
+        if (!m.matches()){
+          return null;
+        }
+        char array[] = main.toCharArray();
+        if (array.length != width * height) {
+          return null;
+        }
+        for (int i = 0; i < array.length; i++) {
+          if (array[i] == '1') {
+            map.set(i);
+          }
+        }
         return map;
     }
 
@@ -195,6 +211,23 @@ public class Map {
         this.height = height;
         myDisplay = display;
         internal = new MapTask(width, height, game, display, new BitSet(width * height), this);
+        controller.clear();
+    }
+    
+    private BitSet loadMapDataFromBinary (byte data[]){
+      if (data.length != (width * height)/8){//8 bits in a byte
+        return null;
+      }
+      return BitSet.valueOf(data);
+      
+    }
+    
+    public Map(int width, int height, byte mapData[], GameInfo game, Display display){
+        this.width = width;
+        this.height = height;
+        BitSet map = loadMapDataFromBinary(mapData);
+        myDisplay = display;
+        internal = new MapTask(width, height, game, display, map, this);
         controller.clear();
     }
 
