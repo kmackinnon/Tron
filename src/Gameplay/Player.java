@@ -216,8 +216,5 @@ public class Player {
     public void saveStats(){
         myUser.saveStats();
     }
-    public User getUser(){
-        return myUser;
-    }
 
 }

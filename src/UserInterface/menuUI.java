@@ -39,7 +39,7 @@ public class menuUI extends StackPane {
      * 
      * @param stage 
      * @param veiwer
-     * @param userA this will be null if in the loginUI, the player picked 1 player, or else this represents the first player
+     * @param userA this will be null if one the loginUI, the player picked 1 player, or else this represents the first player
      * @param userB this will never be null, will be the first player if single player or else it would be the second player
      */
 
@@ -219,7 +219,7 @@ public class menuUI extends StackPane {
         Label top10names[] =new Label[10];
         Label top10scores[] =new Label[10];
         
-        for(int i =0;i<10;i++)
+        for(int i =0;i<1;i++)
         {
             top10names[i]=new Label(top10[0][i]);
             top10names[i].setFont(new Font(20));
