@@ -80,10 +80,10 @@ public class SQLiteInterface extends DatabaseInterface {
     public User getUser(String username) {
         try {
           statement = connection.createStatement();
-          username = Base64.encodeBytes(username.getBytes());
+          String encodedUsername = Base64.encodeBytes(username.getBytes());
           int id;
           String user;
-          try (ResultSet result = statement.executeQuery("select * from Users where username = '" + username + "';")) {
+          try (ResultSet result = statement.executeQuery("select * from Users where username = '" + encodedUsername + "';")) {
             id = result.getInt("id");
             user = result.getString("username");
           }
@@ -91,7 +91,7 @@ public class SQLiteInterface extends DatabaseInterface {
           if (user == null) {
               return null;
           }
-          return new User(id, user);
+          return new User(id, username);
           //return id;
         } catch (SQLException e) {
           return null; //TODO: replace this with proper error handling...
