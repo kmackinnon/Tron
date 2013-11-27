@@ -31,7 +31,7 @@ public class User {
         }
     }
     
-    public static User create(String username, String password){
+    public static User createUser(String username, String password){
         return db.addUser(username, password);
     }
     
