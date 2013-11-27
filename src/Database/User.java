@@ -1,16 +1,14 @@
 package Database;
 
-import Gameplay.Player;
-
 public class User {
 
-    private String username;
     private int uid;
+    
+    private String username;
     private UserStatistics myStats;
     private final DatabaseInterface db = new SQLiteInterface(".lightracer.db");
-    private Player myPlayer;
     private boolean authenticated;
-    boolean success = false;
+    private boolean success;
 
     /**
      * 
@@ -35,41 +33,48 @@ public class User {
         } 
     }
 
-    public boolean getSuccess() {
-        return success;
-    }
-
-    public String getUsername() {
-        return this.username;
-    }
-
+    /**
+     * For future functionality if we wanted to implement it.
+     * @param password 
+     */
     public void changePassword(String password) {
         db.changePassword(this.uid, password);
     }
 
+    /**
+     * Set the authenticated field to true or false based on a login
+     * @param password 
+     */
     public void login(String password) {
-        if (db.confirmUser(this.uid, password)) {
-            authenticated = true;
-            //TODO actually log the user in...
-        } else {
-            authenticated = false;
-        }
+        authenticated = db.confirmUser(this.uid, password);
     }
 
     public void save() {
         db.updateUser(this.uid, this.myStats);
     }
 
-    //TODO how to set wins and losses
     public void win() {
         this.myStats.addWin();
     }
 
     public void lose() {
         this.myStats.addLoss();
+    }    
+    
+    // Accessors
+    public String getUsername() {
+        return this.username;
     }
-
+    
     public UserStatistics getStats() {
         return myStats;
+    }
+        
+    public boolean getAuthenticated() {
+        return authenticated;
+    }
+    
+    public boolean getSuccess() {
+        return success;
     }
 }
