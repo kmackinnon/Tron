@@ -177,19 +177,7 @@ public class Map {
      * @param y
      */
     public void addPlayer(Player player, Player.Direction direction, int x, int y) {
-        int i = internal.addPlayer(player, direction, x, y);
-        player = internal.getPlayer(i);
-        if (i == 0) {
-            controller.addBinding(new MovePlayerDown(KeyCode.S, player));
-            controller.addBinding(new MovePlayerLeft(KeyCode.A, player));
-            controller.addBinding(new MovePlayerUp(KeyCode.W, player));
-            controller.addBinding(new MovePlayerRight(KeyCode.D, player));
-        } else {
-            controller.addBinding(new MovePlayerDown(KeyCode.K, player));
-            controller.addBinding(new MovePlayerLeft(KeyCode.J, player));
-            controller.addBinding(new MovePlayerUp(KeyCode.I, player));
-            controller.addBinding(new MovePlayerRight(KeyCode.L, player));
-        }
+        internal.addPlayer(player, direction, x, y);
     }
 
     /**
@@ -256,7 +244,6 @@ public class Map {
     }
     
     public Map(int width, int height, byte mapData[], String colour, GameInfo game, Display display){
-        controller.clear();
         this.width = width;
         this.height = height;
         BitSet map = loadMapDataFromBinary(mapData);

@@ -22,6 +22,7 @@ public class GameInfo {
 
     private final ArrayList<Player> playerList;
     private static final DatabaseInterface db = new SQLiteInterface(".lightracer.db");
+    private static final Controller controller = Controller.getInstance();
     private final int speed;
 
     public void setDisplay(Display display) {
@@ -35,6 +36,15 @@ public class GameInfo {
         this.baseMap = map;
         playerList.add(new Player(playerOne, playerOneColour, this));
         playerList.add(new Player(playerTwo, playerTwoColour, this));
+        controller.clear();
+        controller.addBinding(new MovePlayerDown(KeyCode.S, playerList.get(0)));
+        controller.addBinding(new MovePlayerLeft(KeyCode.A, playerList.get(0)));
+        controller.addBinding(new MovePlayerUp(KeyCode.W, playerList.get(0)));
+        controller.addBinding(new MovePlayerRight(KeyCode.D, playerList.get(0)));
+        controller.addBinding(new MovePlayerDown(KeyCode.K, playerList.get(1)));
+        controller.addBinding(new MovePlayerLeft(KeyCode.J, playerList.get(1)));
+        controller.addBinding(new MovePlayerUp(KeyCode.I, playerList.get(1)));
+        controller.addBinding(new MovePlayerRight(KeyCode.L, playerList.get(1)));
     }
 
     /**
