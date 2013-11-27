@@ -10,6 +10,8 @@ import Gameplay.MovePlayerRight;
 import Gameplay.MovePlayerUp;
 import Gameplay.Player;
 import UserInterface.Display;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.input.KeyCode;
 
 public class GameInfo {
@@ -37,14 +39,7 @@ public class GameInfo {
         playerList.add(new Player(playerOne, playerOneColour, this));
         playerList.add(new Player(playerTwo, playerTwoColour, this));
         controller.clear();
-        controller.addBinding(new MovePlayerDown(KeyCode.S, playerList.get(0)));
-        controller.addBinding(new MovePlayerLeft(KeyCode.A, playerList.get(0)));
-        controller.addBinding(new MovePlayerUp(KeyCode.W, playerList.get(0)));
-        controller.addBinding(new MovePlayerRight(KeyCode.D, playerList.get(0)));
-        controller.addBinding(new MovePlayerDown(KeyCode.K, playerList.get(1)));
-        controller.addBinding(new MovePlayerLeft(KeyCode.J, playerList.get(1)));
-        controller.addBinding(new MovePlayerUp(KeyCode.I, playerList.get(1)));
-        controller.addBinding(new MovePlayerRight(KeyCode.L, playerList.get(1)));
+        
     }
 
     /**
@@ -55,6 +50,14 @@ public class GameInfo {
         current.setSpeed(speed);
         current.addPlayer(playerList.get(0), Player.Direction.RIGHT, 0, 49);
         current.addPlayer(playerList.get(1), Player.Direction.LEFT, 74, 0);
+        controller.addBinding(new MovePlayerDown(KeyCode.S, current.getPlayer(0)));
+        controller.addBinding(new MovePlayerLeft(KeyCode.A, current.getPlayer(0)));
+        controller.addBinding(new MovePlayerUp(KeyCode.W, current.getPlayer(0)));
+        controller.addBinding(new MovePlayerRight(KeyCode.D, current.getPlayer(0)));
+        controller.addBinding(new MovePlayerDown(KeyCode.K, current.getPlayer(1)));
+        controller.addBinding(new MovePlayerLeft(KeyCode.J, current.getPlayer(1)));
+        controller.addBinding(new MovePlayerUp(KeyCode.I, current.getPlayer(1)));
+        controller.addBinding(new MovePlayerRight(KeyCode.L, current.getPlayer(1)));
         current.run();
     }
 
@@ -152,6 +155,11 @@ public class GameInfo {
                 p.loseGame();
             }
             p.saveStats();
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GameInfo.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         db.addGame(this);
     }
