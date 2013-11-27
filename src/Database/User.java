@@ -1,5 +1,9 @@
 package Database;
 
+/**
+ * 
+ * @author Michael Williams
+ */
 public class User {
 
     private final int uid;

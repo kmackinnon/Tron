@@ -41,6 +41,14 @@ public class Map {
     public void addWall(int xPos, int yPos, String colour) {
         internal.addWall(xPos, yPos, colour);
     }
+    
+    public int getWidth(){
+        return width;
+    }
+    
+    public int getHeight(){
+        return height;
+    }
 
     /**
      * Sets the speed of the map to a frequency hz given in Hertz
