@@ -214,8 +214,9 @@ public class SQLiteInterface extends DatabaseInterface {
     @Override
     public void addMap(String name, byte data[], int width, int height) throws UnsupportedOperationException {
         try {
+            String mapData = Base64.encodeBytes(data);
             statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO Maps (map_name, width, height, map_data) VALUES ('" + name + "', " + width + ", "+ height +", '" + Base64.encodeBytes(data) + "')");
+            statement.executeUpdate("INSERT INTO Maps (map_name, width, height, map_data) VALUES ('" + name + "', " + width + ", "+ height +", '" + mapData + "')");
         } catch (SQLException ex) {
             Logger.getLogger(SQLiteInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -225,7 +226,7 @@ public class SQLiteInterface extends DatabaseInterface {
     public DatabaseInterface.MapSpecs getMap(String name) throws UnsupportedOperationException {
         try {
             statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT COUNT(*) FROM Maps WHERE map_name = '" + name + "';");           
+            ResultSet result = statement.executeQuery("SELECT * FROM Maps WHERE map_name = '" + name + "';");           
             DatabaseInterface.MapSpecs specs = new DatabaseInterface.MapSpecs();
             specs.width = result.getInt("width");
             specs.height = result.getInt("height");
@@ -245,12 +246,18 @@ public class SQLiteInterface extends DatabaseInterface {
         ResultSet result = statement.executeQuery("SELECT user_id, wins FROM UserStats ORDER BY wins LIMIT 10;");
         int i = 0;
         while(result.next()){
-          int id = result.getInt("user_id");
-          int wins = result.getInt("wins");
-          ResultSet userQuery = statement.executeQuery("SELECT username FROM Users WHERE id = " + i + ";");
-          topTen[0][i] = userQuery.getString("username");
-          topTen[1][i] = String.valueOf(wins);
+          try {
+            int id = result.getInt("user_id");
+            int wins = result.getInt("wins");
+            ResultSet userQuery = statement.executeQuery("SELECT username FROM Users WHERE id = " + i + ";");
+            topTen[0][i] = userQuery.getString("username");
+            topTen[1][i] = String.valueOf(wins);
+          } catch (SQLException ex) {
+              break;
+          }
         }
+        result.close();
+        statement.close();
         return topTen;
       } catch (SQLException ex) {
         Logger.getLogger(SQLiteInterface.class.getName()).log(Level.SEVERE, null, ex);

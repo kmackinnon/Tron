@@ -228,9 +228,6 @@ public class Map {
     }
     
     private BitSet loadMapDataFromBinary (byte data[]){
-      if (data.length != (width * height)/8){//8 bits in a byte
-        return null;
-      }
       return BitSet.valueOf(data);
       
     }
