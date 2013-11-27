@@ -33,6 +33,8 @@ public abstract class DatabaseInterface {
   public abstract void addMap(String name, byte mapData[], int width, int height) throws UnsupportedOperationException;
 
   public abstract MapSpecs getMap(String name) throws UnsupportedOperationException;
+  
+  public abstract String[][] getTopTenPlayerStats();
 
   public class MapSpecs{
       public int width, height;

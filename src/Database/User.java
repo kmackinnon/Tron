@@ -2,19 +2,18 @@ package Database;
 
 public class User {
 
-    private int uid;
+    private final int uid;
     
-    private String username;
+    private final String username;
     private UserStatistics myStats;
     private static final DatabaseInterface db = new SQLiteInterface(".lightracer.db");
     private boolean authenticated;
     private boolean success;
 
     /**
-     * 
-     * @param username
-     * @param password
-     * @param newUser 
+     * Internal Constructor used by the Database when called by User's Static functions getUser and createUser.
+     * @param uid Internal User ID
+     * @param username Username
      */
     public User (int uid, String username){
         this.uid = uid;
@@ -83,4 +82,8 @@ public class User {
     public boolean getSuccess() {
         return success;
     }
+    
+    public static String[][] getTopTen() {
+      return db.getTopTenPlayerStats();
+  }
 }

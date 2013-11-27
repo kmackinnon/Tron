@@ -236,4 +236,25 @@ public class SQLiteInterface extends DatabaseInterface {
             return null;
         }
     }
+    
+    @Override
+    public String[][] getTopTenPlayerStats() {
+      String topTen[][] = new String[2][10];
+      try {
+        statement = connection.createStatement();
+        ResultSet result = statement.executeQuery("SELECT user_id, wins FROM UserStats ORDER BY wins LIMIT 10;");
+        int i = 0;
+        while(result.next()){
+          int id = result.getInt("user_id");
+          int wins = result.getInt("wins");
+          ResultSet userQuery = statement.executeQuery("SELECT username FROM Users WHERE id = " + i + ";");
+          topTen[0][i] = userQuery.getString("username");
+          topTen[1][i] = String.valueOf(wins);
+        }
+        return topTen;
+      } catch (SQLException ex) {
+        Logger.getLogger(SQLiteInterface.class.getName()).log(Level.SEVERE, null, ex);
+        return null;
+      }
+    }
 }
