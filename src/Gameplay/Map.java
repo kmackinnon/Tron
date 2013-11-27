@@ -311,7 +311,7 @@ public class Map {
                 }  
             }
             
-            myDisplay.gameover(gameWinner);
+           // myDisplay.gameover(gameWinner);
 
             return null;
         }

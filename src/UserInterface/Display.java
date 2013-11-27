@@ -19,9 +19,9 @@ import javafx.scene.shape.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 
-import Gameplay.Map;
 import Gameplay.Controller;
 import javafx.animation.FadeTransition;
+import javafx.animation.TranslateTransition;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -75,14 +75,13 @@ public class Display extends StackPane {
         menuBtn = new Button("Main Menu");
         buttonGrp.getChildren().addAll(restartBtn,menuBtn);
         
-        EndLabel = new Label("Game \nOver");
-        EndLabel.setFont(new Font(40));
+        EndLabel = new Label("Game Over");
+        EndLabel.setFont(new Font(26));
         EndLabel.setTextFill(Color.PINK);
         gameoverScreen.setAlignment(Pos.CENTER);
 
         gameoverScreen.getChildren().addAll(EndLabel,buttonGrp);
         gameoverScreen.setAlignment(Pos.CENTER);
-        gameoverScreen.setSpacing(150);
         
         roundoverScreen = new VBox();
         
@@ -99,7 +98,7 @@ public class Display extends StackPane {
 
         Rectangle gameoverBack = new Rectangle();
         gameoverBack.setWidth(200);
-        gameoverBack.setHeight(220);
+        gameoverBack.setHeight(90);
         gameoverBack.setFill(Color.BLACK);
         
         Rectangle roundoverBack = new Rectangle();
@@ -204,7 +203,7 @@ displayWall(i, j, "0x000");
                 
                 
                 
-                roundLabel.setText("Games Won : "+ player1point+"                                       Games Won : "+ player1point);
+                
                 
                 Display Gameplay = new Display(stage, Veiwer,GameInfo);
                 Scene Gameplayscene = new Scene(Gameplay);
@@ -227,6 +226,7 @@ displayWall(i, j, "0x000");
             @Override
             public void handle(ActionEvent e) {
                 
+                roundLabel.setText("Games Won : "+ player1point+"                                       Games Won : "+ player2point);
                 clearGrid();
                 gameoverTotal.setOpacity(0);
                 roundoverTotal.setOpacity(0);
@@ -291,6 +291,13 @@ displayWall(i, j, "0x000");
     public void gameover(String winner) {
         
 
+        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), roundoverTotal);
+        tt.setByX(200f);
+         tt.setCycleCount(1);
+     tt.setAutoReverse(true);
+ 
+     tt.play();
+        
         
         FadeTransition fadeTransition =
                 new FadeTransition(Duration.millis(2000), gameoverTotal);
@@ -300,7 +307,7 @@ displayWall(i, j, "0x000");
         fadeTransition.setToValue(1.0);
         fadeTransition.play();
         
-        getChildren().remove(roundoverScreen);
+        this.getChildren().remove(roundoverScreen);
 
     }
 }
