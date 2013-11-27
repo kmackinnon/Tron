@@ -18,6 +18,9 @@ public class User {
         this.uid = uid;
         this.username = username;
         myStats = db.getUserStats(uid);
+        if (myStats == null) { //User has no stats
+            myStats = new UserStatistics(0, 0, 0);
+        }
     }
 
     public static User getUser(String username, String password){
@@ -50,15 +53,11 @@ public class User {
         authenticated = db.confirmUser(this.uid, password);
     }
 
-    public void save() {
-        db.updateUser(this.uid, this.myStats);
-    }
-
-    public void win() {
+    public void winGame() {
         this.myStats.addWin();
     }
 
-    public void lose() {
+    public void loseGame() {
         this.myStats.addLoss();
     }    
     
@@ -93,5 +92,9 @@ public class User {
     
     public int getGamesLost() {
         return myStats.getLosses();
+    }
+    
+    public void saveStats(){
+        db.updateUser(uid, myStats);
     }
 }

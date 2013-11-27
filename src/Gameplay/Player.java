@@ -202,9 +202,15 @@ public class Player {
     }
     //these send the updated end of game stats to the DB.
     public void winGame() {
+        myUser.winGame();
     }
 
     public void loseGame() {
+        myUser.loseGame();
+    }
+    
+    public void saveStats(){
+        myUser.saveStats();
     }
 
 }

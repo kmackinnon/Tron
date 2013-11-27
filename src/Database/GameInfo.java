@@ -15,7 +15,7 @@ public class GameInfo {
     private Display display;
 
     private final ArrayList<Player> playerList;
-    private static final DatabaseInterface myDatabaseInterface = new SQLiteInterface(".lightracer.db");
+    private static final DatabaseInterface db = new SQLiteInterface(".lightracer.db");
     private final int speed;
 
     public void setDisplay(Display display) {
@@ -48,11 +48,12 @@ public class GameInfo {
      * @param draw
      * @param victor
      */
-    public void endRound(boolean draw, Player victor) {
+    public void endRound(boolean draw, Player roundWinner) {
         if (draw) {
-            startRound(); // restart the round
+            display.roundover("Draw", getPlayerWins(0), getPlayerWins(1));
+            //this.startRound();
         } else {
-            victor.winRound();
+            roundWinner.winRound();
             Iterator<Player> it;
             Player p;
             int i = 0;
@@ -60,11 +61,13 @@ public class GameInfo {
                 p = it.next();
                 if (p.getNumRoundsWon() >= 2) {
                     winner = i;
+                    display.gameover(p.getUsername());
+                    this.save();
                     return;
                 }
                 i++;
             }
-            this.startRound();
+           display.roundover(roundWinner.getUsername(), getPlayerWins(0), getPlayerWins(1));
         }
     }
 
@@ -119,5 +122,20 @@ public class GameInfo {
     public int getPlayerWins(int index) {
         Player player = playerList.get(index);
         return player.getNumRoundsWon();
+    }
+    
+    private void save(){
+        int i = 0;
+        Iterator<Player> it;
+        for (it = playerList.iterator(); it.hasNext();) {
+            Player p = it.next();
+            if (i==this.winner) {
+                p.winGame();
+            } else {
+                p.loseGame();
+            }
+            p.saveStats();
+        }
+        db.addGame(this);
     }
 }
