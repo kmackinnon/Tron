@@ -230,7 +230,7 @@ public class LoginUI extends StackPane {
                     return;
                 }
                 
-                User user = new User(usernameInput.getText(), passwordInput.getText(), false);
+                User user = User.getUser(usernameInput.getText(), passwordInput.getText());
 
                 if (user.getSuccess()) {
                     if (playerNumber == 1) {
@@ -270,7 +270,7 @@ public class LoginUI extends StackPane {
                     return;
                 }
 
-                User user = new User(usernameInput.getText(), passwordInput.getText(), true);
+                User user = User.createUser(usernameInput.getText(), passwordInput.getText());
 
                 if (user.getSuccess()) {
                     if (playerNumber == 1) {

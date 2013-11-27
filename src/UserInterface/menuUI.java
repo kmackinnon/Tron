@@ -30,7 +30,14 @@ public class menuUI extends StackPane {
     final String[] COLORS = {"0xF00", "0xFF0", "0x0F0", "0x0FF", "0x00F", "0xF0F"};
     Image[] maps = new Image[3];
     
-    
+    /**
+     * This is the class that consists the main menu
+     * 
+     * @param stage 
+     * @param veiwer
+     * @param userA this will be null if one the loginUI, the player picked 1 player, or else this represents the first player
+     * @param userB this will never be null 
+     */
 
     public menuUI(final Stage stage, final ImageView veiwer, User userA, User userB) {
 
