@@ -35,16 +35,18 @@ public class Display extends StackPane {
     final int horizontalGridSize = 75;
     final int verticalGridSize = 50;
     private Rectangle grid[][];
-    StackPane gameoverTotal;
+    StackPane gameoverTotal,roundoverTotal;
    
     Button startBtn,restartBtn,menuBtn,roundBtn;
     GameInfo GameInfo;
     final Controller controller;
-    Label controllerLabel,roundLabel, restartLabel;
+    Label controllerLabel,roundLabel, EndLabel;
     ImageView Veiwer;
-    VBox gameoverScreen;
+    VBox gameoverScreen,roundoverScreen;
     HBox buttonGrp;
     
+    int player1point,player2point;
+            
     public Display(final Stage stage,ImageView veiwer,GameInfo gameInfo) {
 
         GameInfo=gameInfo;
@@ -69,30 +71,47 @@ public class Display extends StackPane {
         
         buttonGrp = new HBox();
         buttonGrp.setAlignment(Pos.CENTER);
-        
         restartBtn = new Button("Restart");
-        
         menuBtn = new Button("Main Menu");
+        buttonGrp.getChildren().addAll(restartBtn,menuBtn);
+        
+        EndLabel = new Label("Game Over");
+        EndLabel.setFont(new Font(26));
+        EndLabel.setTextFill(Color.PINK);
+        gameoverScreen.setAlignment(Pos.CENTER);
+
+        gameoverScreen.getChildren().addAll(EndLabel,buttonGrp);
+gameoverScreen.setAlignment(Pos.CENTER);
+        roundoverScreen = new VBox();
+        
+        
+        roundLabel = new Label("Round Over");
+        roundLabel.setFont(new Font(26));
+        roundLabel.setTextFill(Color.PINK);
+        
         
         roundBtn = new Button("Next Round");
         
-        
-        
-        restartLabel = new Label();
-        restartLabel.setFont(new Font(26));
-        restartLabel.setTextFill(Color.PINK);
-        gameoverScreen.setAlignment(Pos.CENTER);
-
-        gameoverScreen.getChildren().addAll(restartLabel,buttonGrp);
+        roundoverScreen.getChildren().addAll(roundLabel,roundBtn);
+        roundoverScreen.setAlignment(Pos.CENTER);
 
         Rectangle gameoverBack = new Rectangle();
         gameoverBack.setWidth(200);
         gameoverBack.setHeight(90);
         gameoverBack.setFill(Color.BLACK);
+        
+        Rectangle roundoverBack = new Rectangle();
+        roundoverBack.setWidth(200);
+        roundoverBack.setHeight(90);
+        roundoverBack.setFill(Color.BLACK);
 
         gameoverTotal = new StackPane();
         gameoverTotal.getChildren().addAll(gameoverBack, gameoverScreen);
         gameoverTotal.setOpacity(0);
+        
+        roundoverTotal =new StackPane();
+        roundoverTotal.getChildren().addAll(roundoverBack, roundoverScreen);
+        roundoverTotal.setOpacity(0);
 
         startBtn = new Button("Start Game");
 
@@ -116,6 +135,7 @@ public class Display extends StackPane {
         getChildren().add(veiwer);
         getChildren().add(mainGamePlay);
         getChildren().add(gameoverTotal);
+        getChildren().add(roundoverTotal);
         getChildren().add(startBtn);
         setOnKeyPressed(controller);
 
@@ -180,6 +200,10 @@ displayWall(i, j, "0x000");
             @Override
             public void handle(ActionEvent e) {
                 
+                
+                
+                roundLabel.setText("Games Won : "+ player1point+"                                       Games Won : "+ player1point);
+                
                 Display Gameplay = new Display(stage, Veiwer,GameInfo);
                 Scene Gameplayscene = new Scene(Gameplay);
                 stage.setScene(Gameplayscene);
@@ -203,6 +227,7 @@ displayWall(i, j, "0x000");
                 
                 clearGrid();
                 gameoverTotal.setOpacity(0);
+                roundoverTotal.setOpacity(0);
                 GameInfo.startRound();
             }
         });
@@ -245,29 +270,24 @@ displayWall(i, j, "0x000");
 
     public void roundover(String winner,int player1win,int player2win) {
         
-        
-        restartLabel.setText(winner);
-        buttonGrp.getChildren().clear();
-        buttonGrp.getChildren().addAll(roundBtn);
-        
-        roundLabel=new Label("Games Won : "+ player1win +"                                       Games Won : "+player2win);
-        
-        
         FadeTransition fadeTransition =
-                new FadeTransition(Duration.millis(2000), gameoverTotal);
+                new FadeTransition(Duration.millis(2000), roundoverTotal);
         fadeTransition.setCycleCount(1);
         fadeTransition.setAutoReverse(true);
         fadeTransition.setFromValue(0.0);
         fadeTransition.setToValue(1.0);
         fadeTransition.play();
+
+        player1point=player1win;
+        player2point=player2win;
+       
+        
+        
     }
     
     public void gameover(String winner) {
         
-        restartLabel.setText(winner+"wins the Game");
-        
-        buttonGrp.getChildren().clear();
-        buttonGrp.getChildren().addAll(restartBtn,menuBtn);
+
         
         FadeTransition fadeTransition =
                 new FadeTransition(Duration.millis(2000), gameoverTotal);
