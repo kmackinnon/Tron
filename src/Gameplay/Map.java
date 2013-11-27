@@ -276,16 +276,25 @@ public class Map {
                 gameRound();
             }
 
-//            if (aliveCount == 0){
-//                // DRAW
-//                myGame.endRound(true, null); // 2nd param is user's string
-//            } else {
-//                // One player wins
-//                myGame.endRound(true, null); // 2nd param is winning user
-//            }
+            Iterator<Player> it;
+            
+            // DRAW
+            if (aliveCount == 0){
+                myGame.endRound(true, null); // no one wins
+            } else {
+                // One player wins.
+                for (it = playerList.iterator(); it.hasNext();){
+                    Player player = it.next();
+                    // find the winning player
+                    if (player.getIsAlive() ){
+                        myGame.endRound(false, player);
+                    } 
+                }  
+            }
+            
             myDisplay.gameover();
 
-            return null; // TODO is this necessary?
+            return null;
         }
 
         private void listenPlayers() {
