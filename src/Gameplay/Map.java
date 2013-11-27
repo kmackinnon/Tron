@@ -177,7 +177,19 @@ public class Map {
      * @param y
      */
     public void addPlayer(Player player, Player.Direction direction, int x, int y) {
-        internal.addPlayer(player, direction, x, y);
+        int i = internal.addPlayer(player, direction, x, y);
+        player = internal.getPlayer(i);
+        if (i == 0) {
+            controller.addBinding(new MovePlayerDown(KeyCode.S, player));
+            controller.addBinding(new MovePlayerLeft(KeyCode.A, player));
+            controller.addBinding(new MovePlayerUp(KeyCode.W, player));
+            controller.addBinding(new MovePlayerRight(KeyCode.D, player));
+        } else {
+            controller.addBinding(new MovePlayerDown(KeyCode.K, player));
+            controller.addBinding(new MovePlayerLeft(KeyCode.J, player));
+            controller.addBinding(new MovePlayerUp(KeyCode.I, player));
+            controller.addBinding(new MovePlayerRight(KeyCode.L, player));
+        }
     }
 
     /**
@@ -244,6 +256,7 @@ public class Map {
     }
     
     public Map(int width, int height, byte mapData[], String colour, GameInfo game, Display display){
+        controller.clear();
         this.width = width;
         this.height = height;
         BitSet map = loadMapDataFromBinary(mapData);
@@ -377,7 +390,7 @@ public class Map {
                     displayPlayer(player.getX(), player.getY(), player.getColour());
                 }
             }
-
+            aliveCount = 0;//Init to zero before counting
             // checks for who is alive
             for (it = playerList.iterator(); it.hasNext();) {
                 Player player = it.next();
@@ -405,13 +418,14 @@ public class Map {
         }
 
         public void addPlayer(User user, String colour, Player.Direction direction, int x, int y) {
-            Player player = new Player(x, y, colour, user, parent, direction);
+            Player player = new Player(x, y, colour, user, parent, direction, null);
             playerList.add(player);
         }
 
-        public void addPlayer(Player player, Player.Direction direction, int x, int y) {
-            player.init(x, y, direction);
+        public int addPlayer(Player player, Player.Direction direction, int x, int y) {
+            player.init(x, y, direction, this.parent);
             playerList.add(player);
+            return playerList.size()-1;
         }
 
         public boolean collides(int x, int y) {

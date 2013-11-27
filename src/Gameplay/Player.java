@@ -18,10 +18,9 @@ public class Player {
 
     private final String colour;
 
-    private GameInfo myGame;
+    private final GameInfo myGame;
     //public Controller myController;
-    private Input myInput;
-    private final Map myMap;
+    private Map myMap;
     private final User myUser;
     private boolean moved;
 
@@ -36,7 +35,7 @@ public class Player {
      * 
      * used to give starting coords for new game 
      */
-    public Player(int xStart, int yStart, String colour, User user, Map map, Direction startingDirection) {
+    public Player(int xStart, int yStart, String colour, User user, Map map, Direction startingDirection, GameInfo game) {
         this.xPos = xStart;
         this.yPos = yStart;
         this.colour = colour;
@@ -45,6 +44,7 @@ public class Player {
         this.currentDirection = startingDirection;
         moved = false;
         isAlive = true; // player starts round alive
+        this.myGame = game;
     }
     
     /**
@@ -52,10 +52,11 @@ public class Player {
      * @param user
      * @param colour 
      */
-    public Player(User user, String colour){
+    public Player(User user, String colour, GameInfo game){
       this.colour = colour;
       this.myUser = user;
       this.myMap = null;
+      this.myGame = game;
     }
 
     public int getID(){
@@ -105,10 +106,13 @@ public class Player {
      * 
      * Set initial position and moving direction on the grid
      */
-    public void init(int xStart, int yStart, Direction startingDirection){
+    public void init(int xStart, int yStart, Direction startingDirection, Map map){
       this.xPos = xStart;
       this.yPos = yStart;
       this.currentDirection = startingDirection;
+      this.isAlive = true;
+      this.moved = false;
+      this.myMap = map;
     }
 
     /**

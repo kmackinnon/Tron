@@ -3,8 +3,14 @@ package Database;
 import java.util.ArrayList;
 import java.util.Iterator;
 import Gameplay.Map;
+import Gameplay.Controller;
+import Gameplay.MovePlayerDown;
+import Gameplay.MovePlayerLeft;
+import Gameplay.MovePlayerRight;
+import Gameplay.MovePlayerUp;
 import Gameplay.Player;
 import UserInterface.Display;
+import javafx.scene.input.KeyCode;
 
 public class GameInfo {
 
@@ -27,8 +33,8 @@ public class GameInfo {
         this.speed = speed;
         playerList = new ArrayList(2);
         this.baseMap = map;
-        playerList.add(new Player(playerOne, playerOneColour));
-        playerList.add(new Player(playerTwo, playerTwoColour));
+        playerList.add(new Player(playerOne, playerOneColour, this));
+        playerList.add(new Player(playerTwo, playerTwoColour, this));
     }
 
     /**
@@ -36,6 +42,7 @@ public class GameInfo {
      */
     public void startRound() {
         current = baseMap.loadMap(display, this);
+        current.setSpeed(speed);
         current.addPlayer(playerList.get(0), Player.Direction.RIGHT, 0, 49);
         current.addPlayer(playerList.get(1), Player.Direction.LEFT, 74, 0);
         current.run();

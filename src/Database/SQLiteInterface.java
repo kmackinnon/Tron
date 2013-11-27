@@ -229,8 +229,6 @@ public class SQLiteInterface extends DatabaseInterface {
 
     @Override
     public DatabaseInterface.MapSpecs getMap(String name) throws UnsupportedOperationException {
-        MapGenerator gen = new MapGenerator();
-        gen.makeAllAndInstall();
         try {
             statement = connection.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM Maps WHERE map_name = '" + name + "';");           
