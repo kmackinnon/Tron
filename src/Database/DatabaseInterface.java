@@ -7,13 +7,13 @@ public abstract class DatabaseInterface {
   protected ArrayList<String> supportList;
 
     
-  public abstract int getUser(String username);
+  public abstract User getUser(String username);
   
   public abstract boolean confirmUser(int uid, String password);
 
   public abstract void updateUser(int uid, UserStatistics stats) throws UnsupportedOperationException;
 
-  public abstract int addUser(String username, String password);
+  public abstract User addUser(String username, String password);
   
   public abstract boolean userExists(String username);
 

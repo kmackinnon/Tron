@@ -6,7 +6,7 @@ public class User {
     
     private String username;
     private UserStatistics myStats;
-    private final DatabaseInterface db = new SQLiteInterface(".lightracer.db");
+    private static final DatabaseInterface db = new SQLiteInterface(".lightracer.db");
     private boolean authenticated;
     private boolean success;
 
@@ -16,23 +16,25 @@ public class User {
      * @param password
      * @param newUser 
      */
-    public User(String username, String password, boolean newUser) {
-        if (newUser && !db.userExists(username)  ) {
-            uid = db.addUser(username, password);
-            if (uid < 0){
-                return;
-            }
-            this.username = username;
-            success = true;
-        } else if (!newUser && db.userExists(username)) {
-            uid = db.getUser(username);
-            if (uid > 0 && db.confirmUser(uid, password)) {
-                success = true;
-                this.username = username;
-            }
-        } 
+    public User (int uid, String username){
+        this.uid = uid;
+        this.username = username;
     }
 
+    public static User getUser(String username, String password){
+        User user = db.getUser(username);
+        user.login(password);
+        if (user.authenticated) {
+            return user;
+        } else {
+            return null;
+        }
+    }
+    
+    public static User create(String username, String password){
+        return db.addUser(username, password);
+    }
+    
     /**
      * For future functionality if we wanted to implement it.
      * @param password 

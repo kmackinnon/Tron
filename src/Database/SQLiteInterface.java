@@ -76,18 +76,24 @@ public class SQLiteInterface extends DatabaseInterface {
     }
 
     @Override
-    public int getUser(String username) {
+    public User getUser(String username) {
         try {
           statement = connection.createStatement();
           username = Base64.encodeBytes(username.getBytes());
           int id;
-          try (ResultSet result = statement.executeQuery("select id from Users where username = '" + username + "';")) {
+          String user;
+          try (ResultSet result = statement.executeQuery("select * from Users where username = '" + username + "';")) {
             id = result.getInt("id");
+            user = result.getString("username");
           }
           statement.close();
-          return id;
+          if (user == null) {
+              return null;
+          }
+          return new User(id, user);
+          //return id;
         } catch (SQLException e) {
-          return -1; //TODO: replace this with proper error handling...
+          return null; //TODO: replace this with proper error handling...
         }
     }
 
@@ -140,7 +146,7 @@ public class SQLiteInterface extends DatabaseInterface {
     }
 
     @Override
-    public int addUser(String username, String password) {
+    public User addUser(String username, String password) {
         try {
             statement = connection.createStatement();
             String realUsername = username;
@@ -152,14 +158,14 @@ public class SQLiteInterface extends DatabaseInterface {
                 hashedPassword = hash.hash(password, salt);
             } catch ( NoSuchAlgorithmException e ){
                 System.out.println("Something bad happened in hashing in creation" + e.getMessage());
-                return -1;
+                return null;
             }
             statement.executeUpdate("insert into Users (username,password,salt) values ('" + username + "', '" + hashedPassword + "', '" + salt + "');");
             statement.close();
             return getUser(realUsername);
         } catch (SQLException  e) {
             System.out.println("Something bad happened in creation" + e.getMessage());
-            return -1;
+            return null;
         }
     }
 
