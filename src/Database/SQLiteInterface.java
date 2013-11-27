@@ -254,9 +254,10 @@ public class SQLiteInterface extends DatabaseInterface {
           try {
             int id = result.getInt("user_id");
             int wins = result.getInt("wins");
-            ResultSet userQuery = statement.executeQuery("SELECT username FROM Users WHERE id = " + i + ";");
+            ResultSet userQuery = statement.executeQuery("SELECT username FROM Users WHERE id = " + id + ";");
             topTen[0][i] = userQuery.getString("username");
             topTen[1][i] = String.valueOf(wins);
+            i++;
           } catch (SQLException ex) {
               break;
           }

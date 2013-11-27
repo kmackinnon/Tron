@@ -213,24 +213,35 @@ public class menuUI extends StackPane {
         top10Label.setTextFill(Color.WHITE);
         top10Label.setText("Top 10 Players");
         
+        top10Grp.getChildren().add(top10Label);
+        
         HBox top10rows[] =new HBox[10];
         Label top10names[] =new Label[10];
         Label top10scores[] =new Label[10];
         
-        for(int i =0;i>10;i++)
+        for(int i =0;i<1;i++)
         {
+            top10names[i]=new Label(top10[0][i]);
+            top10names[i].setFont(new Font(20));
+            top10names[i].setTextFill(Color.WHITE);
             
+            top10scores[i]=new Label(top10[1][i]);
+            top10scores[i].setFont(new Font(20));
+            top10scores[i].setTextFill(Color.WHITE);
+            
+            top10rows[i]=new HBox();
+            top10rows[i].setSpacing(15);
+            top10rows[i].getChildren().addAll(top10names[i],top10scores[i]);
+            top10rows[i].setAlignment(Pos.CENTER);
+            
+            top10Grp.getChildren().add(top10rows[i]);
         }
-        
-        
-        
-        
         
         
         statisticsGrp.setAlignment(Pos.CENTER);
         statisticsGrp.setSpacing(30);
         statisticsGrp.setMinHeight(400);
-        statisticsGrp.getChildren().addAll(winStats,top10Label);
+        statisticsGrp.getChildren().addAll(winStats,top10Grp);
         
         statisticsGrpBase.setMinWidth(400);
         statisticsGrpBase.setAlignment(Pos.CENTER);
