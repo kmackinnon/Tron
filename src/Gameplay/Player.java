@@ -9,15 +9,12 @@ public class Player {
 
         LEFT, UP, DOWN, RIGHT
     };
-
     private int xPos;
     private int yPos;
     private Direction currentDirection;
     private boolean isAlive;
     private int roundsWon;
-
     private final String colour;
-
     private final GameInfo myGame;
     //public Controller myController;
     private Map myMap;
@@ -25,15 +22,15 @@ public class Player {
     private boolean moved;
 
     /**
-     * 
+     *
      * @param xStart
      * @param yStart
      * @param colour
      * @param user
      * @param map
-     * @param startingDirection 
-     * 
-     * used to give starting coords for new game 
+     * @param startingDirection
+     *
+     * used to give starting coords for new game
      */
     public Player(int xStart, int yStart, String colour, User user, Map map, Direction startingDirection, GameInfo game) {
         this.xPos = xStart;
@@ -46,22 +43,23 @@ public class Player {
         isAlive = true; // player starts round alive
         this.myGame = game;
     }
-    
+
     /**
-     * 
+     *
      * @param user
-     * @param colour 
+     * @param colour
      */
-    public Player(User user, String colour, GameInfo game){
-      this.colour = colour;
-      this.myUser = user;
-      this.myMap = null;
-      this.myGame = game;
+    public Player(User user, String colour, GameInfo game) {
+        this.colour = colour;
+        this.myUser = user;
+        this.myMap = null;
+        this.myGame = game;
     }
 
-    public int getID(){
+    public int getID() {
         return myUser.getID();
     }
+
     public int getX() {
         return this.xPos;
     }
@@ -92,27 +90,27 @@ public class Player {
 
     /**
      *
-     * @param isAlive 
+     * @param isAlive
      */
     public void setIsAlive(boolean isAlive) {
         this.isAlive = isAlive;
     }
-    
+
     /**
-     * 
+     *
      * @param xStart
      * @param yStart
-     * @param startingDirection 
-     * 
+     * @param startingDirection
+     *
      * Set initial position and moving direction on the grid
      */
-    public void init(int xStart, int yStart, Direction startingDirection, Map map){
-      this.xPos = xStart;
-      this.yPos = yStart;
-      this.currentDirection = startingDirection;
-      this.isAlive = true;
-      this.moved = false;
-      this.myMap = map;
+    public void init(int xStart, int yStart, Direction startingDirection, Map map) {
+        this.xPos = xStart;
+        this.yPos = yStart;
+        this.currentDirection = startingDirection;
+        this.isAlive = true;
+        this.moved = false;
+        this.myMap = map;
     }
 
     /**
@@ -162,9 +160,10 @@ public class Player {
             moved = true;
         }
     }
-    
+
     /**
-     * add a wall to initial spot and update position (x or y coordinate) based on direction
+     * add a wall to initial spot and update position (x or y coordinate) based
+     * on direction
      */
     public void moveCurrent() {
         //add wall, to current position and color
@@ -194,17 +193,19 @@ public class Player {
      * increments the number of rounds won
      */
     public void winRound() {
-      roundsWon++;
+        roundsWon++;
     }
-    
+
     /**
      * gets the number of rounds won
-     * @return 
+     *
+     * @return
      */
-    public int getNumRoundsWon(){
-      return roundsWon;
+    public int getNumRoundsWon() {
+        return roundsWon;
     }
     //these send the updated end of game stats to the DB.
+
     public void winGame() {
         myUser.winGame();
     }
@@ -212,9 +213,12 @@ public class Player {
     public void loseGame() {
         myUser.loseGame();
     }
-    
-    public void saveStats(){
+
+    public void saveStats() {
         myUser.saveStats();
     }
 
+    public User getUser() {
+        return myUser;
+    }
 }

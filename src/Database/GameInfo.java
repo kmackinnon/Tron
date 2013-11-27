@@ -145,4 +145,12 @@ public class GameInfo {
         }
         db.addGame(this);
     }
+    
+    public User getFirstUser(){
+        return playerList.get(0).getUser();
+    }
+    public User getSecondUser(){
+        return playerList.get(0).getUser();
+    }
+
 }

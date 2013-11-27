@@ -190,9 +190,10 @@ displayWall(i, j, "0x000");
             @Override
             public void handle(ActionEvent e) {
                 
-                Display Gameplay = new Display(stage, Veiwer,GameInfo);
-                Scene Gameplayscene = new Scene(Gameplay);
-                stage.setScene(Gameplayscene);
+                menuUI mainMenu = new menuUI(stage, Veiwer,GameInfo.getFirstUser(),GameInfo.getSecondUser());
+                Scene Menuscene = new Scene(mainMenu);
+                stage.setScene(Menuscene);
+
             }
         });
         
