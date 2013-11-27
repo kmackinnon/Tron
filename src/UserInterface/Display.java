@@ -16,16 +16,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 
 import Gameplay.Map;
 import Gameplay.Controller;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
-import javafx.animation.PauseTransition;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -39,14 +36,14 @@ public class Display extends StackPane {
     final int verticalGridSize = 50;
     private Rectangle grid[][];
     StackPane gameoverTotal;
-    Map baseMap;
-    Button startBtn;
-    Button restartBtn;
+   
+    Button startBtn,restartBtn,menuBtn,roundBtn;
     GameInfo GameInfo;
     final Controller controller;
-     Label controllerLabel,roundLabel;
+    Label controllerLabel,roundLabel, restartLabel;
     ImageView Veiwer;
     VBox gameoverScreen;
+    HBox buttonGrp;
     
     public Display(final Stage stage,ImageView veiwer,GameInfo gameInfo) {
 
@@ -68,14 +65,23 @@ public class Display extends StackPane {
         makeSquares(gridpanel);
 
         gameoverScreen = new VBox();
+        
+        buttonGrp.setAlignment(Pos.CENTER);
+        
         restartBtn = new Button("Restart");
         
-        Label restartLabel = new Label("Game Over");
+        menuBtn = new Button("Main Menu");
+        
+        roundBtn = new Button("Next Round");
+        
+        
+        
+        restartLabel = new Label();
         restartLabel.setFont(new Font(26));
         restartLabel.setTextFill(Color.PINK);
         gameoverScreen.setAlignment(Pos.CENTER);
 
-        gameoverScreen.getChildren().addAll(restartLabel,restartBtn);
+        gameoverScreen.getChildren().addAll(restartLabel,buttonGrp);
 
         Rectangle gameoverBack = new Rectangle();
         gameoverBack.setWidth(200);
@@ -84,7 +90,7 @@ public class Display extends StackPane {
 
         gameoverTotal = new StackPane();
         gameoverTotal.getChildren().addAll(gameoverBack, gameoverScreen);
-        gameoverTotal.setOpacity(0);
+        //gameoverTotal.setOpacity(0);
 
         startBtn = new Button("Start Game");
 
@@ -96,7 +102,7 @@ public class Display extends StackPane {
         controllerLabel = new Label("up: W, left: A, down: S, right: D      up: I, left: J, down: K, right: L");
         controllerLabel.setTextFill(Color.WHITE);
         controllerLabel.setFont(new Font(20));
-        roundLabel=new Label("Games Won : 0               Draws : 0               Games Won : 0");
+        roundLabel=new Label("Games Won : 0                                       Games Won : 0");
         roundLabel.setTextFill(Color.WHITE);
         roundLabel.setFont(new Font(20));
         roundLabel.setOpacity(0);
@@ -110,7 +116,7 @@ public class Display extends StackPane {
         getChildren().add(gameoverTotal);
         getChildren().add(startBtn);
         setOnKeyPressed(controller);
-        baseMap = Map.makeDemo(this);
+
         
         
         /*for (int i = 15; i < 25; i++) {
@@ -143,18 +149,6 @@ displayWall(i, j, "0x000");
         restartBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                FadeTransition fadeTransition =
-                        new FadeTransition(Duration.millis(2000), gameoverTotal);
-                fadeTransition.setCycleCount(1);
-                fadeTransition.setAutoReverse(true);
-                fadeTransition.setFromValue(1.0);
-                fadeTransition.setToValue(0.0);
-                fadeTransition.play();
-                setDisable(true);
-
-                clearGrid();
-                
-                restartBtn.setDisable(true);
                 
                 Display Gameplay = new Display(stage, Veiwer,GameInfo);
                 Scene Gameplayscene = new Scene(Gameplay);
@@ -185,9 +179,31 @@ displayWall(i, j, "0x000");
                 outFadeTransition.setToValue(1.0);
                 outFadeTransition.play();
                  
-                baseMap.run();
+                //running the gameinfo
             }
         });
+        menuBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                
+                Display Gameplay = new Display(stage, Veiwer,GameInfo);
+                Scene Gameplayscene = new Scene(Gameplay);
+                stage.setScene(Gameplayscene);
+            }
+        });
+        
+        roundBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                
+                clearGrid();
+                
+                gameoverTotal.setOpacity(0);
+                
+                //running the gameinfo
+            }
+        });
+        
     }
 
     public void makeSquares(GridPane panel) {
@@ -224,13 +240,36 @@ displayWall(i, j, "0x000");
         grid[xpos][ypos].setFill(Color.web(color));
     }
 
-    public void gameover() {
-
+    public void roundover(String winner,int player1win,int player2win) {
+        
+        
+        restartLabel.setText(winner+"wins the round");
+        buttonGrp.getChildren().clear();
+        buttonGrp.getChildren().addAll(roundBtn);
+        
+        roundLabel=new Label("Games Won : "+ player1win +"                                       Games Won : "+player2win);
+        
+        
         FadeTransition fadeTransition =
                 new FadeTransition(Duration.millis(2000), gameoverTotal);
         fadeTransition.setCycleCount(1);
         fadeTransition.setAutoReverse(true);
-
+        fadeTransition.setFromValue(0.0);
+        fadeTransition.setToValue(1.0);
+        fadeTransition.play();
+    }
+    
+    public void gameover(String winner) {
+        
+        restartLabel.setText(winner+"wins the Game");
+        
+        buttonGrp.getChildren().clear();
+        buttonGrp.getChildren().addAll(restartBtn,menuBtn);
+        
+        FadeTransition fadeTransition =
+                new FadeTransition(Duration.millis(2000), gameoverTotal);
+        fadeTransition.setCycleCount(1);
+        fadeTransition.setAutoReverse(true);
         fadeTransition.setFromValue(0.0);
         fadeTransition.setToValue(1.0);
         fadeTransition.play();
