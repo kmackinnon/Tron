@@ -202,6 +202,7 @@ public class Map {
     public Map(String mapString, String colour, GameInfo game, Display display) {
         BitSet map = mapParse(mapString, colour);
         myDisplay = display;
+        this.drawBitset(map, display, colour);
         internal = new MapTask(width, height, game, display, map, this);
         controller.clear();
     }
@@ -232,11 +233,22 @@ public class Map {
       
     }
     
+    private void drawBitset(BitSet set, Display display, String colour){
+        for (int i = 0; i < width; i++){
+            for (int j = 0; j < height; j++) {
+                if (set.get(i + j * width)){
+                    display.displayWall(i, j, colour);
+                }
+            }
+        }
+    }
+    
     public Map(int width, int height, byte mapData[], String colour, GameInfo game, Display display){
         this.width = width;
         this.height = height;
         BitSet map = loadMapDataFromBinary(mapData);
         myDisplay = display;
+        drawBitset(map, display, colour);
         internal = new MapTask(width, height, game, display, map, this);
         controller.clear();
     }
