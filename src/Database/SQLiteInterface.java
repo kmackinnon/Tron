@@ -248,21 +248,22 @@ public class SQLiteInterface extends DatabaseInterface {
       String topTen[][] = new String[2][10];
       try {
         statement = connection.createStatement();
-        ResultSet result = statement.executeQuery("SELECT user_id, wins FROM UserStats ORDER BY wins LIMIT 10;");
-        int i = 0;
-        while(result.next()){
-          try {
-            int id = result.getInt("user_id");
-            int wins = result.getInt("wins");
-            ResultSet userQuery = statement.executeQuery("SELECT username FROM Users WHERE id = " + id + ";");
-            topTen[0][i] = userQuery.getString("username");
-            topTen[1][i] = String.valueOf(wins);
-            i++;
-          } catch (SQLException ex) {
-              break;
+          try (ResultSet result = statement.executeQuery("SELECT username, wins FROM Users JOIN UserStats ON Users.id = UserStats.User_id ORDER BY wins LIMIT 10;")) {
+              int i = 0;
+              while(result.next()){
+                try {
+                  int wins = result.getInt("wins");
+                  String username = result.getString("username");
+                  username = new String(Base64.decode(username));
+                  topTen[0][i] = username;
+                  topTen[1][i] = String.valueOf(wins);
+                  i++;
+                } catch ( SQLException | IOException ex) {
+                    Logger.getLogger(SQLiteInterface.class.getName()).log(Level.SEVERE, null, ex);
+                    break;
+                }
+              }
           }
-        }
-        result.close();
         statement.close();
         return topTen;
       } catch (SQLException ex) {
@@ -275,7 +276,7 @@ public class SQLiteInterface extends DatabaseInterface {
     public void createStats(int uid) {
         try{
             statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO UserStats (user_id) VALUES (" + uid + ");");
+            statement.executeUpdate("INSERT INTO UserStats (user_id , wins, losses, games) VALUES (" + uid + ", 0, 0, 0);");
         } catch (SQLException ex) {
             Logger.getLogger(SQLiteInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
