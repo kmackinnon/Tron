@@ -12,6 +12,8 @@ public abstract class DatabaseInterface {
   public abstract boolean confirmUser(int uid, String password);
 
   public abstract void updateUser(int uid, UserStatistics stats) throws UnsupportedOperationException;
+  
+  public abstract void createStats(int uid);
 
   public abstract User addUser(String username, String password);
   

@@ -257,4 +257,14 @@ public class SQLiteInterface extends DatabaseInterface {
         return null;
       }
     }
+    
+    @Override
+    public void createStats(int uid) {
+        try{
+            statement = connection.createStatement();
+            statement.executeUpdate("INSERT INTO UserStats (user_id) VALUES (" + uid + ");");
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLiteInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

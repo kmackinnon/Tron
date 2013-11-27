@@ -20,6 +20,7 @@ public class User {
         myStats = db.getUserStats(uid);
         if (myStats == null) { //User has no stats
             myStats = new UserStatistics(0, 0, 0);
+            db.createStats(uid);
         }
     }
 
