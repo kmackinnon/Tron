@@ -75,13 +75,15 @@ public class Display extends StackPane {
         menuBtn = new Button("Main Menu");
         buttonGrp.getChildren().addAll(restartBtn,menuBtn);
         
-        EndLabel = new Label("Game Over");
-        EndLabel.setFont(new Font(26));
+        EndLabel = new Label("Game \nOver");
+        EndLabel.setFont(new Font(40));
         EndLabel.setTextFill(Color.PINK);
         gameoverScreen.setAlignment(Pos.CENTER);
 
         gameoverScreen.getChildren().addAll(EndLabel,buttonGrp);
-gameoverScreen.setAlignment(Pos.CENTER);
+        gameoverScreen.setAlignment(Pos.CENTER);
+        gameoverScreen.setSpacing(150);
+        
         roundoverScreen = new VBox();
         
         
@@ -97,7 +99,7 @@ gameoverScreen.setAlignment(Pos.CENTER);
 
         Rectangle gameoverBack = new Rectangle();
         gameoverBack.setWidth(200);
-        gameoverBack.setHeight(90);
+        gameoverBack.setHeight(220);
         gameoverBack.setFill(Color.BLACK);
         
         Rectangle roundoverBack = new Rectangle();
@@ -270,6 +272,7 @@ displayWall(i, j, "0x000");
 
     public void roundover(String winner,int player1win,int player2win) {
         
+        
         FadeTransition fadeTransition =
                 new FadeTransition(Duration.millis(2000), roundoverTotal);
         fadeTransition.setCycleCount(1);
@@ -296,6 +299,8 @@ displayWall(i, j, "0x000");
         fadeTransition.setFromValue(0.0);
         fadeTransition.setToValue(1.0);
         fadeTransition.play();
+        
+        getChildren().remove(roundoverScreen);
 
     }
 }
