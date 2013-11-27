@@ -30,12 +30,17 @@ public class User {
 
     public static User getUser(String username, String password){
         User user = db.getUser(username);
-        user.login(password);
-        if (user.authenticated) {
-            return user;
-        } else {
-            return null;
-        }
+ 
+        // ensure that there is a user in the db
+        if (user != null){
+            user.login(password);
+            if (user.authenticated) {
+                return user;
+            } 
+        } 
+        // return null if user not in db or not authenticated
+        return null;
+          
     }
     
     public static User createUser(String username, String password){
