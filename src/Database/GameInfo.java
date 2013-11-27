@@ -81,8 +81,8 @@ public class GameInfo {
                 p = it.next();
                 if (p.getNumRoundsWon() >= 2) {
                     winner = i;
-                    display.gameover(p.getUsername());
                     this.save();
+                    display.gameover(p.getUsername());
                     return;
                 }
                 i++;
@@ -154,6 +154,7 @@ public class GameInfo {
             } else {
                 p.loseGame();
             }
+            i++;
             p.saveStats();
             try {
                 Thread.sleep(10);

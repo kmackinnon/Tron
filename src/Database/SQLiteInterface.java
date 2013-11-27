@@ -91,6 +91,7 @@ public class SQLiteInterface extends DatabaseInterface {
           try (ResultSet result = statement.executeQuery("select * from Users where username = '" + encodedUsername + "';")) {
             id = result.getInt("id");
             user = result.getString("username");
+            result.close();
           }
           statement.close();
           if (user == null) {
@@ -134,6 +135,7 @@ public class SQLiteInterface extends DatabaseInterface {
             try (ResultSet result = statement.executeQuery("select * from Users where id = " + uid + ";")) {
                 correct = result.getString("password");
                 salt = result.getString("salt");
+                result.close();
             }
             statement.close();
             return correct.equals(hash.hash(password, salt));
@@ -147,7 +149,9 @@ public class SQLiteInterface extends DatabaseInterface {
         try {
           statement = connection.createStatement();
           statement.executeUpdate("update UserStats set wins = " + stats.getWins() + ", losses = " + stats.getLosses() + ", games = " + stats.getGames() + " where user_id = " + uid + ";");
+          statement.close();
         } catch (SQLException e) {
+            Logger.getLogger(SQLiteInterface.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
@@ -180,6 +184,7 @@ public class SQLiteInterface extends DatabaseInterface {
         try {
           statement = connection.createStatement();
           statement.executeUpdate("INSERT INTO GameStats ( player_one, player_two, winner, player_one_rounds, player_two_rounds) VALUES( "+ game.getPlayerID(0) + ", "+ game.getPlayerID(1) + ", "+ game.getWinnerID() + ", " + game.getPlayerWins(0) + ", " + game.getPlayerWins(1) + ");");
+          statement.close();
         } catch (SQLException ex) {
         Logger.getLogger(SQLiteInterface.class.getName()).log(Level.SEVERE, null, ex);
       }
@@ -196,6 +201,7 @@ public class SQLiteInterface extends DatabaseInterface {
           wins = result.getInt("wins");
           losses = result.getInt("losses");
           games = result.getInt("games");
+          result.close();
         }
         statement.close();
         return new UserStatistics(wins, losses, games);
@@ -211,6 +217,7 @@ public class SQLiteInterface extends DatabaseInterface {
           String hashedPassword = hash.hash(newPassword, salt);
           statement = connection.createStatement();
           statement.executeUpdate("update Users set password = '" + hashedPassword + "', salt = '" + salt + "' where id = " + uid + ";");
+          statement.close();
         } catch (SQLException | NoSuchAlgorithmException e) {
             System.out.println("Something bad happened");
         }
@@ -222,6 +229,7 @@ public class SQLiteInterface extends DatabaseInterface {
             String mapData = Base64.encodeBytes(data);
             statement = connection.createStatement();
             statement.executeUpdate("INSERT INTO Maps (map_name, width, height, map_data) VALUES ('" + name + "', " + width + ", "+ height +", '" + mapData + "')");
+            statement.close();
         } catch (SQLException ex) {
             Logger.getLogger(SQLiteInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -236,6 +244,8 @@ public class SQLiteInterface extends DatabaseInterface {
             specs.width = result.getInt("width");
             specs.height = result.getInt("height");
             specs.data = Base64.decode(result.getString("map_data"));
+            result.close();
+            statement.close();
             return specs;
         } catch (SQLException | IOException ex) {
             Logger.getLogger(SQLiteInterface.class.getName()).log(Level.SEVERE, null, ex);
@@ -248,7 +258,7 @@ public class SQLiteInterface extends DatabaseInterface {
       String topTen[][] = new String[2][10];
       try {
         statement = connection.createStatement();
-          try (ResultSet result = statement.executeQuery("SELECT username, wins FROM Users JOIN UserStats ON Users.id = UserStats.User_id ORDER BY wins LIMIT 10;")) {
+          try (ResultSet result = statement.executeQuery("SELECT username, wins FROM Users JOIN UserStats ON Users.id = UserStats.User_id ORDER BY wins DESC LIMIT 10;")) {
               int i = 0;
               while(result.next()){
                 try {
@@ -263,6 +273,7 @@ public class SQLiteInterface extends DatabaseInterface {
                     break;
                 }
               }
+              result.close();
           }
         statement.close();
         return topTen;
@@ -277,6 +288,7 @@ public class SQLiteInterface extends DatabaseInterface {
         try{
             statement = connection.createStatement();
             statement.executeUpdate("INSERT INTO UserStats (user_id , wins, losses, games) VALUES (" + uid + ", 0, 0, 0);");
+            statement.close();
         } catch (SQLException ex) {
             Logger.getLogger(SQLiteInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
