@@ -196,8 +196,9 @@ public class menuUI extends StackPane {
         Label heaToHeadWinLabel = new Label();
         heaToHeadWinLabel.setFont(new Font(20));
         heaToHeadWinLabel.setTextFill(Color.WHITE);
+        int headtoHeadWins[] = User.getHead2HeadStats(firstUser, secondUser);
         //heaToHeadWinLabel.setText(firstUser.getUsername()+" wons "+ Method to get the games won vs +" games vs "+ secondUser.getUsername());
-        heaToHeadWinLabel.setText(firstUser.getUsername()+" vs "+ secondUser.getUsername()+"\n         4-2");
+        heaToHeadWinLabel.setText(firstUser.getUsername()+" vs "+ secondUser.getUsername()+"\n         "+headtoHeadWins[0]+"-"+headtoHeadWins[1]);
         
         winStats.getChildren().addAll(playerOneStatLabel,playerOneStatWinLabel,playerTwoStatLabel,playerTwoStatWinLabel,headToHeadLabel,heaToHeadWinLabel);
         

@@ -107,4 +107,8 @@ public class User {
     public void saveStats(){
         db.updateUser(uid, myStats);
     }
+    
+    public static int[] getHead2HeadStats(User user1, User user2){
+        return db.getHead2Head(user1, user2);
+    }
 }

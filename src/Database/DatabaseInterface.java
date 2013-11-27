@@ -37,6 +37,8 @@ public abstract class DatabaseInterface {
   public abstract MapSpecs getMap(String name) throws UnsupportedOperationException;
   
   public abstract String[][] getTopTenPlayerStats();
+  
+  public abstract int[] getHead2Head(User user1, User user2);
 
   public class MapSpecs{
       public int width, height;

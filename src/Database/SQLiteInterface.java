@@ -287,7 +287,7 @@ public class SQLiteInterface extends DatabaseInterface {
         int wins[] = new int[2];
         try {
             statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT winner FROM GameStats Where player_one IN (" + user1.getID() + ", " + user2.getID() + "), player_two IN (" +user1.getID() + ", " + user2.getID() + ");" );
+            ResultSet result = statement.executeQuery("SELECT winner FROM GameStats WHERE player_one IN (" + user1.getID() + ", " + user2.getID() + ") AND player_two IN (" +user1.getID() + ", " + user2.getID() + ");" );
             while(result.next()){
                 int id = result.getInt("winner");
                 if (id == user1.getID()){
