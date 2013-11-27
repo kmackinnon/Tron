@@ -53,6 +53,11 @@ public class SQLiteInterface extends DatabaseInterface {
                             sqlCommands.add(line);
                         }
                     }
+                    try (InputStream file = getClass().getResourceAsStream("/data/maps.sql"); InputStreamReader reader = new InputStreamReader(file); BufferedReader buffer = new BufferedReader(reader)) {
+                        while ( (line = buffer.readLine()) != null){
+                            sqlCommands.add(line);
+                        }
+                    }
                 } catch (IOException ex) {
                     System.out.println("Something bad happened in reading sql" + ex.getMessage());
                     Logger.getLogger(SQLiteInterface.class.getName()).log(Level.SEVERE, null, ex);
@@ -224,6 +229,8 @@ public class SQLiteInterface extends DatabaseInterface {
 
     @Override
     public DatabaseInterface.MapSpecs getMap(String name) throws UnsupportedOperationException {
+        MapGenerator gen = new MapGenerator();
+        gen.makeAllAndInstall();
         try {
             statement = connection.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM Maps WHERE map_name = '" + name + "';");           
