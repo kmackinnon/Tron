@@ -241,7 +241,7 @@ public class LoginUI extends StackPane {
                 
                 User user = User.getUser(usernameInput.getText(), passwordInput.getText());
 
-                if (user.getSuccess()) {
+                if (user != null) {
                     if (playerNumber == 1) {
                         menuUI mainMenu;
                         mainMenu = new menuUI(stage, veiwer, LoginUI.this.user, user);
@@ -281,7 +281,7 @@ public class LoginUI extends StackPane {
 
                 User user = User.createUser(usernameInput.getText(), passwordInput.getText());
 
-                if (user.getSuccess()) {
+                if (user != null) {
                     if (playerNumber == 1) {
                         menuUI mainMenu = new menuUI(stage, veiwer, LoginUI.this.user, user);
                         Scene mainMenuscene = new Scene(mainMenu);

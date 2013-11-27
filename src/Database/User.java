@@ -5,10 +5,9 @@ public class User {
     private final int uid;
     
     private final String username;
-    private UserStatistics myStats;
+    private  UserStatistics myStats;
     private static final DatabaseInterface db = new SQLiteInterface(".lightracer.db");
     private boolean authenticated;
-    private boolean success;
 
     /**
      * Internal Constructor used by the Database when called by User's Static functions getUser and createUser.
@@ -18,6 +17,7 @@ public class User {
     public User (int uid, String username){
         this.uid = uid;
         this.username = username;
+        myStats = db.getUserStats(uid);
     }
 
     public static User getUser(String username, String password){
@@ -75,15 +75,23 @@ public class User {
         return myStats;
     }
         
-    public boolean getAuthenticated() {
+    public boolean isAuthenticated() {
         return authenticated;
-    }
-    
-    public boolean getSuccess() {
-        return success;
     }
     
     public static String[][] getTopTen() {
       return db.getTopTenPlayerStats();
-  }
+    }
+    
+    public int getGamesWon() {
+        return myStats.getWins();
+    }
+    
+    public int getGamesPlayed() {
+        return myStats.getGames();
+    }
+    
+    public int getGamesLost() {
+        return myStats.getLosses();
+    }
 }
