@@ -40,7 +40,7 @@ public class Display extends StackPane {
     Button startBtn,restartBtn,menuBtn,roundBtn;
     GameInfo GameInfo;
     final Controller controller;
-    Label controllerLabel,roundLabel;
+    Label controllerLabel,roundLabel, restartLabel;
     ImageView Veiwer;
     VBox gameoverScreen;
     HBox buttonGrp;
@@ -76,7 +76,7 @@ public class Display extends StackPane {
         
         
         
-        Label restartLabel = new Label("Round Over");
+        restartLabel = new Label();
         restartLabel.setFont(new Font(26));
         restartLabel.setTextFill(Color.PINK);
         gameoverScreen.setAlignment(Pos.CENTER);
@@ -149,18 +149,6 @@ displayWall(i, j, "0x000");
         restartBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                FadeTransition fadeTransition =
-                        new FadeTransition(Duration.millis(2000), gameoverTotal);
-                fadeTransition.setCycleCount(1);
-                fadeTransition.setAutoReverse(true);
-                fadeTransition.setFromValue(1.0);
-                fadeTransition.setToValue(0.0);
-                fadeTransition.play();
-                setDisable(true);
-
-                clearGrid();
-                
-                restartBtn.setDisable(true);
                 
                 Display Gameplay = new Display(stage, Veiwer,GameInfo);
                 Scene Gameplayscene = new Scene(Gameplay);
@@ -194,6 +182,28 @@ displayWall(i, j, "0x000");
                 //running the gameinfo
             }
         });
+        menuBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                
+                Display Gameplay = new Display(stage, Veiwer,GameInfo);
+                Scene Gameplayscene = new Scene(Gameplay);
+                stage.setScene(Gameplayscene);
+            }
+        });
+        
+        roundBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                
+                clearGrid();
+                
+                gameoverTotal.setOpacity(0);
+                
+                //running the gameinfo
+            }
+        });
+        
     }
 
     public void makeSquares(GridPane panel) {
@@ -230,11 +240,14 @@ displayWall(i, j, "0x000");
         grid[xpos][ypos].setFill(Color.web(color));
     }
 
-    public void roundover() {
+    public void roundover(String winner,int player1win,int player2win) {
         
+        
+        restartLabel.setText(winner+"wins the round");
         buttonGrp.getChildren().clear();
         buttonGrp.getChildren().addAll(roundBtn);
-        //roundLabel=new Label("Games Won : "+  +"                                       Games Won : "+);
+        
+        roundLabel=new Label("Games Won : "+ player1win +"                                       Games Won : "+player2win);
         
         
         FadeTransition fadeTransition =
@@ -246,7 +259,9 @@ displayWall(i, j, "0x000");
         fadeTransition.play();
     }
     
-    public void gameover() {
+    public void gameover(String winner) {
+        
+        restartLabel.setText(winner+"wins the Game");
         
         buttonGrp.getChildren().clear();
         buttonGrp.getChildren().addAll(restartBtn,menuBtn);

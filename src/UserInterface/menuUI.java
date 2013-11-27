@@ -19,6 +19,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+/**
+ *
+ * @author vmorel7
+ */
 public class menuUI extends StackPane {
 
     Label desctiptionLabel, speedLabel;
@@ -31,12 +35,12 @@ public class menuUI extends StackPane {
     Image[] maps = new Image[3];
     
     /**
-     * This is the class that consists the main menu
+     * This is the class that consists of the panel - main menu.
      * 
      * @param stage 
      * @param veiwer
      * @param userA this will be null if one the loginUI, the player picked 1 player, or else this represents the first player
-     * @param userB this will never be null 
+     * @param userB this will never be null, will be the first player if single player or else it would be the second player
      */
 
     public menuUI(final Stage stage, final ImageView veiwer, User userA, User userB) {

@@ -40,6 +40,15 @@ public class LoginUI extends StackPane {
     ImageView veiwer;
     User user;
 
+    
+    /**
+     * 
+     * This is the class that consists of the panel - Login.
+     * 
+     * @param stage
+     * @param veiwer
+     * @param loggedInPlayer This confirms where the program is coming from, if null then the start of the game or else it is coming from the main menu
+     */
     public LoginUI(final Stage stage, final ImageView veiwer, User loggedInPlayer) {
 
         boolean cameFromMainUI;
