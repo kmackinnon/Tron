@@ -276,6 +276,7 @@ public class Map {
                 gameRound();
             }
 
+            String gameWinner = "";
             Iterator<Player> it;
             
             // DRAW
@@ -287,12 +288,13 @@ public class Map {
                     Player player = it.next();
                     // find the winning player
                     if (player.getIsAlive() ){
+                        gameWinner = player.getUsername();
                         myGame.endRound(false, player);
                     } 
                 }  
             }
             
-            myDisplay.gameover();
+            myDisplay.gameover(gameWinner);
 
             return null;
         }
