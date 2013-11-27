@@ -6,12 +6,9 @@ import UserInterface.Display;
 public abstract class MapLoader {
 
   protected String name;
-
     
-  public Map loadMap(Display display, GameInfo game) {
-    return new Map(openMap(), "0x000", game, display);
-  }
+  public abstract Map loadMap(Display display, GameInfo game);
 
-  protected abstract String openMap();
+  protected abstract DatabaseInterface.MapSpecs openMap();
 
 }

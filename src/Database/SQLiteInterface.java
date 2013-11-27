@@ -204,12 +204,28 @@ public class SQLiteInterface extends DatabaseInterface {
     }
 
     @Override
-    public void addMap(String name, String mapString) throws UnsupportedOperationException {
-        throw new UnsupportedOperationException();
+    public void addMap(String name, byte data[], int width, int height) throws UnsupportedOperationException {
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate("INSERT INTO Maps (map_name, width, height, map_data) VALUES ('" + name + "', " + width + ", "+ height +", '" + Base64.encodeBytes(data) + "')");
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLiteInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
-    public String getMap(String name) throws UnsupportedOperationException {
-        return null; //TODO: have this throw an implementation error if not implemented
+    public DatabaseInterface.MapSpecs getMap(String name) throws UnsupportedOperationException {
+        try {
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT COUNT(*) FROM Maps WHERE map_name = '" + name + "';");           
+            DatabaseInterface.MapSpecs specs = new DatabaseInterface.MapSpecs();
+            specs.width = result.getInt("width");
+            specs.height = result.getInt("height");
+            specs.data = Base64.decode(result.getString("map_data"));
+            return specs;
+        } catch (SQLException | IOException ex) {
+            Logger.getLogger(SQLiteInterface.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 }

@@ -30,8 +30,12 @@ public abstract class DatabaseInterface {
     return supportList;
   }
 
-  public abstract void addMap(String name, String mapString) throws UnsupportedOperationException;
+  public abstract void addMap(String name, byte mapData[], int width, int height) throws UnsupportedOperationException;
 
-  public abstract String getMap(String name) throws UnsupportedOperationException;
+  public abstract MapSpecs getMap(String name) throws UnsupportedOperationException;
 
+  public class MapSpecs{
+      public int width, height;
+      public byte data[];
+  }
 }

@@ -227,7 +227,7 @@ public class Map {
       
     }
     
-    public Map(int width, int height, byte mapData[], GameInfo game, Display display){
+    public Map(int width, int height, byte mapData[], String colour, GameInfo game, Display display){
         this.width = width;
         this.height = height;
         BitSet map = loadMapDataFromBinary(mapData);
