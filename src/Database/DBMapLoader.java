@@ -6,7 +6,6 @@ import UserInterface.Display;
 public class DBMapLoader extends MapLoader {
 
   private static final DatabaseInterface db = new SQLiteInterface(".lightracer.db");
-  private int width, height;
 
   public DBMapLoader(String mapName) {
     name = mapName;
@@ -20,7 +19,7 @@ public class DBMapLoader extends MapLoader {
 
   @Override
   protected DatabaseInterface.MapSpecs openMap(){
-    return null;
+    return db.getMap(name);
   }
 
 }
