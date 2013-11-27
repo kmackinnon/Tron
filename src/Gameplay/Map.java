@@ -198,6 +198,11 @@ public class Map {
         controller.clear();
     }
 
+    public byte[] getBinaryData() {
+        BitSet map = internal.getMapData();
+        return map.toByteArray();
+    }
+    
     /**
      * Generates blank Map of given width and height
      *
@@ -365,6 +370,10 @@ public class Map {
 
                 }
             }
+        }
+        
+        public BitSet getMapData() {
+            return map;
         }
 
         public void addPlayer(User user, String colour, Player.Direction direction, int x, int y) {
