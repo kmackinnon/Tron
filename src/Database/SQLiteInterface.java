@@ -283,6 +283,26 @@ public class SQLiteInterface extends DatabaseInterface {
       }
     }
     
+    public int[] getHead2Head(User user1, User user2){
+        int wins[] = new int[2];
+        try {
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT winner FROM GameStats Where player_one IN (" + user1.getID() + ", " + user2.getID() + "), player_two IN (" +user1.getID() + ", " + user2.getID() + ");" );
+            while(result.next()){
+                int id = result.getInt("winner");
+                if (id == user1.getID()){
+                    wins[0]++;
+                } else {
+                    wins[1]++;
+                }
+            }
+            return wins;
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLiteInterface.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
     @Override
     public void createStats(int uid) {
         try{
