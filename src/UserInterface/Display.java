@@ -66,6 +66,8 @@ public class Display extends StackPane {
 
         gameoverScreen = new VBox();
         
+        
+        buttonGrp = new HBox();
         buttonGrp.setAlignment(Pos.CENTER);
         
         restartBtn = new Button("Restart");
@@ -90,7 +92,7 @@ public class Display extends StackPane {
 
         gameoverTotal = new StackPane();
         gameoverTotal.getChildren().addAll(gameoverBack, gameoverScreen);
-        //gameoverTotal.setOpacity(0);
+        gameoverTotal.setOpacity(0);
 
         startBtn = new Button("Start Game");
 
@@ -145,17 +147,7 @@ displayWall(i, j, "0x000");
 }
 }*/
        
-        //This is for the restart button when it is clicked, it will clear the map and fadeaway the gameover screen
-        restartBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                
-                Display Gameplay = new Display(stage, Veiwer,GameInfo);
-                Scene Gameplayscene = new Scene(Gameplay);
-                stage.setScene(Gameplayscene);
-            }
-        });
-
+       
         
         // The start button will
         startBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -179,9 +171,21 @@ displayWall(i, j, "0x000");
                 outFadeTransition.setToValue(1.0);
                 outFadeTransition.play();
                  
-                //running the gameinfo
+                GameInfo.startRound();
             }
         });
+        
+         //This is for the restart button when it is clicked, it will clear the map and fadeaway the gameover screen
+        restartBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                
+                Display Gameplay = new Display(stage, Veiwer,GameInfo);
+                Scene Gameplayscene = new Scene(Gameplay);
+                stage.setScene(Gameplayscene);
+            }
+        });
+
         menuBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -197,10 +201,8 @@ displayWall(i, j, "0x000");
             public void handle(ActionEvent e) {
                 
                 clearGrid();
-                
                 gameoverTotal.setOpacity(0);
-                
-                //running the gameinfo
+                GameInfo.startRound();
             }
         });
         
@@ -243,7 +245,7 @@ displayWall(i, j, "0x000");
     public void roundover(String winner,int player1win,int player2win) {
         
         
-        restartLabel.setText(winner+"wins the round");
+        restartLabel.setText(winner);
         buttonGrp.getChildren().clear();
         buttonGrp.getChildren().addAll(roundBtn);
         

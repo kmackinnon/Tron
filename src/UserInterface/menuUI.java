@@ -172,8 +172,7 @@ public class menuUI extends StackPane {
         playerOneStatWinLabel.setFont(new Font(20));
         playerOneStatWinLabel.setTextFill(Color.WHITE);
         
-        //playerOneStatWinLabel.setText("Games Played:"+(method to get games played)+" Wins:"+(method to get wins));
-        playerOneStatWinLabel.setText("Games Played: 16\n        Wins: 8");
+        playerOneStatWinLabel.setText("Games Played: "+firstUser.getStats().getGames()+"\n        Wins: "+firstUser.getStats().getWins());
         
         if(isSinglePlayer){
             winStats.getChildren().addAll(playerOneStatLabel,playerOneStatWinLabel);
@@ -188,8 +187,7 @@ public class menuUI extends StackPane {
         playerTwoStatWinLabel.setFont(new Font(20));
         playerTwoStatWinLabel.setTextFill(Color.WHITE);
         
-        //playerTwoStatWinLabel.setText("Games Played:"+(method to get games played)+" Wins:"+(method to get wins));
-        playerTwoStatWinLabel.setText("Games Played: 30\n        Wins: 25");
+        playerTwoStatWinLabel.setText("Games Played: "+secondUser.getStats().getGames()+"\n        Wins: "+secondUser.getStats().getWins());
         
         Label headToHeadLabel = new Label("Head-To-Head");
         headToHeadLabel.setFont(new Font(26));
@@ -205,14 +203,29 @@ public class menuUI extends StackPane {
         
         }
 
+        VBox top10Grp =new VBox();
+        top10Grp.setMinWidth(200);
+        
+        String top10[][] =User.getTopTen();
         
         Label top10Label = new Label();
-        top10Label.setFont(new Font(20));
+        top10Label.setFont(new Font(26));
         top10Label.setTextFill(Color.WHITE);
-        top10Label.setMinWidth(200);
+        top10Label.setText("Top 10 Players");
         
-        top10Label.setText("Top 10 Players\n\nbob  170 \nviviexe 32 \nbill 16 \nsteve 13\nvic 11\njill 9\njen 5\ntest 4\ntest1 2 \ntest3 1");
-        //top10Label.setText((call the method that would give me the top 10 players));
+        HBox top10rows[] =new HBox[10];
+        Label top10names[] =new Label[10];
+        Label top10scores[] =new Label[10];
+        
+        for(int i =0;i>10;i++)
+        {
+            
+        }
+        
+        
+        
+        
+        
         
         statisticsGrp.setAlignment(Pos.CENTER);
         statisticsGrp.setSpacing(30);
