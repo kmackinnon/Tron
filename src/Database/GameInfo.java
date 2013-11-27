@@ -14,24 +14,16 @@ public class GameInfo {
     private MapLoader baseMap;
     private Display display;
 
-    /**
-     *
-     * @element-type Player
-     */
     private final ArrayList<Player> playerList;
-    /**
-     *
-     * @element-type MapLoader
-     */
     private static final DatabaseInterface myDatabaseInterface = new SQLiteInterface(".lightracer.db");
-    private int speed;
+    private final int speed;
 
     public void setDisplay(Display display) {
         this.display = display;
     }
 
     public GameInfo(User playerOne, String playerOneColour, User playerTwo, String playerTwoColour, int speed, MapLoader map) {
-        winner = -1;
+        winner = -1; // inital value when no one has won yet
         this.speed = speed;
         playerList = new ArrayList(2);
         this.baseMap = map;
@@ -49,6 +41,13 @@ public class GameInfo {
         current.run();
     }
 
+    /**
+     * Ends the round and keeps track of result and round winner. Sets the game
+     * winner.
+     *
+     * @param draw
+     * @param victor
+     */
     public void endRound(boolean draw, Player victor) {
         if (draw) {
             startRound(); // restart the round
@@ -69,9 +68,14 @@ public class GameInfo {
         }
     }
 
+    /**
+     * Determines the end of a game.
+     *
+     * @return true or false
+     */
     public boolean endGame() {
         if (winner < 0) {
-            return false;
+            return false; // keep playing
         } else {
             Player player = playerList.get(winner);
             player.winGame();
@@ -79,11 +83,22 @@ public class GameInfo {
         }
     }
 
+    /**
+     * A quick way to get a player's username from his index in the playerList.
+     *
+     * @param index
+     * @return the player's username
+     */
     public String getPlayerName(int index) {
         Player player = playerList.get(index);
         return player.getUsername();
     }
 
+    /**
+     * Get the game winner's username.
+     *
+     * @return the winning player's username
+     */
     public String getWinnerName() {
         if (winner < 0) {
             return null;
