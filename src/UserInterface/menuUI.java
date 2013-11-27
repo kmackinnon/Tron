@@ -219,7 +219,7 @@ public class menuUI extends StackPane {
         Label top10names[] =new Label[10];
         Label top10scores[] =new Label[10];
         
-        for(int i =0;i<1;i++)
+        for(int i = 0; i < 10;i++)
         {
             top10names[i]=new Label(top10[0][i]);
             top10names[i].setFont(new Font(20));
