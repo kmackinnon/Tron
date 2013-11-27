@@ -73,6 +73,7 @@ public class SQLiteInterface extends DatabaseInterface {
             System.out.println("Something bad happened in init" + e.getMessage());
         }
         supportList.add("user");
+        supportList.add("map");
     }
 
     @Override
@@ -173,6 +174,7 @@ public class SQLiteInterface extends DatabaseInterface {
     public void addGame(GameInfo game) throws UnsupportedOperationException {
         try {
           statement = connection.createStatement();
+          statement.executeUpdate("INSERT INTO GameStats ( player_one, player_two, winner, player_one_rounds, player_two_rounds) VALUES( "+ game.getPlayerID(0) + ", "+ game.getPlayerID(1) + ", "+ game.getWinnerID() + ", " + game.getPlayerWins(0) + ", " + game.getPlayerWins(1) + ");");
         } catch (SQLException ex) {
         Logger.getLogger(SQLiteInterface.class.getName()).log(Level.SEVERE, null, ex);
       }

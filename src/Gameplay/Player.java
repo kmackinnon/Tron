@@ -58,6 +58,9 @@ public class Player {
       this.myMap = null;
     }
 
+    public int getID(){
+        return myUser.getID();
+    }
     public int getX() {
         return this.xPos;
     }

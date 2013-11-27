@@ -68,6 +68,10 @@ public class User {
         return this.username;
     }
     
+    public int getID(){
+        return this.uid;
+    }
+    
     public UserStatistics getStats() {
         return myStats;
     }

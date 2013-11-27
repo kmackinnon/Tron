@@ -106,5 +106,18 @@ public class GameInfo {
             return getPlayerName(winner);
         }
     }
-
+    
+    public int getPlayerID(int index) {
+        Player player = playerList.get(index);
+        return player.getID();
+    }
+    
+    public int getWinnerID() {
+      return getPlayerID(winner);
+    }
+    
+    public int getPlayerWins(int index) {
+        Player player = playerList.get(index);
+        return player.getNumRoundsWon();
+    }
 }
