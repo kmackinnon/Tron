@@ -125,7 +125,7 @@ public class Display extends StackPane {
         controllerLabel = new Label("up: W, left: A, down: S, right: D      up: I, left: J, down: K, right: L");
         controllerLabel.setTextFill(Color.WHITE);
         controllerLabel.setFont(new Font(20));
-        roundLabel = new Label("Games Won : 0                                       Games Won : 0");
+        roundLabel = new Label("Rounds Won : 0                                       Rounds Won : 0");
         roundLabel.setTextFill(Color.WHITE);
         roundLabel.setFont(new Font(20));
         roundLabel.setOpacity(0);
@@ -142,31 +142,6 @@ public class Display extends StackPane {
         getChildren().add(startBtn);
         setOnKeyPressed(controller);
 
-        /*for (int i = 15; i < 25; i++) {
-         for (int j = 20; j < 30; j++) {
-         displayWall(i, j, "0x000");
-         }
-         }
-         for (int i = 50; i < 60; i++) {
-         for (int j = 20; j < 30; j++) {
-         displayWall(i, j, "0x000");
-         }
-         }*/
-        /* for (int i = 30; i < 45; i++) {
-         for (int j = 20; j < 30; j++) {
-         displayWall(i, j, "0x000");
-         }
-         }
-         for (int i = 5; i < 25; i++) {
-         for (int j = 25; j < 45; j++) {
-         displayWall(i, j, "0x000");
-         }
-         }
-         for (int i = 50; i < 70; i++) {
-         for (int j = 5; j < 25; j++) {
-         displayWall(i, j, "0x000");
-         }
-         }*/
         // The start button will
         startBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -224,8 +199,7 @@ public class Display extends StackPane {
                 if (endGame) {
                     switchGrp.getChildren().remove(roundoverTotal);
                 } else {
-
-                    roundLabel.setText("Games Won : " + player1point + "                                       Games Won : " + player2point);
+                    roundLabel.setText("Rounds Won : " + player1point + "                                       Rounds Won : " + player2point);
                     clearGrid();
                     roundoverTotal.setOpacity(0);
                     GameInfo.startRound();
