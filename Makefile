@@ -1,4 +1,4 @@
-PACKAGES := Database UserInterface Gameplay lightracer
+PACKAGES := database userinterface gameplay lightracer
 .PHONY: all clean dist check clean-docs $(PACKAGES) todo libs
 
 RESOURCE_PATH := res
