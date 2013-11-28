@@ -16,21 +16,19 @@ public class Player {
     private int roundsWon;
     private final String colour;
     private final GameInfo myGame;
-    //public Controller myController;
     private Map myMap;
     private final User myUser;
     private boolean moved;
 
     /**
-     *
+     * Create new player with full details to start new game
      * @param xStart
      * @param yStart
      * @param colour
      * @param user
      * @param map
      * @param startingDirection
-     *
-     * used to give starting coords for new game
+     * @param game
      */
     public Player(int xStart, int yStart, String colour, User user, Map map, Direction startingDirection, GameInfo game) {
         this.xPos = xStart;
@@ -48,6 +46,7 @@ public class Player {
      *
      * @param user
      * @param colour
+     * @param game
      */
     public Player(User user, String colour, GameInfo game) {
         this.colour = colour;
@@ -97,12 +96,11 @@ public class Player {
     }
 
     /**
-     *
+     * Set initial position and moving direction on the grid
      * @param xStart
      * @param yStart
      * @param startingDirection
-     *
-     * Set initial position and moving direction on the grid
+     * @param map
      */
     public void init(int xStart, int yStart, Direction startingDirection, Map map) {
         this.xPos = xStart;
