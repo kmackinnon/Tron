@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package Database;
+package database;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import net.iharder.Base64;

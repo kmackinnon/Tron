@@ -1,8 +1,8 @@
-package UserInterface;
+package userinterface;
 
-import Database.DBMapLoader;
-import Database.GameInfo;
-import Database.User;
+import database.DBMapLoader;
+import database.GameInfo;
+import database.User;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;

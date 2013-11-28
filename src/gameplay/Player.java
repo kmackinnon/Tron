@@ -1,7 +1,7 @@
-package Gameplay;
+package gameplay;
 
-import Database.GameInfo;
-import Database.User;
+import database.GameInfo;
+import database.User;
 
 public class Player {
 

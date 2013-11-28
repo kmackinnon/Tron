@@ -1,7 +1,7 @@
-package Database;
+package database;
 
-import Gameplay.Map;
-import UserInterface.Display;
+import gameplay.Map;
+import userinterface.Display;
 
 public abstract class MapLoader {
 

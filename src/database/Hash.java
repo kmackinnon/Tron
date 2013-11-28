@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package Database;
+package database;
 
 import java.security.SecureRandom;
 import java.security.NoSuchAlgorithmException;

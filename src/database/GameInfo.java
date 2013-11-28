@@ -1,15 +1,15 @@
-package Database;
+package database;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import Gameplay.Map;
-import Gameplay.Controller;
-import Gameplay.MovePlayerDown;
-import Gameplay.MovePlayerLeft;
-import Gameplay.MovePlayerRight;
-import Gameplay.MovePlayerUp;
-import Gameplay.Player;
-import UserInterface.Display;
+import gameplay.Map;
+import gameplay.Controller;
+import gameplay.MovePlayerDown;
+import gameplay.MovePlayerLeft;
+import gameplay.MovePlayerRight;
+import gameplay.MovePlayerUp;
+import gameplay.Player;
+import userinterface.Display;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.input.KeyCode;

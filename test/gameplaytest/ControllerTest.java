@@ -7,8 +7,6 @@
 package gameplaytest;
 
 import org.junit.*;
-import Gameplay.*;
-import UserInterface.*;
 
 /**
  * Controller testing: don't need full in game setup, just check that key press functionality is good

@@ -1,4 +1,4 @@
-package Gameplay;
+package gameplay;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;

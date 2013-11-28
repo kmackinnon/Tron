@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package Database;
+package database;
 
+import database.SHA256Hash;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

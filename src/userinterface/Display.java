@@ -1,6 +1,6 @@
-package UserInterface;
+package userinterface;
 
-import Database.GameInfo;
+import database.GameInfo;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.paint.Color;
@@ -15,7 +15,7 @@ import javafx.scene.shape.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 
-import Gameplay.Controller;
+import gameplay.Controller;
 import javafx.animation.FadeTransition;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;

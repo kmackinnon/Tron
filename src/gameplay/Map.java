@@ -1,8 +1,8 @@
-package Gameplay;
+package gameplay;
 
-import Database.GameInfo;
-import Database.User;
-import UserInterface.Display;
+import database.GameInfo;
+import database.User;
+import userinterface.Display;
 
 import java.util.BitSet;
 import java.util.regex.Pattern;

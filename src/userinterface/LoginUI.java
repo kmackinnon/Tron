@@ -1,6 +1,6 @@
-package UserInterface;
+package userinterface;
 
-import Database.User;
+import database.User;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.event.ActionEvent;
