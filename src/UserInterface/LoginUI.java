@@ -15,7 +15,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -27,7 +26,7 @@ import javafx.util.Duration;
 
 /**
  *
- * @author vmorel7
+ * @author Victorio
  */
 public class LoginUI extends StackPane {
 
@@ -40,14 +39,14 @@ public class LoginUI extends StackPane {
     ImageView veiwer;
     User user;
 
-    
     /**
-     * 
+     *
      * This is the class that consists of the panel - Login.
-     * 
+     *
      * @param stage
      * @param veiwer
-     * @param loggedInPlayer This confirms where the program is coming from, if null then the start of the game or else it is coming from the main menu
+     * @param loggedInPlayer This confirms where the program is coming from, if
+     * null then the start of the game or else it is coming from the main menu
      */
     public LoginUI(final Stage stage, final ImageView veiwer, User loggedInPlayer) {
 
@@ -55,11 +54,10 @@ public class LoginUI extends StackPane {
         this.user = loggedInPlayer;
         if (user != null) {
             cameFromMainUI = true;
-            playerNumber=1;
+            playerNumber = 1;
         } else {
             cameFromMainUI = false;
         }
-
 
         //this is the background
         this.veiwer = veiwer;
@@ -89,11 +87,10 @@ public class LoginUI extends StackPane {
         BtnGroup.setAlignment(Pos.CENTER);
         BtnGroup.setSpacing(70);
         BtnGroup.getChildren().addAll(singlePlayerBtn, multiPlayerBtn);
-        if(cameFromMainUI){
-        BtnGroup.setDisable(true);
-        BtnGroup.setOpacity(0);
+        if (cameFromMainUI) {
+            BtnGroup.setDisable(true);
+            BtnGroup.setOpacity(0);
         }
-        
 
         //opening the group that conatins most of the log in items (textboxs & buttons)
         loginBase = new VBox();
@@ -146,11 +143,10 @@ public class LoginUI extends StackPane {
                 passwordLabel, passwordInput,
                 loginBtnGroup, errorLabel);
         loginBase.setSpacing(15);
-        if(!cameFromMainUI){
-        loginBase.setDisable(true);
-        loginBase.setOpacity(0);}
-        
-        
+        if (!cameFromMainUI) {
+            loginBase.setDisable(true);
+            loginBase.setOpacity(0);
+        }
 
         // this is the swicth group this is here so that I would be able to switch one out for the other once I'm done with one set of buttons
         StackPane switchGrp = new StackPane();
@@ -161,10 +157,8 @@ public class LoginUI extends StackPane {
         base.setAlignment(Pos.CENTER);
         base.getChildren().addAll(titleLabel, switchGrp);
 
-
         //adds the group that conatins everything and the background 
         getChildren().addAll(veiwer, base);
-
 
         // This is the action of when you press the single player button
         // it will switch the group and keep in mind there is only one player that will be logging in
@@ -174,15 +168,15 @@ public class LoginUI extends StackPane {
                 playerNumber = 1;
                 loginBase.setDisable(false);
                 BtnGroup.setDisable(true);
-                FadeTransition buttonOut =
-                        new FadeTransition(Duration.millis(1000), BtnGroup);
+                FadeTransition buttonOut
+                        = new FadeTransition(Duration.millis(1000), BtnGroup);
                 buttonOut.setCycleCount(1);
                 buttonOut.setAutoReverse(true);
                 buttonOut.setFromValue(1.0);
                 buttonOut.setToValue(0.0);
 
-                FadeTransition loginIn =
-                        new FadeTransition(Duration.millis(1000), loginBase);
+                FadeTransition loginIn
+                        = new FadeTransition(Duration.millis(1000), loginBase);
                 loginIn.setCycleCount(1);
                 loginIn.setAutoReverse(true);
                 loginIn.setFromValue(0.0);
@@ -190,7 +184,6 @@ public class LoginUI extends StackPane {
 
                 SequentialTransition seqT = new SequentialTransition(buttonOut, loginIn);
                 seqT.play();
-
 
                 BtnGroup.setDisable(true);
 
@@ -203,15 +196,15 @@ public class LoginUI extends StackPane {
                 playerNumber = 2;
                 loginBase.setDisable(false);
                 BtnGroup.setDisable(true);
-                FadeTransition fadeTransitionout =
-                        new FadeTransition(Duration.millis(1000), BtnGroup);
+                FadeTransition fadeTransitionout
+                        = new FadeTransition(Duration.millis(1000), BtnGroup);
                 fadeTransitionout.setCycleCount(1);
                 fadeTransitionout.setAutoReverse(true);
                 fadeTransitionout.setFromValue(1.0);
                 fadeTransitionout.setToValue(0.0);
 
-                FadeTransition fadeTransitionin =
-                        new FadeTransition(Duration.millis(1000), loginBase);
+                FadeTransition fadeTransitionin
+                        = new FadeTransition(Duration.millis(1000), loginBase);
                 fadeTransitionin.setCycleCount(1);
                 fadeTransitionin.setAutoReverse(true);
                 fadeTransitionin.setFromValue(0.0);
@@ -220,31 +213,27 @@ public class LoginUI extends StackPane {
                 SequentialTransition seqT = new SequentialTransition(fadeTransitionout, fadeTransitionin);
                 seqT.play();
 
-
                 BtnGroup.setDisable(true);
 
             }
         });
 
-
-
         LoginBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
 
-                if(user!=null && usernameInput.getText().equals(user.getUsername()))
-                {
+                if (user != null && usernameInput.getText().equals(user.getUsername())) {
                     passwordInput.clear();
                     errorLabel.setText("That user is already logged in");
                     return;
                 }
-                
+
                 User user = User.getUser(usernameInput.getText(), passwordInput.getText());
 
                 if (user != null) {
                     if (playerNumber == 1) {
-                        menuUI mainMenu;
-                        mainMenu = new menuUI(stage, veiwer, LoginUI.this.user, user);
+                        MenuUI mainMenu;
+                        mainMenu = new MenuUI(stage, veiwer, LoginUI.this.user, user);
                         Scene mainMenuscene = new Scene(mainMenu);
                         stage.setScene(mainMenuscene);
                     } else {
@@ -266,8 +255,8 @@ public class LoginUI extends StackPane {
             public void handle(ActionEvent e) {
 
                 String password = passwordInput.getText();
-                
-                if (password.length() < 8|| password.matches("[A-Za-z0-9 ]*")||password.equals(password.toLowerCase())||password.equals(password.toUpperCase())||!password.matches(".*\\d.*")) {
+
+                if (password.length() < 8 || password.matches("[A-Za-z0-9 ]*") || password.equals(password.toLowerCase()) || password.equals(password.toUpperCase()) || !password.matches(".*\\d.*")) {
                     passwordInput.clear();
                     errorLabel.setText("The password must be greater than 7 characters and contain at least: \n 1 lowercase letter, 1 uppercase letter, 1 number, and 1 special character ");
                     return;
@@ -283,7 +272,7 @@ public class LoginUI extends StackPane {
 
                 if (user != null) {
                     if (playerNumber == 1) {
-                        menuUI mainMenu = new menuUI(stage, veiwer, LoginUI.this.user, user);
+                        MenuUI mainMenu = new MenuUI(stage, veiwer, LoginUI.this.user, user);
                         Scene mainMenuscene = new Scene(mainMenu);
                         stage.setScene(mainMenuscene);
                     } else {

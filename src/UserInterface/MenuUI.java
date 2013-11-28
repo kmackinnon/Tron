@@ -23,27 +23,28 @@ import javafx.stage.Stage;
  *
  * @author vmorel7
  */
-public class menuUI extends StackPane {
+public class MenuUI extends StackPane {
 
     Label desctiptionLabel, speedLabel;
     ImageView veiwer, mapSelect;
     User firstUser, secondUser;
     boolean isSinglePlayer;
     Rectangle colorOne, colorTwo;
-    int colorOnePlace, colorTwoPlace,mapposition,speed=10;
+    int colorOnePlace, colorTwoPlace, mapposition, speed = 10;
     final String[] COLORS = {"0xF00", "0xFF0", "0x0F0", "0x0FF", "0x00F", "0xF0F"};
     Image[] maps = new Image[3];
-    
+
     /**
      * This is the class that consists of the panel - main menu.
-     * 
-     * @param stage 
+     *
+     * @param stage
      * @param veiwer
-     * @param userA this will be null if one the loginUI, the player picked 1 player, or else this represents the first player
-     * @param userB this will never be null, will be the first player if single player or else it would be the second player
+     * @param userA this will be null if one the loginUI, the player picked 1
+     * player, or else this represents the first player
+     * @param userB this will never be null, will be the first player if single
+     * player or else it would be the second player
      */
-
-    public menuUI(final Stage stage, final ImageView veiwer, User userA, User userB) {
+    public MenuUI(final Stage stage, final ImageView veiwer, User userA, User userB) {
 
         //might have to change the names coming in.
         if (userA != null) {
@@ -85,7 +86,6 @@ public class menuUI extends StackPane {
         mapGrp.setSpacing(10);
         mapGrp.getChildren().addAll(leftMapBtn, mapSelect, rightMapBtn);
 
-
         HBox colorGrp = new HBox();
 
         Button leftColorOneBtn = new Button("←");
@@ -99,7 +99,6 @@ public class menuUI extends StackPane {
         colorOne.setHeight(30);
         colorOne.setFill(Color.web(COLORS[0]));
         colorOnePlace = 0;
-
 
         colorTwo = new Rectangle();
         colorTwo.setWidth(30);
@@ -115,7 +114,6 @@ public class menuUI extends StackPane {
             colorGrp.getChildren().addAll(leftColorOneBtn, colorOne, rightColorOneBtn, new Label("         "), leftColorTwoBtn, colorTwo, rightColorTwoBtn);
         }
 
-
         Label mapLabel = new Label("Select Map");
         mapLabel.setFont(new Font(20));
         mapLabel.setTextFill(Color.WHITE);
@@ -128,22 +126,20 @@ public class menuUI extends StackPane {
         } else {
             colorLabel.setText("Select " + firstUser.getUsername() + "'s color     Select " + secondUser.getUsername() + "'s color ");
         }
-       
-        HBox speedStartGrp=new HBox();
-        
+
+        HBox speedStartGrp = new HBox();
 
         Button leftSpeedBtn = new Button("←");
         Button rightSpeedBtn = new Button("→");
-        
-        speedLabel= new Label("  Map Speed : "+String.valueOf(speed));
+
+        speedLabel = new Label("  Map Speed : " + String.valueOf(speed));
         speedLabel.setFont(new Font(20));
         speedLabel.setTextFill(Color.WHITE);
         speedLabel.setMinWidth(165);
-        
-        
+
         speedStartGrp.setAlignment(Pos.CENTER);
-        speedStartGrp.getChildren().addAll(leftSpeedBtn,speedLabel,rightSpeedBtn,new Label("      "),playBtn);
-        
+        speedStartGrp.getChildren().addAll(leftSpeedBtn, speedLabel, rightSpeedBtn, new Label("      "), playBtn);
+
         gameInitGrp.setSpacing(40);
         gameInitGrp.setAlignment(Pos.CENTER);
         gameInitGrp.getChildren().addAll(mapLabel, mapGrp, colorLabel, colorGrp, speedStartGrp);
@@ -152,110 +148,102 @@ public class menuUI extends StackPane {
         }
 
         VBox statisticsGrpBase = new VBox();
-        
+
         Label statTitleLabel = new Label("Statistics");
         statTitleLabel.setFont(new Font(40));
         statTitleLabel.setTextFill(Color.WHITE);
-        
+
         HBox statisticsGrp = new HBox();
-        
-        VBox winStats=new VBox();
+
+        VBox winStats = new VBox();
         winStats.setAlignment(Pos.CENTER);
         winStats.setSpacing(10);
-        
-        
+
         Label playerOneStatLabel = new Label(firstUser.getUsername());
         playerOneStatLabel.setFont(new Font(26));
         playerOneStatLabel.setTextFill(Color.WHITE);
-        
+
         Label playerOneStatWinLabel = new Label();
         playerOneStatWinLabel.setFont(new Font(20));
         playerOneStatWinLabel.setTextFill(Color.WHITE);
-        
-        playerOneStatWinLabel.setText("Games Played: "+firstUser.getStats().getGames()+"\n        Wins: "+firstUser.getStats().getWins());
-        
-        if(isSinglePlayer){
-            winStats.getChildren().addAll(playerOneStatLabel,playerOneStatWinLabel);
-        }
-        else 
-        {
-        Label playerTwoStatLabel = new Label(secondUser.getUsername());
-        playerTwoStatLabel.setFont(new Font(26));
-        playerTwoStatLabel.setTextFill(Color.WHITE);
-        
-         Label playerTwoStatWinLabel = new Label();
-        playerTwoStatWinLabel.setFont(new Font(20));
-        playerTwoStatWinLabel.setTextFill(Color.WHITE);
-        
-        playerTwoStatWinLabel.setText("Games Played: "+secondUser.getStats().getGames()+"\n        Wins: "+secondUser.getStats().getWins());
-        
-        Label headToHeadLabel = new Label("Head-To-Head");
-        headToHeadLabel.setFont(new Font(26));
-        headToHeadLabel.setTextFill(Color.WHITE);
-        
-        Label heaToHeadWinLabel = new Label();
-        heaToHeadWinLabel.setFont(new Font(20));
-        heaToHeadWinLabel.setTextFill(Color.WHITE);
-        int headtoHeadWins[] = User.getHead2HeadStats(firstUser, secondUser);
-        //heaToHeadWinLabel.setText(firstUser.getUsername()+" wons "+ Method to get the games won vs +" games vs "+ secondUser.getUsername());
-        heaToHeadWinLabel.setText(firstUser.getUsername()+" vs "+ secondUser.getUsername()+"\n         "+headtoHeadWins[0]+"-"+headtoHeadWins[1]);
-        
-        winStats.getChildren().addAll(playerOneStatLabel,playerOneStatWinLabel,playerTwoStatLabel,playerTwoStatWinLabel,headToHeadLabel,heaToHeadWinLabel);
-        
+
+        playerOneStatWinLabel.setText("Games Played: " + firstUser.getStats().getGames() + "\n        Wins: " + firstUser.getStats().getWins());
+
+        if (isSinglePlayer) {
+            winStats.getChildren().addAll(playerOneStatLabel, playerOneStatWinLabel);
+        } else {
+            Label playerTwoStatLabel = new Label(secondUser.getUsername());
+            playerTwoStatLabel.setFont(new Font(26));
+            playerTwoStatLabel.setTextFill(Color.WHITE);
+
+            Label playerTwoStatWinLabel = new Label();
+            playerTwoStatWinLabel.setFont(new Font(20));
+            playerTwoStatWinLabel.setTextFill(Color.WHITE);
+
+            playerTwoStatWinLabel.setText("Games Played: " + secondUser.getStats().getGames() + "\n        Wins: " + secondUser.getStats().getWins());
+
+            Label headToHeadLabel = new Label("Head-To-Head");
+            headToHeadLabel.setFont(new Font(26));
+            headToHeadLabel.setTextFill(Color.WHITE);
+
+            Label heaToHeadWinLabel = new Label();
+            heaToHeadWinLabel.setFont(new Font(20));
+            heaToHeadWinLabel.setTextFill(Color.WHITE);
+            int headtoHeadWins[] = User.getHead2HeadStats(firstUser, secondUser);
+            //heaToHeadWinLabel.setText(firstUser.getUsername()+" wons "+ Method to get the games won vs +" games vs "+ secondUser.getUsername());
+            heaToHeadWinLabel.setText(firstUser.getUsername() + " vs " + secondUser.getUsername() + "\n         " + headtoHeadWins[0] + "-" + headtoHeadWins[1]);
+
+            winStats.getChildren().addAll(playerOneStatLabel, playerOneStatWinLabel, playerTwoStatLabel, playerTwoStatWinLabel, headToHeadLabel, heaToHeadWinLabel);
+
         }
 
-        VBox top10Grp =new VBox();
+        VBox top10Grp = new VBox();
         top10Grp.setMinWidth(200);
-        
-        String top10[][] =User.getTopTen();
-        
+
+        String top10[][] = User.getTopTen();
+
         Label top10Label = new Label();
         top10Label.setFont(new Font(26));
         top10Label.setTextFill(Color.WHITE);
         top10Label.setText("Top 10 Players");
-        
+
         top10Grp.getChildren().add(top10Label);
-        
-        HBox top10rows[] =new HBox[10];
-        Label top10names[] =new Label[10];
-        Label top10scores[] =new Label[10];
-        
-        for(int i = 0; i < 10;i++)
-        {
-            top10names[i]=new Label(top10[0][i]);
+
+        HBox top10rows[] = new HBox[10];
+        Label top10names[] = new Label[10];
+        Label top10scores[] = new Label[10];
+
+        for (int i = 0; i < 10; i++) {
+            top10names[i] = new Label(top10[0][i]);
             top10names[i].setFont(new Font(20));
             top10names[i].setTextFill(Color.WHITE);
-            
-            top10scores[i]=new Label(top10[1][i]);
+
+            top10scores[i] = new Label(top10[1][i]);
             top10scores[i].setFont(new Font(20));
             top10scores[i].setTextFill(Color.WHITE);
-            
-            top10rows[i]=new HBox();
+
+            top10rows[i] = new HBox();
             top10rows[i].setSpacing(15);
-            top10rows[i].getChildren().addAll(top10names[i],top10scores[i]);
+            top10rows[i].getChildren().addAll(top10names[i], top10scores[i]);
             top10rows[i].setAlignment(Pos.CENTER);
-            
+
             top10Grp.getChildren().add(top10rows[i]);
         }
-        
-        
+
         statisticsGrp.setAlignment(Pos.CENTER);
         statisticsGrp.setSpacing(30);
         statisticsGrp.setMinHeight(400);
-        statisticsGrp.getChildren().addAll(winStats,top10Grp);
-        
+        statisticsGrp.getChildren().addAll(winStats, top10Grp);
+
         statisticsGrpBase.setMinWidth(400);
         statisticsGrpBase.setAlignment(Pos.CENTER);
-        statisticsGrpBase.getChildren().addAll(statTitleLabel,statisticsGrp);
-        
-
+        statisticsGrpBase.getChildren().addAll(statTitleLabel, statisticsGrp);
 
         HBox logoutBtnGrp = new HBox();
 
         Button logoutplayer1Btn = new Button("Logout " + firstUser.getUsername());
         logoutplayer1Btn.setFont(new Font(16));
         logoutplayer1Btn.setMinSize(140, 50);
-
 
         Button player2Btn = new Button();
         player2Btn.setFont(new Font(16));
@@ -266,12 +254,9 @@ public class menuUI extends StackPane {
             player2Btn.setText("Logout " + secondUser.getUsername());
         }
 
-
         logoutBtnGrp.setSpacing(25);
         logoutBtnGrp.setAlignment(Pos.CENTER);
         logoutBtnGrp.getChildren().addAll(logoutplayer1Btn, player2Btn);
-
-
 
         options.setSpacing(30);
         options.setMinHeight(600);
@@ -284,24 +269,20 @@ public class menuUI extends StackPane {
         titleLabel.setFont(new Font(80));
         titleLabel.setTextFill(Color.WHITE);
 
-
         base.getChildren().addAll(titleLabel, options, logoutBtnGrp);
         getChildren().addAll(veiwer, base);
-
 
         playBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                
-               DBMapLoader map =new DBMapLoader("BasicMap"+String.valueOf(mapposition+1));
-               
-               GameInfo gameInfo =new GameInfo(firstUser,COLORS[colorOnePlace],secondUser,COLORS[colorTwoPlace],speed,map);
-               
-                
-                
-               Display Gameplay = new Display(stage, veiwer,gameInfo);
-               Scene Gameplayscene = new Scene(Gameplay);
-               stage.setScene(Gameplayscene);
+
+                DBMapLoader map = new DBMapLoader("BasicMap" + String.valueOf(mapposition + 1));
+
+                GameInfo gameInfo = new GameInfo(firstUser, COLORS[colorOnePlace], secondUser, COLORS[colorTwoPlace], speed, map);
+
+                Display Gameplay = new Display(stage, veiwer, gameInfo);
+                Scene Gameplayscene = new Scene(Gameplay);
+                stage.setScene(Gameplayscene);
             }
         });
 
@@ -313,8 +294,8 @@ public class menuUI extends StackPane {
                     Scene startScreenScene = new Scene(startScreen);
                     stage.setScene(startScreenScene);
                 } else {
-                    menuUI mainMenu;
-                    mainMenu = new menuUI(stage, veiwer, null, secondUser);
+                    MenuUI mainMenu;
+                    mainMenu = new MenuUI(stage, veiwer, null, secondUser);
                     Scene mainMenuscene = new Scene(mainMenu);
                     stage.setScene(mainMenuscene);
                 }
@@ -329,8 +310,8 @@ public class menuUI extends StackPane {
                     Scene startScreenScene = new Scene(startScreen);
                     stage.setScene(startScreenScene);
                 } else {
-                    menuUI mainMenu;
-                    mainMenu = new menuUI(stage, veiwer, null, firstUser);
+                    MenuUI mainMenu;
+                    mainMenu = new MenuUI(stage, veiwer, null, firstUser);
                     Scene mainMenuscene = new Scene(mainMenu);
                     stage.setScene(mainMenuscene);
                 }
@@ -419,21 +400,22 @@ public class menuUI extends StackPane {
         leftSpeedBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                if(speed!=5)
-                speed--;
-                 speedLabel.setText("  Map Speed : "+String.valueOf(speed));
+                if (speed != 5) {
+                    speed--;
+                }
+                speedLabel.setText("  Map Speed : " + String.valueOf(speed));
             }
         });
 
         rightSpeedBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                if(speed!=20)
-                speed++;
-                speedLabel.setText("  Map Speed : "+String.valueOf(speed));
+                if (speed != 20) {
+                    speed++;
+                }
+                speedLabel.setText("  Map Speed : " + String.valueOf(speed));
             }
         });
-
 
     }
 }
