@@ -46,9 +46,13 @@ public class Display extends StackPane {
     HBox buttonGrp;
     
     int player1point,player2point;
+    boolean endGame;
+     StackPane switchGrp;
             
     public Display(final Stage stage,ImageView veiwer,GameInfo gameInfo) {
 
+        endGame=false;
+        
         GameInfo=gameInfo;
         
         GameInfo.setDisplay(this);
@@ -75,12 +79,16 @@ public class Display extends StackPane {
         menuBtn = new Button("Main Menu");
         buttonGrp.getChildren().addAll(restartBtn,menuBtn);
         
-        EndLabel = new Label("Game Over");
+        EndLabel = new Label("Game Over ");
         EndLabel.setFont(new Font(26));
         EndLabel.setTextFill(Color.PINK);
         gameoverScreen.setAlignment(Pos.CENTER);
-
-        gameoverScreen.getChildren().addAll(EndLabel,buttonGrp);
+        
+Label warningLabel = new Label("You must double click");
+        warningLabel.setFont(new Font(14));
+        warningLabel.setTextFill(Color.PINK);
+        
+        gameoverScreen.getChildren().addAll(EndLabel,warningLabel,buttonGrp);
         gameoverScreen.setAlignment(Pos.CENTER);
         
         roundoverScreen = new VBox();
@@ -91,9 +99,12 @@ public class Display extends StackPane {
         roundLabel.setTextFill(Color.PINK);
         
         
+        
         roundBtn = new Button("Next Round");
+        roundBtn.setMinWidth(120);
         
         roundoverScreen.getChildren().addAll(roundLabel,roundBtn);
+        roundoverScreen.setSpacing(20);
         roundoverScreen.setAlignment(Pos.CENTER);
 
         Rectangle gameoverBack = new Rectangle();
@@ -133,10 +144,13 @@ public class Display extends StackPane {
         mainGamePlay.setAlignment(Pos.CENTER);
         
 
+        switchGrp=new StackPane();
+        switchGrp.getChildren().addAll(gameoverTotal,roundoverTotal);
+        
+        
         getChildren().add(veiwer);
         getChildren().add(mainGamePlay);
-        getChildren().add(gameoverTotal);
-        getChildren().add(roundoverTotal);
+        getChildren().add(switchGrp);
         getChildren().add(startBtn);
         setOnKeyPressed(controller);
 
@@ -201,11 +215,12 @@ displayWall(i, j, "0x000");
             @Override
             public void handle(ActionEvent e) {
                 
+                GameInfo newGameInfo =new GameInfo(GameInfo.getFirstUser(),GameInfo.getFirstUserColour(),
+                        GameInfo.getSecondUser(),GameInfo.getSecondUserColour(),GameInfo.getSpeed(),GameInfo.getMap());
                 
                 
                 
-                
-                Display Gameplay = new Display(stage, Veiwer,GameInfo);
+                Display Gameplay = new Display(stage, Veiwer,newGameInfo);
                 Scene Gameplayscene = new Scene(Gameplay);
                 stage.setScene(Gameplayscene);
             }
@@ -225,12 +240,17 @@ displayWall(i, j, "0x000");
         roundBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+                if(endGame)
+                {
+                    switchGrp.getChildren().remove(roundoverTotal);
+                }
+                else{
                 
                 roundLabel.setText("Games Won : "+ player1point+"                                       Games Won : "+ player2point);
                 clearGrid();
-                gameoverTotal.setOpacity(0);
                 roundoverTotal.setOpacity(0);
                 GameInfo.startRound();
+                }
             }
         });
         
@@ -274,7 +294,7 @@ displayWall(i, j, "0x000");
         
         
         FadeTransition fadeTransition =
-                new FadeTransition(Duration.millis(2000), roundoverTotal);
+                new FadeTransition(Duration.millis(500), roundoverTotal);
         fadeTransition.setCycleCount(1);
         fadeTransition.setAutoReverse(true);
         fadeTransition.setFromValue(0.0);
@@ -291,16 +311,11 @@ displayWall(i, j, "0x000");
     public void gameover(String winner) {
         
 
-        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), roundoverTotal);
-        tt.setByX(200f);
-         tt.setCycleCount(1);
-     tt.setAutoReverse(true);
- 
-     tt.play();
+        endGame=true;
         
         
         FadeTransition fadeTransition =
-                new FadeTransition(Duration.millis(2000), gameoverTotal);
+                new FadeTransition(Duration.millis(500), gameoverTotal);
         fadeTransition.setCycleCount(1);
         fadeTransition.setAutoReverse(true);
         fadeTransition.setFromValue(0.0);

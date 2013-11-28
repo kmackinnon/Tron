@@ -169,7 +169,19 @@ public class GameInfo {
         return playerList.get(0).getUser();
     }
     public User getSecondUser(){
-        return playerList.get(0).getUser();
+        return playerList.get(1).getUser();
+    }
+    public String getFirstUserColour(){
+        return playerList.get(0).getColour();
+    }
+    public String getSecondUserColour(){
+        return playerList.get(1).getColour();
+    }
+    public int getSpeed(){
+        return speed;
+    }
+    public MapLoader getMap(){
+      return baseMap;  
     }
 
 }
