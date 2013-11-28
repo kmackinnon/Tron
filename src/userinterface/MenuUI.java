@@ -3,6 +3,7 @@ package userinterface;
 import database.DBMapLoader;
 import database.GameInfo;
 import database.User;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
