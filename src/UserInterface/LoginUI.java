@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package UserInterface;
 
 import Database.User;
@@ -36,7 +32,7 @@ public class LoginUI extends StackPane {
     TextField usernameInput;
     Label errorLabel;
     PasswordField passwordInput;
-    ImageView veiwer;
+    ImageView viewer;
     User user;
 
     /**
@@ -44,11 +40,11 @@ public class LoginUI extends StackPane {
      * This is the class that consists of the panel - Login.
      *
      * @param stage
-     * @param veiwer
+     * @param viewer
      * @param loggedInPlayer This confirms where the program is coming from, if
      * null then the start of the game or else it is coming from the main menu
      */
-    public LoginUI(final Stage stage, final ImageView veiwer, User loggedInPlayer) {
+    public LoginUI(final Stage stage, final ImageView viewer, User loggedInPlayer) {
 
         boolean cameFromMainUI;
         this.user = loggedInPlayer;
@@ -60,7 +56,7 @@ public class LoginUI extends StackPane {
         }
 
         //this is the background
-        this.veiwer = veiwer;
+        this.viewer = viewer;
 
         //opening the group that contains everything but the background
         VBox base = new VBox();
@@ -158,7 +154,7 @@ public class LoginUI extends StackPane {
         base.getChildren().addAll(titleLabel, switchGrp);
 
         //adds the group that conatins everything and the background 
-        getChildren().addAll(veiwer, base);
+        getChildren().addAll(viewer, base);
 
         // This is the action of when you press the single player button
         // it will switch the group and keep in mind there is only one player that will be logging in
@@ -233,7 +229,7 @@ public class LoginUI extends StackPane {
                 if (user != null) {
                     if (playerNumber == 1) {
                         MenuUI mainMenu;
-                        mainMenu = new MenuUI(stage, veiwer, LoginUI.this.user, user);
+                        mainMenu = new MenuUI(stage, viewer, LoginUI.this.user, user);
                         Scene mainMenuscene = new Scene(mainMenu);
                         stage.setScene(mainMenuscene);
                     } else {
@@ -253,7 +249,6 @@ public class LoginUI extends StackPane {
         createAccountBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-
                 String password = passwordInput.getText();
 
                 if (password.length() < 8 || password.matches("[A-Za-z0-9 ]*") || password.equals(password.toLowerCase()) || password.equals(password.toUpperCase()) || !password.matches(".*\\d.*")) {
@@ -272,7 +267,7 @@ public class LoginUI extends StackPane {
 
                 if (user != null) {
                     if (playerNumber == 1) {
-                        MenuUI mainMenu = new MenuUI(stage, veiwer, LoginUI.this.user, user);
+                        MenuUI mainMenu = new MenuUI(stage, viewer, LoginUI.this.user, user);
                         Scene mainMenuscene = new Scene(mainMenu);
                         stage.setScene(mainMenuscene);
                     } else {
@@ -281,7 +276,6 @@ public class LoginUI extends StackPane {
                         passwordInput.clear();
                         errorLabel.setText("Created the first player; please enter second player ");
                         LoginUI.this.user = user;
-
                     }
                 } else {
                     passwordInput.clear();

@@ -1,7 +1,6 @@
 package lightracer;
 
 import UserInterface.LoginUI;
-import UserInterface.MenuUI;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -13,9 +12,7 @@ import javafx.stage.Stage;
  * @author Victorio
  */
 public class LightRacer extends Application {
-
     public static void main(String[] args) {
-
         launch(args);
     }
 
@@ -27,10 +24,10 @@ public class LightRacer extends Application {
     public void start(final Stage stage) {
 
         final Image background = new Image("/image/background.png");
-        ImageView veiwer = new ImageView();
-        veiwer.setImage(background);
+        ImageView viewer = new ImageView();
+        viewer.setImage(background);
 
-        LoginUI startScreen = new LoginUI(stage, veiwer, null);
+        LoginUI startScreen = new LoginUI(stage, viewer, null);
         Scene startScreenScene = new Scene(startScreen);
         stage.setScene(startScreenScene);
         stage.setTitle("Light Racer");

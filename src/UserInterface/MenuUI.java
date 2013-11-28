@@ -21,12 +21,12 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author vmorel7
+ * @author Victorio
  */
 public class MenuUI extends StackPane {
 
     Label desctiptionLabel, speedLabel;
-    ImageView veiwer, mapSelect;
+    ImageView viewer, mapSelect;
     User firstUser, secondUser;
     boolean isSinglePlayer;
     Rectangle colorOne, colorTwo;
@@ -38,13 +38,13 @@ public class MenuUI extends StackPane {
      * This is the class that consists of the panel - main menu.
      *
      * @param stage
-     * @param veiwer
+     * @param viewer
      * @param userA this will be null if one the loginUI, the player picked 1
      * player, or else this represents the first player
      * @param userB this will never be null, will be the first player if single
      * player or else it would be the second player
      */
-    public MenuUI(final Stage stage, final ImageView veiwer, User userA, User userB) {
+    public MenuUI(final Stage stage, final ImageView viewer, User userA, User userB) {
 
         //might have to change the names coming in.
         if (userA != null) {
@@ -56,7 +56,7 @@ public class MenuUI extends StackPane {
             this.firstUser = userB;
         }
 
-        this.veiwer = veiwer;
+        this.viewer = viewer;
 
         HBox options = new HBox();
 
@@ -270,7 +270,7 @@ public class MenuUI extends StackPane {
         titleLabel.setTextFill(Color.WHITE);
 
         base.getChildren().addAll(titleLabel, options, logoutBtnGrp);
-        getChildren().addAll(veiwer, base);
+        getChildren().addAll(viewer, base);
 
         playBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -280,7 +280,7 @@ public class MenuUI extends StackPane {
 
                 GameInfo gameInfo = new GameInfo(firstUser, COLORS[colorOnePlace], secondUser, COLORS[colorTwoPlace], speed, map);
 
-                Display Gameplay = new Display(stage, veiwer, gameInfo);
+                Display Gameplay = new Display(stage, viewer, gameInfo);
                 Scene Gameplayscene = new Scene(Gameplay);
                 stage.setScene(Gameplayscene);
             }
@@ -290,12 +290,12 @@ public class MenuUI extends StackPane {
             @Override
             public void handle(ActionEvent e) {
                 if (isSinglePlayer) {
-                    LoginUI startScreen = new LoginUI(stage, veiwer, null);
+                    LoginUI startScreen = new LoginUI(stage, viewer, null);
                     Scene startScreenScene = new Scene(startScreen);
                     stage.setScene(startScreenScene);
                 } else {
                     MenuUI mainMenu;
-                    mainMenu = new MenuUI(stage, veiwer, null, secondUser);
+                    mainMenu = new MenuUI(stage, viewer, null, secondUser);
                     Scene mainMenuscene = new Scene(mainMenu);
                     stage.setScene(mainMenuscene);
                 }
@@ -306,12 +306,12 @@ public class MenuUI extends StackPane {
             @Override
             public void handle(ActionEvent e) {
                 if (isSinglePlayer) {
-                    LoginUI startScreen = new LoginUI(stage, veiwer, firstUser);
+                    LoginUI startScreen = new LoginUI(stage, viewer, firstUser);
                     Scene startScreenScene = new Scene(startScreen);
                     stage.setScene(startScreenScene);
                 } else {
                     MenuUI mainMenu;
-                    mainMenu = new MenuUI(stage, veiwer, null, firstUser);
+                    mainMenu = new MenuUI(stage, viewer, null, firstUser);
                     Scene mainMenuscene = new Scene(mainMenu);
                     stage.setScene(mainMenuscene);
                 }

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package UserInterface;
 
 import Database.GameInfo;
@@ -40,7 +36,7 @@ public class Display extends StackPane {
     GameInfo GameInfo;
     final Controller controller;
     Label controllerLabel, roundLabel, EndLabel;
-    ImageView Veiwer;
+    ImageView Viewer;
     VBox gameoverScreen, roundoverScreen;
     HBox buttonGrp;
 
@@ -56,7 +52,7 @@ public class Display extends StackPane {
 
         GameInfo.setDisplay(this);
 
-        this.Veiwer = veiwer;
+        this.Viewer = veiwer;
 
         controller = Controller.getInstance();
 
@@ -205,7 +201,7 @@ public class Display extends StackPane {
                 GameInfo newGameInfo = new GameInfo(GameInfo.getFirstUser(), GameInfo.getFirstUserColour(),
                         GameInfo.getSecondUser(), GameInfo.getSecondUserColour(), GameInfo.getSpeed(), GameInfo.getMap());
 
-                Display Gameplay = new Display(stage, Veiwer, newGameInfo);
+                Display Gameplay = new Display(stage, Viewer, newGameInfo);
                 Scene Gameplayscene = new Scene(Gameplay);
                 stage.setScene(Gameplayscene);
             }
@@ -215,7 +211,7 @@ public class Display extends StackPane {
             @Override
             public void handle(ActionEvent e) {
 
-                MenuUI mainMenu = new MenuUI(stage, Veiwer, GameInfo.getFirstUser(), GameInfo.getSecondUser());
+                MenuUI mainMenu = new MenuUI(stage, Viewer, GameInfo.getFirstUser(), GameInfo.getSecondUser());
                 Scene Menuscene = new Scene(mainMenu);
                 stage.setScene(Menuscene);
 
