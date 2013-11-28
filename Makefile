@@ -7,6 +7,7 @@ BUILD_PATH := build
 DOC_PATH := docs
 DIST_PATH := dist
 LIB_PATH := lib
+TEST_PATH := test
 
 APP_CLASS := lightracer.LightRacer
 
@@ -14,7 +15,10 @@ DIST_LIBS := base64-2.3.7.jar sqlite-jdbc-3.7.2.jar
 
 DIST_CLASS_PATH := lib/base64-2.3.7.jar:lib/sqlite-jdbc-3.7.2.jar:$(JAVA_HOME)/jre/lib/jfxrt.jar
 BUILD_CLASS_PATH := $(BUILD_PATH):$(SOURCE_PATH):$(DIST_CLASS_PATH)
+TEST_CLASS_PATH := lib/hamcrest-core-1.3.jar:junit-4.11.jar:$(BUILD_CLASS_PATH)
 
+TEST_SOURCES := $(shell find $(TEST_PATH) -type f -name "*.java")
+TEST_CLASSES := $(patsubst %.java,%.class,$(TEST_SOURCES))
 SRCFILES := $(shell find $(SOURCE_PATH) -type f -name "*.java")
 CLASSFILES := $(patsubst %.java,%.class,$(patsubst $(SOURCE_PATH)%,$(BUILD_PATH)%,$(SRCFILES)))
 
@@ -59,3 +63,8 @@ $(foreach lib,$(DIST_LIBS),$(eval $(call DIST_template,$(lib))))
 
 dist: all $(DIST_LIBS)
 	@javafxpackager -createjar -srcdir $(BUILD_PATH) -appclass $(APP_CLASS) -classpath $(DIST_CLASS_PATH) -outdir $(DIST_PATH) -outfile LightRacer
+
+$(TEST_PATH)/%.class: $(TEST_PATH)/%.java
+	javac $< -d $(TEST_PATH) -cp $(TEST_CLASS_PATH)
+
+check: $(TEST_CLASSES)
