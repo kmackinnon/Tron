@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
- *
+ * Sets up the grid and displays the entire frontend of the project
  * @author Victorio
  */
 public class Display extends StackPane {
@@ -44,7 +44,13 @@ public class Display extends StackPane {
     boolean endGame;
     StackPane switchGrp;
 
-    public Display(final Stage stage, ImageView veiwer, GameInfo gameInfo) {
+    /**
+     * Display constructor which sets up everything the user sees.
+     * @param stage
+     * @param viewer
+     * @param gameInfo all info necessary for a game
+     */
+    public Display(final Stage stage, ImageView viewer, GameInfo gameInfo) {
 
         endGame = false;
 
@@ -52,7 +58,7 @@ public class Display extends StackPane {
 
         GameInfo.setDisplay(this);
 
-        this.Viewer = veiwer;
+        this.Viewer = viewer;
 
         controller = Controller.getInstance();
 
@@ -136,15 +142,17 @@ public class Display extends StackPane {
         switchGrp = new StackPane();
         switchGrp.getChildren().addAll(gameoverTotal, roundoverTotal);
 
-        getChildren().add(veiwer);
+        getChildren().add(viewer);
         getChildren().add(mainGamePlay);
         getChildren().add(switchGrp);
         getChildren().add(startBtn);
         setOnKeyPressed(controller);
 
-        // The start button will
         startBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
+            /**
+             * The start button appears and the round will begin
+             */
             public void handle(ActionEvent e) {
                 getChildren().remove(startBtn);
 
@@ -168,9 +176,11 @@ public class Display extends StackPane {
             }
         });
 
-        //This is for the restart button when it is clicked, it will clear the map and fadeaway the gameover screen
         restartBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
+            /**
+             * When the restart button is clicked, it will clear the map and gameover screen fades away
+             */
             public void handle(ActionEvent e) {
 
                 GameInfo newGameInfo = new GameInfo(GameInfo.getFirstUser(), GameInfo.getFirstUserColour(),
@@ -184,8 +194,10 @@ public class Display extends StackPane {
 
         menuBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
+            /**
+             * Menu button allows user to get back to main menu.
+             */
             public void handle(ActionEvent e) {
-
                 MenuUI mainMenu = new MenuUI(stage, Viewer, GameInfo.getFirstUser(), GameInfo.getSecondUser());
                 Scene Menuscene = new Scene(mainMenu);
                 stage.setScene(Menuscene);
@@ -193,7 +205,8 @@ public class Display extends StackPane {
             }
         });
 
-        roundBtn.setOnAction(new EventHandler<ActionEvent>() {
+        // Update the player scores on round button click
+        roundBtn.setOnAction(new EventHandler<ActionEvent>() {            
             @Override
             public void handle(ActionEvent e) {
                 if (endGame) {
@@ -209,6 +222,10 @@ public class Display extends StackPane {
 
     }
 
+    /**
+     * Sets a grey rectangle in each index of the grid to display the map.
+     * @param panel 
+     */
     public void makeSquares(GridPane panel) {
 
         for (int i = 0; i < horizontalGridSize; i++) {
@@ -222,6 +239,9 @@ public class Display extends StackPane {
         }
     }
 
+    /**
+     * Resets the map by making everything grey again.
+     */
     public void clearGrid() {
         for (int i = 0; i < horizontalGridSize; i++) {
             for (int j = 0; j < verticalGridSize; j++) {
@@ -230,6 +250,14 @@ public class Display extends StackPane {
         }
     }
 
+    /**
+     * Fill the grid from start to end of coordinates passed.
+     * @param xposStart
+     * @param yposStart
+     * @param xposEnd
+     * @param yposEnd
+     * @param color 
+     */
     public void displayMultipleWalls(int xposStart, int yposStart, int xposEnd, int yposEnd, String color) {
         for (int i = xposStart; i < xposEnd; i++) {
             for (int j = yposStart; j < yposEnd; j++) {
@@ -238,10 +266,22 @@ public class Display extends StackPane {
         }
     }
 
+    /**
+     * Displays a wall with a given color at various positions.
+     * @param xpos
+     * @param ypos
+     * @param color 
+     */
     public void displayWall(int xpos, int ypos, String color) {
         grid[xpos][ypos].setFill(Color.web(color));
     }
 
+    /**
+     * Displays the roundover screen and updates each player's points.
+     * @param winner
+     * @param player1win
+     * @param player2win 
+     */
     public void roundover(String winner, int player1win, int player2win) {
 
         FadeTransition fadeTransition
@@ -257,6 +297,10 @@ public class Display extends StackPane {
 
     }
 
+    /**
+     * Displays the gameover screen.
+     * @param winner 
+     */
     public void gameover(String winner) {
 
         endGame = true;
