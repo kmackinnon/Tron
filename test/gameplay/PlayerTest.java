@@ -7,7 +7,6 @@
 package gameplay;
 
 import database.User;
-import database.GameInfo;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
