@@ -6,7 +6,6 @@
 
 package database;
 
-import database.SHA256Hash;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -41,6 +40,7 @@ public class SHA256HashTest {
 
   /**
    * Test of hash method, of class SHA256Hash.
+   * @throws java.lang.Exception
    */
   @Test
   public void testHash() throws Exception {
