@@ -9,6 +9,8 @@ Github Repository: https://github.com/mcgill-ecse321/team-6
 
 Dependencies: Java, JavaFX
 
+Build Dependencies: GNU make, POSIX environment (Cygwin if running Windows)
+
 Developed and tested code: Windows 7 and 8, ArchLinux, Oracle Java 1.7, Netbeans 7.4
 
 Third Party Libraries:
