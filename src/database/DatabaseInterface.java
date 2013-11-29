@@ -165,7 +165,15 @@ public abstract class DatabaseInterface {
      * of the Implementations.
      */
     public class MapSpecs {
+        
+        /**
+         * Width and Height of the Map.
+         */
         public int width, height;
+        
+        /**
+         * Raw Binary Data describing the layout of the map.
+         */
         public byte data[];
     }
 }
