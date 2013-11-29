@@ -2,7 +2,7 @@ PACKAGES := database userinterface gameplay lightracer
 .PHONY: all clean dist check clean-docs $(PACKAGES) todo libs
 
 ifeq ($(OS),Windows_NT)
-P_SEP := ;
+P_SEP := :
 JAVA_HOME := '$(JAVA_HOME)'
 else
 P_SEP := :
