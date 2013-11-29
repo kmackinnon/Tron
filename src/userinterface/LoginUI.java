@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
+ * This class consists of the Login panel from which users may login to play.
  *
  * @author Victorio
  */
@@ -38,12 +39,13 @@ public class LoginUI extends StackPane {
 
     /**
      *
-     * This is the class that consists of the panel - Login.
+     * The constructor which instantiates the login panel and is the first thing
+     * launched when a user beings the game.
      *
      * @param stage
      * @param viewer
-     * @param loggedInPlayer This confirms where the program is coming from, if
-     * null then the start of the game or else it is coming from the main menu
+     * @param loggedInPlayer This determines where the program is coming from;
+     * if null, then beginning of the game or else coming from the main menu
      */
     public LoginUI(final Stage stage, final ImageView viewer, User loggedInPlayer) {
 
@@ -89,7 +91,7 @@ public class LoginUI extends StackPane {
             BtnGroup.setOpacity(0);
         }
 
-        //opening the group that conatins most of the log in items (textboxs & buttons)
+        //opening the group that conatins most of the login items (textboxs & buttons)
         loginBase = new VBox();
 
         //the username text box
@@ -100,17 +102,17 @@ public class LoginUI extends StackPane {
         passwordInput = new PasswordField();
         passwordInput.setMaxWidth(200);
 
-        //the label for the username (pretty much just text) 
+        //the label for the username
         Label usernameLabel = new Label("Username");
         usernameLabel.setTextFill(Color.WHITE);
         usernameLabel.setFont(new Font(16));
 
-        //the label for the password (pretty much just text) 
+        //the label for the password 
         Label passwordLabel = new Label("Password");
         passwordLabel.setTextFill(Color.WHITE);
         passwordLabel.setFont(new Font(16));
 
-        //opening the group that will contain the login button and the creat account button
+        //opening the group that will contain the login button and the create account button
         HBox loginBtnGroup = new HBox();
 
         //the login Button
@@ -128,7 +130,7 @@ public class LoginUI extends StackPane {
         loginBtnGroup.setAlignment(Pos.CENTER);
         loginBtnGroup.getChildren().addAll(LoginBtn, createAccountBtn);
 
-        //this is the label that will give us warnings, if username is wrong or password doesnt work.
+        //label that will give us warnings, if username is wrong or password doesn't work.
         errorLabel = new Label();
         errorLabel.setTextFill(Color.WHITE);
         errorLabel.setFont(new Font(16));
@@ -145,11 +147,11 @@ public class LoginUI extends StackPane {
             loginBase.setOpacity(0);
         }
 
-        // this is the swicth group this is here so that I would be able to switch one out for the other once I'm done with one set of buttons
+        // this is the swith group this is here to switch one out for the other 
         StackPane switchGrp = new StackPane();
         switchGrp.getChildren().addAll(BtnGroup, loginBase);
 
-        //finishing off the groupd that hold everything 
+        //finishing off the group that holds everything 
         base.setSpacing(70);
         base.setAlignment(Pos.CENTER);
         base.getChildren().addAll(titleLabel, switchGrp);
@@ -157,9 +159,13 @@ public class LoginUI extends StackPane {
         //adds the group that conatins everything and the background 
         getChildren().addAll(viewer, base);
 
-        // This is the action of when you press the single player button
-        // it will switch the group and keep in mind there is only one player that will be logging in
         singlePlayerBtn.setOnAction(new EventHandler<ActionEvent>() {
+            /**
+             * Defines a single player login. Changes state so program knows to
+             * disable gameplay but still show statistics.
+             *
+             * @param e
+             */
             @Override
             public void handle(ActionEvent e) {
                 playerNumber = 1;
@@ -188,6 +194,12 @@ public class LoginUI extends StackPane {
         });
 
         multiPlayerBtn.setOnAction(new EventHandler<ActionEvent>() {
+            /**
+             * Defines a 2-player login. Prepares to allow two users to login
+             * sequentially.
+             *
+             * @param e
+             */
             @Override
             public void handle(ActionEvent e) {
                 playerNumber = 2;
@@ -216,6 +228,11 @@ public class LoginUI extends StackPane {
         });
 
         LoginBtn.setOnAction(new EventHandler<ActionEvent>() {
+            /**
+             * Validates user login.
+             *
+             * @param e
+             */
             @Override
             public void handle(ActionEvent e) {
 
@@ -229,8 +246,7 @@ public class LoginUI extends StackPane {
 
                 if (user != null) {
                     if (playerNumber == 1) {
-                        MenuUI mainMenu;
-                        mainMenu = new MenuUI(stage, viewer, LoginUI.this.user, user);
+                        MenuUI mainMenu = new MenuUI(stage, viewer, LoginUI.this.user, user);
                         Scene mainMenuscene = new Scene(mainMenu);
                         stage.setScene(mainMenuscene);
                     } else {
@@ -248,6 +264,12 @@ public class LoginUI extends StackPane {
         });
 
         createAccountBtn.setOnAction(new EventHandler<ActionEvent>() {
+            /**
+             * Processes account creation. Validates username and password and
+             * handles invalid entries.
+             *
+             * @param e
+             */
             @Override
             public void handle(ActionEvent e) {
                 String password = passwordInput.getText();
