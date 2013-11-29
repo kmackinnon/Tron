@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package database;
 
 import java.util.BitSet;
@@ -19,13 +15,23 @@ public class MapGenerator {
     public MapGenerator (){
     }
     
+    /**
+     * Default size of the map.
+     */
     public void makeMap1 (){
         basic1 = new BitSet(75*50);
     }
     
+    /**
+     * Save the default map in the database.
+     */
     public void saveMap1 (){
         db.addMap("BasicMap1", basic1.toByteArray(),75, 50);
     }
+    
+    /**
+     * Makes the second map with two obstacles.
+     */
     public void makeMap2 () {
         basic2 = new BitSet(75*50);
         for (int i = 15; i < 25; i++) {
@@ -40,10 +46,16 @@ public class MapGenerator {
         }
     }
     
+    /**
+     * Saves the second map in the database.
+     */
     public void saveMap2 (){
         db.addMap("BasicMap2", basic2.toByteArray(),75, 50);
     }
     
+    /** 
+     * Makes the third (hardest) map in the database with three obstacles.
+     */
     public void makeMap3 () {
         basic3 = new BitSet(75*50);
         for (int i = 30; i < 45; i++) {
@@ -63,10 +75,16 @@ public class MapGenerator {
         }
     }
     
+    /**
+     * Saves the third map to the database.
+     */
     public void saveMap3 (){
         db.addMap("BasicMap3", basic3.toByteArray(),75, 50);
     }
     
+    /**
+     * Sets up all three maps and saves them all at once.
+     */
     public void makeAllAndInstall() {
         makeMap1();
         saveMap1();

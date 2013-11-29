@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package database;
 
 import java.security.SecureRandom;
@@ -11,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import net.iharder.Base64;
 /**
  * Abstract Hash class that provides salt generation and contains an abstract hash method.
- * @author draringi
+ * @author Michael Williams
  */
 public abstract class Hash {
   static SecureRandom NUMBER_GENERATOR;
