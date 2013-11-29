@@ -48,7 +48,7 @@ public class MapTest {
         int xPos = 0;
         int yPos = 0;
         String colour = "0x00F";
-        Map instance = new Map(null, null,null,null);
+        Map instance = new Map(10, 10,null,null);
         instance.addWall(xPos, yPos, colour);
     }
 
@@ -107,10 +107,8 @@ public class MapTest {
     @Test
     public void testRun() {
         System.out.println("run");
-        Map instance = null;
+        Map instance = new Map(10,10,null,null);
         instance.run();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -120,7 +118,9 @@ public class MapTest {
     public void testGetPlayerWins() {
         System.out.println("getPlayerWins");
         int index = 0;
+        Player player = new Player(null,null,null);
         Map instance = new Map(10,10,null,null);
+        instance.addPlayer(player, Player.Direction.LEFT, 0, 0);
         int expResult = 0;
         int result = instance.getPlayerWins(index);
         assertEquals(expResult, result);
@@ -133,12 +133,12 @@ public class MapTest {
     public void testGetPlayer() {
         System.out.println("getPlayer");
         int i = 0;
-        Map instance = null;
-        Player expResult = null;
+        Map instance = new Map(10,10,null,null);
+        User testUser = new User(1, "Gabriel");
+        Player expResult = new Player(testUser,null,null);
+        instance.addPlayer(expResult, Player.Direction.LEFT, 0, 0);
         Player result = instance.getPlayer(i);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -171,32 +171,15 @@ public class MapTest {
     }
 
     /**
-     * Test of displayPlayer method, of class Map.
-     */
-    @Test
-    public void testDisplayPlayer() {
-        System.out.println("displayPlayer");
-        int x = 0;
-        int y = 0;
-        String colour = "";
-        Map instance = null;
-        instance.displayPlayer(x, y, colour);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of getBinaryData method, of class Map.
      */
     @Test
     public void testGetBinaryData() {
         System.out.println("getBinaryData");
-        Map instance = null;
-        byte[] expResult = null;
+        Map instance = new Map(0,0,null,null);
+        byte[] expResult = new byte[0];
         byte[] result = instance.getBinaryData();
         assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }
