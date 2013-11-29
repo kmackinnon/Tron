@@ -22,6 +22,9 @@ TEST_CLASSES := $(patsubst %.java,%.class,$(TEST_SOURCES))
 SRCFILES := $(shell find $(SOURCE_PATH) -type f -name "*.java")
 CLASSFILES := $(patsubst %.java,%.class,$(patsubst $(SOURCE_PATH)%,$(BUILD_PATH)%,$(SRCFILES)))
 
+all: $(PACKAGES)
+	-@cp -R $(RESOURCE_PATH)/* $(BUILD_PATH)
+
 $(BUILD_PATH)/%.class: $(SOURCE_PATH)/%.java
 	mkdir -p build
 	javac $< -d $(BUILD_PATH) -cp $(BUILD_CLASS_PATH)
@@ -49,9 +52,6 @@ clean:
 todo:
 	-@echo "TODO:"
 	-@for file in $(SRCFILES); do fgrep -H -e TODO -e FIXME $$file; done; true
-
-all: $(PACKAGES)
-	-@cp -R $(RESOURCE_PATH)/* $(BUILD_PATH)
 
 define DIST_template
 $(1):

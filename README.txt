@@ -19,14 +19,14 @@ Third Party Libraries:
 
 Compile and Run:
 	Makefile is included
-        To build jar:
-            make dist
-        To run tests:
-            make check
-        To make docs:
-            make docs
-        To clean build folder:
-            make clean
-        To clean out docs folder:
-            make clean-docs
-
+	To build jar:
+		make dist
+		(LightRacer.jar and required libs will be found in the folder "dist")
+	To run tests:
+		make check
+	To make docs:
+		make docs
+	To clean build folder:
+		make clean
+	To clean out docs folder:
+	make clean-docs
