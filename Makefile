@@ -8,14 +8,14 @@ else
 P_SEP := :
 endif
 
-RESOURCE_PATH := $(CURDIR)/res
-SOURCE_PATH := $(CURDIR)/src
-BUILD_PATH := $(CURDIR)/build
-DOC_PATH := $(CURDIR)/docs
-DIST_PATH := $(CURDIR)/dist
+RESOURCE_PATH := ./res
+SOURCE_PATH := ./src
+BUILD_PATH := ./build
+DOC_PATH := ./docs
+DIST_PATH := ./dist
 LIB_EXT := lib
-LIB_PATH := $(CURDIR)/$(LIB_EXT)
-TEST_PATH := $(CURDIR)/test
+LIB_PATH := ./$(LIB_EXT)
+TEST_PATH := ./test
 
 APP_CLASS := lightracer.LightRacer
 
