@@ -1,11 +1,5 @@
 package database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -27,7 +21,7 @@ public class UserTest {
     }
 
     /**
-     * Create a new database and a testUser before running the tests are executed.
+     * Create a new database interface at the beginning of the test.
      */
     @BeforeClass
     public static void setUpClass() {
@@ -39,6 +33,9 @@ public class UserTest {
 
     }
 
+    /**
+     * Create a new user before each method so that state (wins etc) is not saved)
+     */
     @Before
     public void setUp() {
         testUser = new User(1, "Sankalp"); // creates a user with uid = 1
@@ -145,8 +142,9 @@ public class UserTest {
     @Test
     public void testGetTopTen() {
         System.out.println("getTopTen");
-        String[][] expResult = {{"Sankalp","0"},
-            {"Nancy","0"}};               
+        String[][] expResult = new String[2][10];
+        expResult[0][0] = "Nancy";
+        expResult[1][0] = "0";
         String[][] result = User.getTopTen();
         assertArrayEquals(expResult, result);
     }
@@ -216,8 +214,8 @@ public class UserTest {
     @Test
     public void testGetUser() {
         System.out.println("getUser");
-        String username = "Nancy";
-        String password = "Nancy93!";
+        String username = "Sankalp";
+        String password = null;
         User expResult = db.getUser(username);
         User result = User.getUser(username, password);
         assertEquals(expResult, result);
