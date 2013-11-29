@@ -92,8 +92,10 @@ public class SQLiteInterface extends DatabaseInterface {
         } catch (ClassNotFoundException e) {
             System.out.println("Something bad happened in init" + e.getMessage());
         }
-        supportList.add("user");
-        supportList.add("map");
+        supportList.add("User");
+        supportList.add("Maps");
+        supportList.add("Stats");
+        supportList.add("Games");
     }
 
     /**
