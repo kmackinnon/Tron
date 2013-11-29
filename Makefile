@@ -3,7 +3,7 @@ PACKAGES := database userinterface gameplay lightracer
 
 ifeq ($(OS),Windows_NT)
 P_SEP := :
-JAVA_HOME := /cygdrive/'$(JAVA_HOME)'
+JAVA_HOME := $(patsubst, c:/%, /cygdrive/c/%,  $(JAVA_HOME))'
 else
 P_SEP := :
 endif
