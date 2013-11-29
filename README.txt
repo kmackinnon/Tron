@@ -22,6 +22,10 @@ Third Party Libraries:
 Compile and Run:
 	Makefile is included
 	Environment variable JAVA_HOME should be correctly set.
+	On *NIX machines, this should have been set when Java was installed,
+	otherwise set it with your shell's environment setting function.
+	On Windows machines, it should be set already,
+	if not, look at http://stackoverflow.com/questions/2619584/how-to-set-java-home-on-windows-7
 	To build jar:
 		make dist
 		(LightRacer.jar and required libs will be found in the folder "dist")
