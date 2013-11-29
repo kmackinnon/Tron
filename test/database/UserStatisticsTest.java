@@ -14,87 +14,88 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Contains unit tests for UserStatistics Class
- * @author Gabriel
+ *
+ * @author Michael Williams
  */
 public class UserStatisticsTest {
-    
-    public UserStatistics statsTest;
-    
-    public UserStatisticsTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-        statsTest = new UserStatistics(0,0,0);
-    }
-    
-    @After
-    public void tearDown() {
-    }
+  
+  public UserStatisticsTest() {
+  }
+  
+  @BeforeClass
+  public static void setUpClass() {
+  }
+  
+  @AfterClass
+  public static void tearDownClass() {
+  }
+  
+  @Before
+  public void setUp() {
+  }
+  
+  @After
+  public void tearDown() {
+  }
 
-    /**
-     * Test of addWin method, of class UserStatistics.
-     */
-    @Test
-    public void testAddWin() {
-        System.out.println("addWin");
-        UserStatistics instance = statsTest;
-        instance.addWin();
-    }
+  /**
+   * Test of addWin method, of class UserStatistics.
+   */
+  @Test
+  public void testAddWin() {
+    System.out.println("addWin");
+    UserStatistics instance = new UserStatistics(0, 0, 0);
+    instance.addWin();
+    assertEquals(instance.getWins(), 1);
+    assertEquals(instance.getWins(), instance.getGames());
+  }
 
-    /**
-     * Test of addLoss method, of class UserStatistics.
-     */
-    @Test
-    public void testAddLoss() {
-        System.out.println("addLoss");
-        UserStatistics instance = statsTest;
-        instance.addLoss();
-    }
+  /**
+   * Test of addLoss method, of class UserStatistics.
+   */
+  @Test
+  public void testAddLoss() {
+    System.out.println("addLoss");
+    UserStatistics instance = new UserStatistics(0, 0, 0);
+    instance.addLoss();
+    assertEquals(instance.getLosses(), 1);
+    assertEquals(instance.getLosses(), instance.getGames());
+  }
 
-    /**
-     * Test of getWins method, of class UserStatistics.
-     */
-    @Test
-    public void testGetWins() {
-        System.out.println("getWins");
-        UserStatistics instance = statsTest;
-        int expResult = 0;
-        int result = instance.getWins();
-        assertEquals(expResult, result);
-    }
+  /**
+   * Test of getWins method, of class UserStatistics.
+   */
+  @Test
+  public void testGetWins() {
+    System.out.println("getWins");
+    UserStatistics instance = new UserStatistics(3, 1, 4);
+    int expResult = 3;
+    int result = instance.getWins();
+    assertEquals(expResult, result);
+  }
 
-    /**
-     * Test of getLosses method, of class UserStatistics.
-     */
-    @Test
-    public void testGetLosses() {
-        System.out.println("getLosses");
-        UserStatistics instance = statsTest;
-        int expResult = 0;
-        int result = instance.getLosses();
-        assertEquals(expResult, result);
-    }
+  /**
+   * Test of getLosses method, of class UserStatistics.
+   */
+  @Test
+  public void testGetLosses() {
+    System.out.println("getLosses");
+    UserStatistics instance = new UserStatistics(3, 1, 4);
+    int expResult = 1;
+    int result = instance.getLosses();
+    assertEquals(expResult, result);
+  }
 
-    /**
-     * Test of getGames method, of class UserStatistics.
-     */
-    @Test
-    public void testGetGames() {
-        System.out.println("getGames");
-        UserStatistics instance = statsTest;
-        int expResult = 0;
-        int result = instance.getGames();
-        assertEquals(expResult, result);
-    }
-    
+  /**
+   * Test of getGames method, of class UserStatistics.
+   */
+  @Test
+  public void testGetGames() {
+    System.out.println("getGames");
+    UserStatistics instance = new UserStatistics(3, 1, 4);
+    int expResult = 4;
+    int result = instance.getGames();
+    assertEquals(expResult, result);
+    assertEquals(instance.getLosses() + instance.getWins(), result);
+  }
 }
