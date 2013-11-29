@@ -1,6 +1,12 @@
 PACKAGES := database userinterface gameplay lightracer
 .PHONY: all clean dist check clean-docs $(PACKAGES) todo libs
 
+ifeq ($(OS),Windows_NT)
+P_SEP := ;
+else
+P_SEP := :
+endif
+
 RESOURCE_PATH := res
 SOURCE_PATH := src
 BUILD_PATH := build
@@ -13,9 +19,9 @@ APP_CLASS := lightracer.LightRacer
 
 DIST_LIBS := base64-2.3.7.jar sqlite-jdbc-3.7.2.jar
 
-DIST_CLASS_PATH := lib/base64-2.3.7.jar:lib/sqlite-jdbc-3.7.2.jar:$(JAVA_HOME)/jre/lib/jfxrt.jar
-BUILD_CLASS_PATH := $(BUILD_PATH):$(SOURCE_PATH):$(DIST_CLASS_PATH)
-TEST_CLASS_PATH := lib/hamcrest-core-1.3.jar:junit-4.11.jar:$(BUILD_CLASS_PATH)
+DIST_CLASS_PATH := lib/base64-2.3.7.jar$(P_SEP)lib/sqlite-jdbc-3.7.2.jar$(P_SEP)$(JAVA_HOME)/jre/lib/jfxrt.jar
+BUILD_CLASS_PATH := $(BUILD_PATH)$(P_SEP)$(SOURCE_PATH)$(P_SEP)$(DIST_CLASS_PATH)
+TEST_CLASS_PATH := lib/hamcrest-core-1.3.jar$(P_SEP)junit-4.11.jar$(P_SEP)$(BUILD_CLASS_PATH)
 
 TEST_SOURCES := $(shell find $(TEST_PATH) -type f -name "*.java")
 TEST_CLASSES := $(patsubst %.java,%.class,$(TEST_SOURCES))
