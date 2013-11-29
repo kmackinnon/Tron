@@ -42,10 +42,16 @@ public class Map {
         internal.addWall(xPos, yPos, colour);
     }
     
+    /**
+     * @return width of map
+     */
     public int getWidth(){
         return width;
     }
     
+    /**
+     * @return height of map
+     */
     public int getHeight(){
         return height;
     }
@@ -141,6 +147,11 @@ public class Map {
         new Thread(internal).start();
     }
     
+    /**
+     * Gets the number of rounds won for specific Player
+     * @param index
+     * @return 
+     */
     public int getPlayerWins(int index) {
       Player player = this.getPlayer(index);
       return player.getNumRoundsWon();
@@ -243,6 +254,15 @@ public class Map {
         }
     }
     
+    /**
+     * Creates a new Map with the following parameters:
+     * @param width
+     * @param height
+     * @param mapData
+     * @param colour
+     * @param game
+     * @param display 
+     */
     public Map(int width, int height, byte mapData[], String colour, GameInfo game, Display display){
         this.width = width;
         this.height = height;

@@ -3,10 +3,14 @@ package gameplay;
 import database.GameInfo;
 import database.User;
 
+/**
+ * Contains details concerning a Player's in-game information.
+ * This includes direction and location on the map and round wins and losses.
+ * @author Gabriel
+ */
 public class Player {
 
     public enum Direction {
-
         LEFT, UP, DOWN, RIGHT
     };
     private int xPos;
@@ -54,35 +58,66 @@ public class Player {
         this.myMap = null;
         this.myGame = game;
     }
-
+    
+    /**
+     * @return Player's user id
+     */
     public int getID() {
         return myUser.getID();
     }
 
+    /**
+     * 
+     * @return Player's current x coordinate location on the map
+     */
     public int getX() {
         return this.xPos;
     }
-
+    
+    /**
+     * 
+     * @return Player's current y coordinate location on the map
+     */
     public int getY() {
         return this.yPos;
     }
 
+    /**
+     * 
+     * @return Player's color during the game
+     */
     public String getColour() {
         return this.colour;
     }
 
+    /**
+     * 
+     * @return Wether player is alive or has collided
+     */
     public boolean getIsAlive() {
         return this.isAlive;
     }
 
+    /**
+     * 
+     * @return Username associated for that player
+     */
     public String getUsername() {
         return this.myUser.getUsername();
     }
 
+    /**
+     * Set player's x coordinate on the map
+     * @param x 
+     */
     public void setX(int x) {
         this.xPos = x;
     }
-
+    
+    /**
+     * Set Player's y coordinate on the map
+     * @param y 
+     */
     public void setY(int y) {
         this.yPos = y;
     }
@@ -202,8 +237,9 @@ public class Player {
     public int getNumRoundsWon() {
         return roundsWon;
     }
+    
     //these send the updated end of game stats to the DB.
-
+    
     public void winGame() {
         myUser.winGame();
     }

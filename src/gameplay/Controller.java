@@ -5,6 +5,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Handles user key input and binds it to the input list
+ * @author Gabriel
+ */
 public class Controller implements EventHandler<KeyEvent> {
 
     private static final Controller INSTANCE = new Controller();
@@ -15,7 +19,7 @@ public class Controller implements EventHandler<KeyEvent> {
     static ConcurrentHashMap<KeyCode, Input> inputList = new ConcurrentHashMap<>();
 
     // to implement a singleton pattern
-    private Controller() {  
+    protected Controller() {  
     }
 
     /**
