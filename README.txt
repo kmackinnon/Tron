@@ -21,6 +21,7 @@ Third Party Libraries:
 
 Compile and Run:
 	Makefile is included
+	Environment variable JAVA_HOME should be correctly set.
 	To build jar:
 		make dist
 		(LightRacer.jar and required libs will be found in the folder "dist")
