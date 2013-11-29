@@ -21,7 +21,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
- *
+ * This class consists of the panel which is the main menu. 
  * @author Victorio
  */
 public class MenuUI extends StackPane {
@@ -36,18 +36,17 @@ public class MenuUI extends StackPane {
     Image[] maps = new Image[3];
 
     /**
-     * This is the class that consists of the panel - main menu.
+     * The constructor which sets up the main menu panel. 
      *
      * @param stage
      * @param viewer
-     * @param userA this will be null if one the loginUI, the player picked 1
-     * player, or else this represents the first player
+     * @param userA this will be null if on the loginUI, the player picked 1
+     * player; otherwise this represents the first player
      * @param userB this will never be null, will be the first player if single
      * player or else it would be the second player
      */
     public MenuUI(final Stage stage, final ImageView viewer, User userA, User userB) {
 
-        //might have to change the names coming in.
         if (userA != null) {
             isSinglePlayer = false;
             this.firstUser = userA;
@@ -66,6 +65,7 @@ public class MenuUI extends StackPane {
         Button playBtn = new Button("Play Game");
         playBtn.setFont(new Font(16));
         playBtn.setMinSize(180, 50);
+        
         if (isSinglePlayer) {
             playBtn.setDisable(true);
         }
@@ -109,6 +109,7 @@ public class MenuUI extends StackPane {
 
         colorGrp.setAlignment(Pos.CENTER);
         colorGrp.setSpacing(10);
+        
         if (isSinglePlayer) {
             colorGrp.getChildren().addAll(leftColorOneBtn, colorOne, rightColorOneBtn);
         } else {
@@ -122,6 +123,7 @@ public class MenuUI extends StackPane {
         Label colorLabel = new Label();
         colorLabel.setFont(new Font(20));
         colorLabel.setTextFill(Color.WHITE);
+        
         if (isSinglePlayer) {
             colorLabel.setText("Select " + firstUser.getUsername() + "'s color");
         } else {
@@ -144,6 +146,7 @@ public class MenuUI extends StackPane {
         gameInitGrp.setSpacing(40);
         gameInitGrp.setAlignment(Pos.CENTER);
         gameInitGrp.getChildren().addAll(mapLabel, mapGrp, colorLabel, colorGrp, speedStartGrp);
+        
         if (isSinglePlayer) {
             gameInitGrp.setDisable(true);
         }
@@ -187,14 +190,14 @@ public class MenuUI extends StackPane {
             headToHeadLabel.setFont(new Font(26));
             headToHeadLabel.setTextFill(Color.WHITE);
 
-            Label heaToHeadWinLabel = new Label();
-            heaToHeadWinLabel.setFont(new Font(20));
-            heaToHeadWinLabel.setTextFill(Color.WHITE);
+            Label headToHeadWinLabel = new Label();
+            headToHeadWinLabel.setFont(new Font(20));
+            headToHeadWinLabel.setTextFill(Color.WHITE);
             int headtoHeadWins[] = User.getHead2HeadStats(firstUser, secondUser);
-            //heaToHeadWinLabel.setText(firstUser.getUsername()+" wons "+ Method to get the games won vs +" games vs "+ secondUser.getUsername());
-            heaToHeadWinLabel.setText(firstUser.getUsername() + " vs " + secondUser.getUsername() + "\n         " + headtoHeadWins[0] + "-" + headtoHeadWins[1]);
+            //headToHeadWinLabel.setText(firstUser.getUsername()+" wons "+ Method to get the games won vs +" games vs "+ secondUser.getUsername());
+            headToHeadWinLabel.setText(firstUser.getUsername() + " vs " + secondUser.getUsername() + "\n         " + headtoHeadWins[0] + "-" + headtoHeadWins[1]);
 
-            winStats.getChildren().addAll(playerOneStatLabel, playerOneStatWinLabel, playerTwoStatLabel, playerTwoStatWinLabel, headToHeadLabel, heaToHeadWinLabel);
+            winStats.getChildren().addAll(playerOneStatLabel, playerOneStatWinLabel, playerTwoStatLabel, playerTwoStatWinLabel, headToHeadLabel, headToHeadWinLabel);
 
         }
 
@@ -249,6 +252,7 @@ public class MenuUI extends StackPane {
         Button player2Btn = new Button();
         player2Btn.setFont(new Font(16));
         player2Btn.setMinSize(140, 50);
+        
         if (isSinglePlayer) {
             player2Btn.setText("2nd Player login");
         } else {
@@ -320,6 +324,9 @@ public class MenuUI extends StackPane {
         });
         leftColorOneBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
+            /**
+             * Upon right color selection, scrolls to previous player1 color.
+             */
             public void handle(ActionEvent e) {
                 if (colorOnePlace == 0 || (colorTwoPlace == 0 && colorOnePlace == 1)) {
                     colorOnePlace = COLORS.length;
@@ -334,6 +341,9 @@ public class MenuUI extends StackPane {
         });
         rightColorOneBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
+            /**
+             * Upon right color selection, scrolls to next player1 color.
+             */
             public void handle(ActionEvent e) {
                 if (colorOnePlace == COLORS.length - 1 || (colorTwoPlace == COLORS.length - 1 && colorOnePlace == COLORS.length - 2)) {
                     colorOnePlace = -1;
@@ -348,6 +358,9 @@ public class MenuUI extends StackPane {
         });
         leftColorTwoBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
+            /**
+             * Upon left color selection, scrolls to previous player2 color.
+             */
             public void handle(ActionEvent e) {
                 if (colorTwoPlace == 0 || (colorOnePlace == 0 && colorTwoPlace == 1)) {
                     colorTwoPlace = COLORS.length;
@@ -363,6 +376,9 @@ public class MenuUI extends StackPane {
 
         rightColorTwoBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
+            /**
+             * Upon right color selection, scrolls to next player2 color.
+             */
             public void handle(ActionEvent e) {
                 if (colorTwoPlace == COLORS.length - 1 || (colorOnePlace == COLORS.length - 1 && colorTwoPlace == COLORS.length - 2)) {
                     colorTwoPlace = -1;
@@ -377,6 +393,9 @@ public class MenuUI extends StackPane {
         });
         leftMapBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
+            /**
+             * Left arrow key clicked which scrolls to previous map.
+             */
             public void handle(ActionEvent e) {
                 if (mapposition == 0) {
                     mapposition = maps.length - 1;
@@ -389,6 +408,9 @@ public class MenuUI extends StackPane {
 
         rightMapBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
+            /**
+             * Right arrow key clicked which scrolls to next map.
+             */
             public void handle(ActionEvent e) {
                 if (mapposition == maps.length - 1) {
                     mapposition = 0;
@@ -400,6 +422,9 @@ public class MenuUI extends StackPane {
         });
         leftSpeedBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
+            /**
+             * Decrements the speed upon clicking the left arrow key beside the speed option. 
+             */
             public void handle(ActionEvent e) {
                 if (speed != 5) {
                     speed--;
@@ -410,6 +435,9 @@ public class MenuUI extends StackPane {
 
         rightSpeedBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
+            /**
+             * Increments the speed upon clicking the right arrow key beside the speed option.
+             */
             public void handle(ActionEvent e) {
                 if (speed != 20) {
                     speed++;
