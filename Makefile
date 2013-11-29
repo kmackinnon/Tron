@@ -8,21 +8,22 @@ else
 P_SEP := :
 endif
 
-RESOURCE_PATH := res
-SOURCE_PATH := src
-BUILD_PATH := build
-DOC_PATH := docs
-DIST_PATH := dist
-LIB_PATH := lib
-TEST_PATH := test
+RESOURCE_PATH := $(CURDIR)/res
+SOURCE_PATH := $(CURDIR)/src
+BUILD_PATH := $(CURDIR)/build
+DOC_PATH := $(CURDIR)/docs
+DIST_PATH := $(CURDIR)/dist
+LIB_EXT := lib
+LIB_PATH := $(CURDIR)/$(LIB_EXT)
+TEST_PATH := $(CURDIR)/test
 
 APP_CLASS := lightracer.LightRacer
 
 DIST_LIBS := base64-2.3.7.jar sqlite-jdbc-3.7.2.jar
 
-DIST_CLASS_PATH := lib/base64-2.3.7.jar$(P_SEP)lib/sqlite-jdbc-3.7.2.jar$(P_SEP)$(JAVA_HOME)/jre/lib/jfxrt.jar
+DIST_CLASS_PATH := $(LIB_PATH)/base64-2.3.7.jar$(P_SEP)$(LIB_PATH)/sqlite-jdbc-3.7.2.jar$(P_SEP)$(JAVA_HOME)/jre/lib/jfxrt.jar
 BUILD_CLASS_PATH := $(BUILD_PATH)$(P_SEP)$(SOURCE_PATH)$(P_SEP)$(DIST_CLASS_PATH)
-TEST_CLASS_PATH := lib/hamcrest-core-1.3.jar$(P_SEP)junit-4.11.jar$(P_SEP)$(BUILD_CLASS_PATH)
+TEST_CLASS_PATH := 	/hamcrest-core-1.3.jar$(P_SEP)$(LIB_PATH)/junit-4.11.jar$(P_SEP)$(BUILD_CLASS_PATH)
 
 TEST_SOURCES := $(shell find $(TEST_PATH) -type f -name "*.java")
 TEST_CLASSES := $(patsubst %.java,%.class,$(TEST_SOURCES))
@@ -62,8 +63,8 @@ todo:
 
 define DIST_template
 $(1):
-	-@mkdir -p $(DIST_PATH)/$(LIB_PATH)
-	-@cp $(LIB_PATH)/$(1) $(DIST_PATH)/$(LIB_PATH)
+	-@mkdir -p $(DIST_PATH)/$(LIB_EXT)
+	-@cp $(LIB_PATH)/$(1) $(DIST_PATH)/$(LIB_EXT)
 endef
 
 $(foreach lib,$(DIST_LIBS),$(eval $(call DIST_template,$(lib))))
