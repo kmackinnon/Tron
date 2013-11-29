@@ -21,7 +21,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
- * This class consists of the panel which is the main menu. 
+ * This class consists of the panel which is the main menu.
+ *
  * @author Victorio
  */
 public class MenuUI extends StackPane {
@@ -36,7 +37,7 @@ public class MenuUI extends StackPane {
     Image[] maps = new Image[3];
 
     /**
-     * The constructor which sets up the main menu panel. 
+     * The constructor which sets up the main menu panel.
      *
      * @param stage
      * @param viewer
@@ -65,7 +66,7 @@ public class MenuUI extends StackPane {
         Button playBtn = new Button("Play Game");
         playBtn.setFont(new Font(16));
         playBtn.setMinSize(180, 50);
-        
+
         if (isSinglePlayer) {
             playBtn.setDisable(true);
         }
@@ -109,7 +110,7 @@ public class MenuUI extends StackPane {
 
         colorGrp.setAlignment(Pos.CENTER);
         colorGrp.setSpacing(10);
-        
+
         if (isSinglePlayer) {
             colorGrp.getChildren().addAll(leftColorOneBtn, colorOne, rightColorOneBtn);
         } else {
@@ -123,7 +124,7 @@ public class MenuUI extends StackPane {
         Label colorLabel = new Label();
         colorLabel.setFont(new Font(20));
         colorLabel.setTextFill(Color.WHITE);
-        
+
         if (isSinglePlayer) {
             colorLabel.setText("Select " + firstUser.getUsername() + "'s color");
         } else {
@@ -146,7 +147,7 @@ public class MenuUI extends StackPane {
         gameInitGrp.setSpacing(40);
         gameInitGrp.setAlignment(Pos.CENTER);
         gameInitGrp.getChildren().addAll(mapLabel, mapGrp, colorLabel, colorGrp, speedStartGrp);
-        
+
         if (isSinglePlayer) {
             gameInitGrp.setDisable(true);
         }
@@ -252,7 +253,7 @@ public class MenuUI extends StackPane {
         Button player2Btn = new Button();
         player2Btn.setFont(new Font(16));
         player2Btn.setMinSize(140, 50);
-        
+
         if (isSinglePlayer) {
             player2Btn.setText("2nd Player login");
         } else {
@@ -278,11 +279,13 @@ public class MenuUI extends StackPane {
         getChildren().addAll(viewer, base);
 
         playBtn.setOnAction(new EventHandler<ActionEvent>() {
+            /**
+             * Loads the map and all the game info then begins the game display.
+             * @param e 
+             */
             @Override
             public void handle(ActionEvent e) {
-
                 DBMapLoader map = new DBMapLoader("BasicMap" + String.valueOf(mapposition + 1));
-
                 GameInfo gameInfo = new GameInfo(firstUser, COLORS[colorOnePlace], secondUser, COLORS[colorTwoPlace], speed, map);
 
                 Display Gameplay = new Display(stage, viewer, gameInfo);
@@ -292,6 +295,14 @@ public class MenuUI extends StackPane {
         });
 
         logoutplayer1Btn.setOnAction(new EventHandler<ActionEvent>() {
+            /**
+             * If a single player is logged in, the 1st player button will take
+             * the user back to the login screen to login a second player. When
+             * both are logged in, the 1st player button will log out that
+             * player thus disabling gameplay but still showing main menu.
+             * 
+             * @param e 
+             */
             @Override
             public void handle(ActionEvent e) {
                 if (isSinglePlayer) {
@@ -299,8 +310,7 @@ public class MenuUI extends StackPane {
                     Scene startScreenScene = new Scene(startScreen);
                     stage.setScene(startScreenScene);
                 } else {
-                    MenuUI mainMenu;
-                    mainMenu = new MenuUI(stage, viewer, null, secondUser);
+                    MenuUI mainMenu = new MenuUI(stage, viewer, null, secondUser);
                     Scene mainMenuscene = new Scene(mainMenu);
                     stage.setScene(mainMenuscene);
                 }
@@ -308,6 +318,14 @@ public class MenuUI extends StackPane {
         });
 
         player2Btn.setOnAction(new EventHandler<ActionEvent>() {
+            /**
+             * If a single player is logged in, the 2nd player button will take
+             * the user back to the login screen to login a second player. When
+             * both are logged in, the 2nd player button will log out that
+             * player thus disabling gameplay but still showing main menu.
+             *
+             * @param e
+             */
             @Override
             public void handle(ActionEvent e) {
                 if (isSinglePlayer) {
@@ -315,18 +333,19 @@ public class MenuUI extends StackPane {
                     Scene startScreenScene = new Scene(startScreen);
                     stage.setScene(startScreenScene);
                 } else {
-                    MenuUI mainMenu;
-                    mainMenu = new MenuUI(stage, viewer, null, firstUser);
+                    MenuUI mainMenu = new MenuUI(stage, viewer, null, firstUser);
                     Scene mainMenuscene = new Scene(mainMenu);
                     stage.setScene(mainMenuscene);
                 }
             }
         });
         leftColorOneBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
             /**
              * Upon right color selection, scrolls to previous player1 color.
+             *
+             * @param e
              */
+            @Override
             public void handle(ActionEvent e) {
                 if (colorOnePlace == 0 || (colorTwoPlace == 0 && colorOnePlace == 1)) {
                     colorOnePlace = COLORS.length;
@@ -340,10 +359,12 @@ public class MenuUI extends StackPane {
             }
         });
         rightColorOneBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
             /**
              * Upon right color selection, scrolls to next player1 color.
+             *
+             * @param e
              */
+            @Override
             public void handle(ActionEvent e) {
                 if (colorOnePlace == COLORS.length - 1 || (colorTwoPlace == COLORS.length - 1 && colorOnePlace == COLORS.length - 2)) {
                     colorOnePlace = -1;
@@ -357,10 +378,12 @@ public class MenuUI extends StackPane {
             }
         });
         leftColorTwoBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
             /**
              * Upon left color selection, scrolls to previous player2 color.
+             *
+             * @param e
              */
+            @Override
             public void handle(ActionEvent e) {
                 if (colorTwoPlace == 0 || (colorOnePlace == 0 && colorTwoPlace == 1)) {
                     colorTwoPlace = COLORS.length;
@@ -375,10 +398,12 @@ public class MenuUI extends StackPane {
         });
 
         rightColorTwoBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
             /**
              * Upon right color selection, scrolls to next player2 color.
+             *
+             * @param e
              */
+            @Override
             public void handle(ActionEvent e) {
                 if (colorTwoPlace == COLORS.length - 1 || (colorOnePlace == COLORS.length - 1 && colorTwoPlace == COLORS.length - 2)) {
                     colorTwoPlace = -1;
@@ -392,10 +417,12 @@ public class MenuUI extends StackPane {
             }
         });
         leftMapBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
             /**
              * Left arrow key clicked which scrolls to previous map.
+             *
+             * @param e
              */
+            @Override
             public void handle(ActionEvent e) {
                 if (mapposition == 0) {
                     mapposition = maps.length - 1;
@@ -407,10 +434,12 @@ public class MenuUI extends StackPane {
         });
 
         rightMapBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
             /**
              * Right arrow key clicked which scrolls to next map.
+             *
+             * @param e
              */
+            @Override
             public void handle(ActionEvent e) {
                 if (mapposition == maps.length - 1) {
                     mapposition = 0;
@@ -421,10 +450,13 @@ public class MenuUI extends StackPane {
             }
         });
         leftSpeedBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
             /**
-             * Decrements the speed upon clicking the left arrow key beside the speed option. 
+             * Decrements the speed upon clicking the left arrow key beside the
+             * speed option.
+             *
+             * @param e
              */
+            @Override
             public void handle(ActionEvent e) {
                 if (speed != 5) {
                     speed--;
@@ -434,10 +466,13 @@ public class MenuUI extends StackPane {
         });
 
         rightSpeedBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
             /**
-             * Increments the speed upon clicking the right arrow key beside the speed option.
+             * Increments the speed upon clicking the right arrow key beside the
+             * speed option.
+             *
+             * @param e
              */
+            @Override
             public void handle(ActionEvent e) {
                 if (speed != 20) {
                     speed++;
