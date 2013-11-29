@@ -16,6 +16,7 @@ import javafx.scene.input.KeyCode;
 
 /**
  * Contains all essential game information such as map, speed, game winner
+ *
  * @author Keith
  */
 public class GameInfo {
@@ -33,20 +34,21 @@ public class GameInfo {
 
     /**
      * Sets the private display field equal to the display passed
-     * @param display 
+     *
+     * @param display
      */
     public void setDisplay(Display display) {
         this.display = display;
     }
 
     /**
-     * 
+     *
      * @param playerOne
      * @param playerOneColour
      * @param playerTwo
      * @param playerTwoColour
      * @param speed
-     * @param map 
+     * @param map
      */
     public GameInfo(User playerOne, String playerOneColour, User playerTwo, String playerTwoColour, int speed, MapLoader map) {
         winner = -1; // inital value when no one has won yet
@@ -56,7 +58,7 @@ public class GameInfo {
         playerList.add(new Player(playerOne, playerOneColour, this));
         playerList.add(new Player(playerTwo, playerTwoColour, this));
         controller.clear();
-        
+
     }
 
     /**
@@ -103,7 +105,7 @@ public class GameInfo {
                 }
                 i++;
             }
-           display.roundover(roundWinner.getUsername(), getPlayerWins(0), getPlayerWins(1));
+            display.roundover(roundWinner.getUsername(), getPlayerWins(0), getPlayerWins(1));
         }
     }
 
@@ -141,7 +143,7 @@ public class GameInfo {
             return getPlayerName(winner);
         }
     }
-    
+
     /**
      * @param index
      * @return the user id of the specified player
@@ -150,32 +152,32 @@ public class GameInfo {
         Player player = playerList.get(index);
         return player.getID();
     }
-    
+
     /**
      * @return the winning player's user id
      */
     public int getWinnerID() {
-      return getPlayerID(winner);
+        return getPlayerID(winner);
     }
-    
+
     /**
      * @param index
-     * @return the number of rounds a player has won 
+     * @return the number of rounds a player has won
      */
     public int getPlayerWins(int index) {
         Player player = playerList.get(index);
         return player.getNumRoundsWon();
     }
-    
+
     /**
-     * Saves statistics after a game. 
+     * Saves statistics after a game.
      */
-    private void save(){
+    private void save() {
         int i = 0;
         Iterator<Player> it;
         for (it = playerList.iterator(); it.hasNext();) {
             Player p = it.next();
-            if (i==this.winner) {
+            if (i == this.winner) {
                 p.winGame();
             } else {
                 p.loseGame();
@@ -190,47 +192,47 @@ public class GameInfo {
         }
         db.addGame(this);
     }
-    
+
     /**
-     * @return the first user in the playerList 
+     * @return the first user in the playerList
      */
-    public User getFirstUser(){
+    public User getFirstUser() {
         return playerList.get(0).getUser();
     }
-    
+
     /**
      * @return the second user in the playerList
      */
-    public User getSecondUser(){
+    public User getSecondUser() {
         return playerList.get(1).getUser();
     }
-    
+
     /**
      * @return the first player's color on the map
      */
-    public String getFirstUserColour(){
+    public String getFirstUserColour() {
         return playerList.get(0).getColour();
     }
-    
+
     /**
-     * @return the second player's color on the map 
+     * @return the second player's color on the map
      */
-    public String getSecondUserColour(){
+    public String getSecondUserColour() {
         return playerList.get(1).getColour();
     }
-    
+
     /**
      * @return return the speed of the game in Hz (moves per second)
      */
-    public int getSpeed(){
+    public int getSpeed() {
         return speed;
     }
-    
+
     /**
      * @return the map being used
      */
-    public MapLoader getMap(){
-      return baseMap;  
+    public MapLoader getMap() {
+        return baseMap;
     }
 
 }

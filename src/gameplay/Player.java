@@ -4,13 +4,15 @@ import database.GameInfo;
 import database.User;
 
 /**
- * Contains details concerning a Player's in-game information.
- * This includes direction and location on the map and round wins and losses.
+ * Contains details concerning a Player's in-game information. This includes
+ * direction and location on the map and round wins and losses.
+ *
  * @author Gabriel
  */
 public class Player {
 
     public enum Direction {
+
         LEFT, UP, DOWN, RIGHT
     };
     private int xPos;
@@ -26,6 +28,7 @@ public class Player {
 
     /**
      * Create new player with full details to start new game
+     *
      * @param xStart
      * @param yStart
      * @param colour
@@ -58,7 +61,7 @@ public class Player {
         this.myMap = null;
         this.myGame = game;
     }
-    
+
     /**
      * @return Player's user id
      */
@@ -67,15 +70,15 @@ public class Player {
     }
 
     /**
-     * 
+     *
      * @return Player's current x coordinate location on the map
      */
     public int getX() {
         return this.xPos;
     }
-    
+
     /**
-     * 
+     *
      * @return Player's current y coordinate location on the map
      */
     public int getY() {
@@ -83,7 +86,7 @@ public class Player {
     }
 
     /**
-     * 
+     *
      * @return Player's color during the game
      */
     public String getColour() {
@@ -91,7 +94,7 @@ public class Player {
     }
 
     /**
-     * 
+     *
      * @return Wether player is alive or has collided
      */
     public boolean getIsAlive() {
@@ -99,7 +102,7 @@ public class Player {
     }
 
     /**
-     * 
+     *
      * @return Username associated for that player
      */
     public String getUsername() {
@@ -108,15 +111,17 @@ public class Player {
 
     /**
      * Set player's x coordinate on the map
-     * @param x 
+     *
+     * @param x
      */
     public void setX(int x) {
         this.xPos = x;
     }
-    
+
     /**
      * Set Player's y coordinate on the map
-     * @param y 
+     *
+     * @param y
      */
     public void setY(int y) {
         this.yPos = y;
@@ -132,6 +137,7 @@ public class Player {
 
     /**
      * Set initial position and moving direction on the grid
+     *
      * @param xStart
      * @param yStart
      * @param startingDirection
@@ -237,9 +243,8 @@ public class Player {
     public int getNumRoundsWon() {
         return roundsWon;
     }
-    
+
     //these send the updated end of game stats to the DB.
-    
     public void winGame() {
         myUser.winGame();
     }

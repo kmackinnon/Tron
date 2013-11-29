@@ -17,12 +17,12 @@ public class UserTest {
 
     private static User testUser;
     private static SQLiteInterface db;
-    
+
     private static final String path = ".test.db";
 
     @BeforeClass
     public static void setUpClass() {
-      
+
     }
 
     @AfterClass
@@ -41,7 +41,7 @@ public class UserTest {
     }
 
     /**
-     * Delete the database after each method so that tests are independent. 
+     * Delete the database after each method so that tests are independent.
      */
     @After
     public void tearDown() {

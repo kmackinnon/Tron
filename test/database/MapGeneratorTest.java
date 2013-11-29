@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package database;
 
 import org.junit.After;
@@ -15,25 +14,26 @@ import static org.junit.Assert.*;
 
 /**
  * Contains unit tests for MapGenerator Class
+ *
  * @author Gabriel
  */
 public class MapGeneratorTest {
-    
+
     public MapGeneratorTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -110,5 +110,5 @@ public class MapGeneratorTest {
         MapGenerator instance = new MapGenerator();
         instance.makeAllAndInstall();
     }
-    
+
 }

@@ -287,11 +287,12 @@ public class SQLiteInterface extends DatabaseInterface {
 
     /**
      * Adds a map to the database.
+     *
      * @param name of the map
      * @param data where are the "forbidden zones"
      * @param width
      * @param height
-     * @throws UnsupportedOperationException 
+     * @throws UnsupportedOperationException
      */
     @Override
     public void addMap(String name, byte data[], int width, int height) throws UnsupportedOperationException {
@@ -308,7 +309,7 @@ public class SQLiteInterface extends DatabaseInterface {
     /**
      * @param name
      * @return specifications of the map
-     * @throws UnsupportedOperationException 
+     * @throws UnsupportedOperationException
      */
     @Override
     public DatabaseInterface.MapSpecs getMap(String name) throws UnsupportedOperationException {
@@ -389,6 +390,7 @@ public class SQLiteInterface extends DatabaseInterface {
 
     /**
      * Create statistics for a user based on his user id.
+     *
      * @param uid user id
      */
     @Override

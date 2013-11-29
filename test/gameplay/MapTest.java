@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package gameplay;
 
 import database.User;
@@ -16,25 +15,26 @@ import static org.junit.Assert.*;
 
 /**
  * Contains unit tests for Map class
+ *
  * @author Gabriel
  */
 public class MapTest {
-    
+
     public MapTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -48,7 +48,7 @@ public class MapTest {
         int xPos = 0;
         int yPos = 0;
         String colour = "0x00F";
-        Map instance = new Map(10, 10,null,null);
+        Map instance = new Map(10, 10, null, null);
         instance.addWall(xPos, yPos, colour);
     }
 
@@ -58,7 +58,7 @@ public class MapTest {
     @Test
     public void testGetWidth() {
         System.out.println("getWidth");
-        Map instance = new Map(0,0,null,null);
+        Map instance = new Map(0, 0, null, null);
         int expResult = 0;
         int result = instance.getWidth();
         assertEquals(expResult, result);
@@ -70,7 +70,7 @@ public class MapTest {
     @Test
     public void testGetHeight() {
         System.out.println("getHeight");
-        Map instance = new Map(0,0,null,null);
+        Map instance = new Map(0, 0, null, null);
         int expResult = 0;
         int result = instance.getHeight();
         assertEquals(expResult, result);
@@ -83,7 +83,7 @@ public class MapTest {
     public void testSetSpeed() {
         System.out.println("setSpeed");
         int hz = 10;
-        Map instance = new Map(0,0,null,null);
+        Map instance = new Map(0, 0, null, null);
         instance.setSpeed(hz);
     }
 
@@ -95,7 +95,7 @@ public class MapTest {
         System.out.println("collides");
         int x = 0;
         int y = 0;
-        Map instance = new Map(10,10,null,null);
+        Map instance = new Map(10, 10, null, null);
         boolean expResult = false;
         boolean result = instance.collides(x, y);
         assertEquals(expResult, result);
@@ -107,7 +107,7 @@ public class MapTest {
     @Test
     public void testRun() {
         System.out.println("run");
-        Map instance = new Map(10,10,null,null);
+        Map instance = new Map(10, 10, null, null);
         instance.run();
     }
 
@@ -118,8 +118,8 @@ public class MapTest {
     public void testGetPlayerWins() {
         System.out.println("getPlayerWins");
         int index = 0;
-        Player player = new Player(null,null,null);
-        Map instance = new Map(10,10,null,null);
+        Player player = new Player(null, null, null);
+        Map instance = new Map(10, 10, null, null);
         instance.addPlayer(player, Player.Direction.LEFT, 0, 0);
         int expResult = 0;
         int result = instance.getPlayerWins(index);
@@ -133,9 +133,9 @@ public class MapTest {
     public void testGetPlayer() {
         System.out.println("getPlayer");
         int i = 0;
-        Map instance = new Map(10,10,null,null);
+        Map instance = new Map(10, 10, null, null);
         User testUser = new User(1, "Gabriel");
-        Player expResult = new Player(testUser,null,null);
+        Player expResult = new Player(testUser, null, null);
         instance.addPlayer(expResult, Player.Direction.LEFT, 0, 0);
         Player result = instance.getPlayer(i);
         assertEquals(expResult, result);
@@ -152,7 +152,7 @@ public class MapTest {
         Player.Direction direction = Player.Direction.UP;
         int x = 0;
         int y = 0;
-        Map instance = new Map(10,10,null,null);
+        Map instance = new Map(10, 10, null, null);
         instance.addPlayer(user, colour, direction, x, y);
     }
 
@@ -162,11 +162,11 @@ public class MapTest {
     @Test
     public void testAddPlayer_4args() {
         System.out.println("addPlayer (player, direction, x, y)");
-        Player player = new Player(null,null,null);
+        Player player = new Player(null, null, null);
         Player.Direction direction = Player.Direction.UP;
         int x = 0;
         int y = 0;
-        Map instance = new Map(10,10,null,null);
+        Map instance = new Map(10, 10, null, null);
         instance.addPlayer(player, direction, x, y);
     }
 
@@ -176,10 +176,10 @@ public class MapTest {
     @Test
     public void testGetBinaryData() {
         System.out.println("getBinaryData");
-        Map instance = new Map(0,0,null,null);
+        Map instance = new Map(0, 0, null, null);
         byte[] expResult = new byte[0];
         byte[] result = instance.getBinaryData();
         assertArrayEquals(expResult, result);
     }
-    
+
 }
