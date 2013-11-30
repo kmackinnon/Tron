@@ -26,6 +26,7 @@ Compile and Run:
 	otherwise set it with your shell's environment setting function.
 	On Windows machines, it should be set already,
 	if not, look at http://stackoverflow.com/questions/2619584/how-to-set-java-home-on-windows-7
+	Build works fine under Linux, some issues with Paths under Windows.
 	To build jar:
 		make dist
 		(LightRacer.jar and required libs will be found in the folder "dist")
