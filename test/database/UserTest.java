@@ -1,5 +1,6 @@
 package database;
 
+import java.io.File;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -13,19 +14,15 @@ import static org.junit.Assert.*;
  * @author Keith MacKinnon
  */
 public class UserTest {
-    
+
     private static User testUser;
-    private static DatabaseInterface db;
+    private static SQLiteInterface db;
 
-    public UserTest() {
-    }
+    private static final String path = ".test.db";
 
-    /**
-     * Create a new database interface at the beginning of the test.
-     */
     @BeforeClass
     public static void setUpClass() {
-        db = new SQLiteInterface(".testing.db");
+
     }
 
     @AfterClass
@@ -34,15 +31,22 @@ public class UserTest {
     }
 
     /**
-     * Create a new user before each method so that state (wins etc) is not saved)
+     * Create a new user and testing database before each method so that state
+     * (wins etc) is not saved)
      */
     @Before
     public void setUp() {
+        db = new SQLiteInterface(path); // located in home directory
         testUser = new User(1, "Sankalp"); // creates a user with uid = 1
     }
 
+    /**
+     * Delete the database after each method so that tests are independent.
+     */
     @After
     public void tearDown() {
+        File f = new File(path);
+        f.delete();
     }
 
     /**
@@ -203,7 +207,7 @@ public class UserTest {
         System.out.println("getHead2HeadStats");
         User user1 = testUser;
         User user2 = db.getUser("Nancy");
-        int[] expResult = {0,0};
+        int[] expResult = {0, 0};
         int[] result = User.getHead2HeadStats(user1, user2);
         assertArrayEquals(expResult, result);
     }
@@ -233,5 +237,5 @@ public class UserTest {
         assertEquals(expResult, result);
         assertNotEquals("Keith", result);
     }
-   
+
 }

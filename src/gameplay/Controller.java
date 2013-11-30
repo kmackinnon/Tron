@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Handles user key input and binds it to the input list
+ *
  * @author Gabriel
  */
 public class Controller implements EventHandler<KeyEvent> {
@@ -19,7 +20,7 @@ public class Controller implements EventHandler<KeyEvent> {
     static ConcurrentHashMap<KeyCode, Input> inputList = new ConcurrentHashMap<>();
 
     // to implement a singleton pattern
-    protected Controller() {  
+    protected Controller() {
     }
 
     /**
@@ -39,6 +40,7 @@ public class Controller implements EventHandler<KeyEvent> {
 
     /**
      * Check the user-entered key and add it to the inputList
+     *
      * @param input
      */
     public void addBinding(Input input) {

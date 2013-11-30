@@ -27,6 +27,7 @@ TEST_CLASS_PATH := 	/hamcrest-core-1.3.jar$(P_SEP)$(LIB_PATH)/junit-4.11.jar$(P_
 
 TEST_SOURCES := $(shell find $(TEST_PATH) -type f -name "*.java")
 TEST_CLASSES := $(patsubst %.java,%.class,$(TEST_SOURCES))
+TESTS := $(patsubst %.class,%,$(TEST_CLASSES))
 SRCFILES := $(shell find $(SOURCE_PATH) -type f -name "*.java")
 CLASSFILES := $(patsubst %.java,%.class,$(patsubst $(SOURCE_PATH)%,$(BUILD_PATH)%,$(SRCFILES)))
 
@@ -76,3 +77,4 @@ $(TEST_PATH)/%.class: $(TEST_PATH)/%.java
 	javac $< -d $(TEST_PATH) -cp $(TEST_CLASS_PATH)
 
 check: $(TEST_CLASSES)
+	$(foreach test, $(TESTS), java $(test) -cp $(TEST_CLASS_PATH)

@@ -4,6 +4,7 @@ import javafx.scene.input.KeyCode;
 
 /**
  * Abstract class to handle KeyCode inputs;
+ *
  * @author Gabriel
  */
 public abstract class Input {
@@ -13,27 +14,30 @@ public abstract class Input {
 
     /**
      * Retrieves KeyCode
-     * @return 
+     *
+     * @return
      */
     public KeyCode checkKey() {
         return key;
     }
-    
+
     /**
      * Check for KeyCode match
+     *
      * @param key
-     * @return 
+     * @return
      */
     public boolean isKey(KeyCode key) {
         return key == this.key;
     }
 
     public abstract void command();
-    
+
     /**
      * Sets key for specific player
+     *
      * @param key
-     * @param player 
+     * @param player
      */
     public Input(KeyCode key, Player player) {
         this.key = key;

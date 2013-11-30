@@ -23,6 +23,7 @@ import javafx.util.Duration;
 
 /**
  * Sets up the grid and displays the entire frontend of the project
+ *
  * @author Victorio
  */
 public class Display extends StackPane {
@@ -46,6 +47,7 @@ public class Display extends StackPane {
 
     /**
      * Display constructor which sets up everything the user sees.
+     *
      * @param stage
      * @param viewer
      * @param gameInfo all info necessary for a game
@@ -179,7 +181,8 @@ public class Display extends StackPane {
         restartBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             /**
-             * When the restart button is clicked, it will clear the map and gameover screen fades away
+             * When the restart button is clicked, it will clear the map and
+             * gameover screen fades away
              */
             public void handle(ActionEvent e) {
 
@@ -206,7 +209,7 @@ public class Display extends StackPane {
         });
 
         // Update the player scores on round button click
-        roundBtn.setOnAction(new EventHandler<ActionEvent>() {            
+        roundBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 if (endGame) {
@@ -224,7 +227,8 @@ public class Display extends StackPane {
 
     /**
      * Sets a grey rectangle in each index of the grid to display the map.
-     * @param panel 
+     *
+     * @param panel
      */
     public void makeSquares(GridPane panel) {
 
@@ -252,11 +256,12 @@ public class Display extends StackPane {
 
     /**
      * Fill the grid from start to end of coordinates passed.
+     *
      * @param xposStart
      * @param yposStart
      * @param xposEnd
      * @param yposEnd
-     * @param color 
+     * @param color
      */
     public void displayMultipleWalls(int xposStart, int yposStart, int xposEnd, int yposEnd, String color) {
         for (int i = xposStart; i < xposEnd; i++) {
@@ -268,9 +273,10 @@ public class Display extends StackPane {
 
     /**
      * Displays a wall with a given color at various positions.
+     *
      * @param xpos
      * @param ypos
-     * @param color 
+     * @param color
      */
     public void displayWall(int xpos, int ypos, String color) {
         grid[xpos][ypos].setFill(Color.web(color));
@@ -278,9 +284,10 @@ public class Display extends StackPane {
 
     /**
      * Displays the roundover screen and updates each player's points.
+     *
      * @param winner
      * @param player1win
-     * @param player2win 
+     * @param player2win
      */
     public void roundover(String winner, int player1win, int player2win) {
 
@@ -299,7 +306,8 @@ public class Display extends StackPane {
 
     /**
      * Displays the gameover screen.
-     * @param winner 
+     *
+     * @param winner
      */
     public void gameover(String winner) {
 

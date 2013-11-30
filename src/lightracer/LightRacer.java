@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 /**
  * This class launches the game.
+ *
  * @author Victorio
  */
 public class LightRacer extends Application {
@@ -20,6 +21,7 @@ public class LightRacer extends Application {
 
     /**
      * Sets the background image and loads the login screen.
+     *
      * @param stage
      */
     @Override

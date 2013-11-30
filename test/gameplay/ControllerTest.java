@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package gameplay;
 
 import javafx.scene.input.KeyEvent;
@@ -16,25 +15,26 @@ import static org.junit.Assert.*;
 
 /**
  * Used for unit testing of the Controller class
+ *
  * @author Gabriel
  */
 public class ControllerTest {
-    
+
     public ControllerTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -89,5 +89,5 @@ public class ControllerTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
 }

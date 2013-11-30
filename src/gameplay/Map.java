@@ -41,18 +41,18 @@ public class Map {
     public void addWall(int xPos, int yPos, String colour) {
         internal.addWall(xPos, yPos, colour);
     }
-    
+
     /**
      * @return width of map
      */
-    public int getWidth(){
+    public int getWidth() {
         return width;
     }
-    
+
     /**
      * @return height of map
      */
-    public int getHeight(){
+    public int getHeight() {
         return height;
     }
 
@@ -90,22 +90,22 @@ public class Map {
             width = Integer.parseInt(head[0]);
             height = Integer.parseInt(head[1]);
         } else {
-          return null;
+            return null;
         }
         BitSet map = new BitSet();
         String main = mapString.substring(m.end());
         m = bodyParser.matcher(main);
-        if (!m.matches()){
-          return null;
+        if (!m.matches()) {
+            return null;
         }
         char array[] = main.toCharArray();
         if (array.length != width * height) {
-          return null;
+            return null;
         }
         for (int i = 0; i < array.length; i++) {
-          if (array[i] == '1') {
-            map.set(i);
-          }
+            if (array[i] == '1') {
+                map.set(i);
+            }
         }
         return map;
     }
@@ -116,15 +116,16 @@ public class Map {
     public void run() {
         new Thread(internal).start();
     }
-    
+
     /**
      * Gets the number of rounds won for specific Player
+     *
      * @param index
-     * @return 
+     * @return
      */
     public int getPlayerWins(int index) {
-      Player player = this.getPlayer(index);
-      return player.getNumRoundsWon();
+        Player player = this.getPlayer(index);
+        return player.getNumRoundsWon();
     }
 
     /**
@@ -192,7 +193,7 @@ public class Map {
         BitSet map = internal.getMapData();
         return map.toByteArray();
     }
-    
+
     /**
      * Generates blank Map of given width and height
      *
@@ -208,32 +209,33 @@ public class Map {
         internal = new MapTask(width, height, game, display, new BitSet(width * height), this);
         controller.clear();
     }
-    
-    private BitSet loadMapDataFromBinary (byte data[]){
-      return BitSet.valueOf(data);
-      
+
+    private BitSet loadMapDataFromBinary(byte data[]) {
+        return BitSet.valueOf(data);
+
     }
-    
-    private void drawBitset(BitSet set, Display display, String colour){
-        for (int i = 0; i < width; i++){
+
+    private void drawBitset(BitSet set, Display display, String colour) {
+        for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if (set.get(i + j * width)){
+                if (set.get(i + j * width)) {
                     display.displayWall(i, j, colour);
                 }
             }
         }
     }
-    
+
     /**
      * Creates a new Map with the following parameters:
+     *
      * @param width
      * @param height
      * @param mapData
      * @param colour
      * @param game
-     * @param display 
+     * @param display
      */
-    public Map(int width, int height, byte mapData[], String colour, GameInfo game, Display display){
+    public Map(int width, int height, byte mapData[], String colour, GameInfo game, Display display) {
         this.width = width;
         this.height = height;
         BitSet map = loadMapDataFromBinary(mapData);
@@ -285,24 +287,23 @@ public class Map {
 
             String gameWinner = "";
             Iterator<Player> it;
-            
+
             // DRAW
-            if (aliveCount == 0){
+            if (aliveCount == 0) {
                 myGame.endRound(true, null); // no one wins
             } else {
                 // One player wins.
-                for (it = playerList.iterator(); it.hasNext();){
+                for (it = playerList.iterator(); it.hasNext();) {
                     Player player = it.next();
                     // find the winning player
-                    if (player.getIsAlive() ){
+                    if (player.getIsAlive()) {
                         gameWinner = player.getUsername();
                         myGame.endRound(false, player);
-                    } 
-                }  
+                    }
+                }
             }
-            
-           // myDisplay.gameover(gameWinner);
 
+           // myDisplay.gameover(gameWinner);
             return null;
         }
 
@@ -330,35 +331,35 @@ public class Map {
         public Player getPlayer(int i) {
             return playerList.get(i);
         }
-        
+
         private boolean sameSquare(Player player) {
-          Iterator<Player> it;
-          boolean dead = false;
-          int x = player.getX();
-          int y = player.getY();
-          for (it = playerList.iterator(); it.hasNext();) {
-            Player other = it.next();
-            if (other != player && other.getIsAlive() && x == other.getX() && y == other.getY()) {
-              other.setIsAlive(false);
-              dead = true;
+            Iterator<Player> it;
+            boolean dead = false;
+            int x = player.getX();
+            int y = player.getY();
+            for (it = playerList.iterator(); it.hasNext();) {
+                Player other = it.next();
+                if (other != player && other.getIsAlive() && x == other.getX() && y == other.getY()) {
+                    other.setIsAlive(false);
+                    dead = true;
+                }
             }
-          }
-          return dead;
+            return dead;
         }
 
         private void gameRound() {
             Iterator<Player> it;
             for (it = playerList.iterator(); it.hasNext();) {
                 Player player = it.next();
-                if (player.getIsAlive()){
-                  player.moveCurrent();
+                if (player.getIsAlive()) {
+                    player.moveCurrent();
                 }
             }
             listenPlayers();
             for (it = playerList.iterator(); it.hasNext();) {
                 Player player = it.next();
-                if (!player.getIsAlive()){
-                  continue;
+                if (!player.getIsAlive()) {
+                    continue;
                 }
                 if (collides(player.getX(), player.getY()) || sameSquare(player)) {
                     running = false;
@@ -389,7 +390,7 @@ public class Map {
                 }
             }
         }
-        
+
         public BitSet getMapData() {
             return map;
         }
@@ -402,7 +403,7 @@ public class Map {
         public int addPlayer(Player player, Player.Direction direction, int x, int y) {
             player.init(x, y, direction, this.parent);
             playerList.add(player);
-            return playerList.size()-1;
+            return playerList.size() - 1;
         }
 
         public boolean collides(int x, int y) {

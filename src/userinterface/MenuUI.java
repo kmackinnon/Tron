@@ -281,7 +281,8 @@ public class MenuUI extends StackPane {
         playBtn.setOnAction(new EventHandler<ActionEvent>() {
             /**
              * Loads the map and all the game info then begins the game display.
-             * @param e 
+             *
+             * @param e
              */
             @Override
             public void handle(ActionEvent e) {
@@ -300,8 +301,8 @@ public class MenuUI extends StackPane {
              * the user back to the login screen to login a second player. When
              * both are logged in, the 1st player button will log out that
              * player thus disabling gameplay but still showing main menu.
-             * 
-             * @param e 
+             *
+             * @param e
              */
             @Override
             public void handle(ActionEvent e) {

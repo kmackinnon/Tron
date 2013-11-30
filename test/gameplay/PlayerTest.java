@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package gameplay;
 
 import database.User;
@@ -16,31 +15,33 @@ import static org.junit.Assert.*;
 
 /**
  * Contains unit tests for Player class
+ *
  * @author Gabriel
  */
 public class PlayerTest {
-    
+
     public static User testUser1;
     public static User testUser2;
+
     //GameInfo testGame;
     public PlayerTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
         testUser1 = new User(1, "Gabriel");
-        
+
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
-        
+
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -215,8 +216,8 @@ public class PlayerTest {
     @Test
     public void testMoveCurrent() {
         System.out.println("moveCurrent");
-        Map testMap = new Map(0,0,null,null);
-        Player instance =  new Player(10, 10, "0x00F", null, testMap, Player.Direction.LEFT, null);
+        Map testMap = new Map(0, 0, null, null);
+        Player instance = new Player(10, 10, "0x00F", null, testMap, Player.Direction.LEFT, null);
         instance.moveCurrent();
     }
 
@@ -283,5 +284,5 @@ public class PlayerTest {
         User result = instance.getUser();
         assertEquals(expResult, result);
     }
-    
+
 }
